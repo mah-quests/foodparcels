@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>DSD - Department of Social Development  </title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../vendors/feather/feather.css">
+  <link rel="stylesheet" href="../vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="../vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="../js/select.dataTables.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../images/favicon.png" />
+</head>
+<body>
+  <div class="container-scroller">
+
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div class="me-3">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+            <span class="icon-menu"></span>
+          </button>
+        </div>
+        <div>
+          <a class="navbar-brand brand-logo" href="list_in_transit.html">
+            <img src="../images/dsd-logo.png" alt="logo" />
+          </a>
+          <a class="navbar-brand brand-logo-mini" href="list_in_transit.html">
+            <img src="../images/dsd-logo.png" alt="logo" />
+          </a>
+        </div>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-top"> 
+        <ul class="navbar-nav">
+          <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
+            <h1 class="welcome-text">Logged In As, <span class="text-black fw-bold">Ntokozo Zulu</span></h1>
+            <h3 class="welcome-sub-text">Security, Checked-Out Food Parcels </h3>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+            <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              <img class="img-xs rounded-circle" src="../images/faces/DavidM.png" alt="Profile image"> </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                <div class="dropdown-header text-center">
+                  <p class="mb-1 mt-3 font-weight-semibold">Ntokozo Zulu</p>
+                  <p class="fw-light text-muted mb-0">ntokozo.zulu@gmail.com</p>
+                </div>
+                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
+                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
+                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
+                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
+                <a class="dropdown-item" href="../index.html"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+              </div>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <div class="theme-setting-wrapper">
+          <div id="settings-trigger"><i class="ti-settings"></i></div>
+          <div id="theme-settings" class="settings-panel">
+            <i class="settings-close ti-close"></i>
+            <p class="settings-heading">SIDEBAR SKINS</p>
+            <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border me-3"></div>Light</div>
+            <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border me-3"></div>Dark</div>
+            <p class="settings-heading mt-2">HEADER SKINS</p>
+            <div class="color-tiles mx-0 px-4">
+              <div class="tiles success"></div>
+              <div class="tiles warning"></div>
+              <div class="tiles danger"></div>
+              <div class="tiles info"></div>
+              <div class="tiles dark"></div>
+              <div class="tiles default"></div>
+            </div>
+          </div>
+        </div>
+        <div id="right-sidebar" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="todo-tab" data-bs-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="chats-tab" data-bs-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
+            </li>
+          </ul>
+        </div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="list_in_transit.html">
+                <i class="mdi mdi-grid-large menu-icon"></i>
+                <span class="menu-title">FOOD PACKS IN TRANSIT</span>
+              </a>
+            </li>
+          </ul>
+        </nav>      
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-sm-12">
+
+                  <br>
+                  <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title"> Food Pack List </h4>
+                        <p class="card-description">
+                          food packs packaged in the past 30 days
+                        </p>
+                        <div class="table-responsive">
+                          <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th>Transaction</th>
+                                <th>Reference</th>
+                                <th>Project Name</th>
+                                <th>Date of delivery</th>
+                                <th>Stock Type</th>
+                                <th>Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>1010</td>
+                                <td>9Yy3gm5VIK</td>
+                                <td>War On Poverty</td>
+                                <td>14-Mar-2022</td>
+                                <td>Dry Goods</td>
+                                <td><label class="badge badge-danger">Looted</label></td>
+                              </tr>
+                              <tr>
+                                <td>1012</td>
+                                <td>L21k5j7B4o</td>
+                                <td>War On Poverty</td>
+                                <td>14-Mar-2022</td>
+                                <td>Vegetables</td>
+                                <td><label class="badge badge-danger">Looted</label></td>
+                              </tr>
+                              <tr>
+                                <td>1018</td>
+                                <td>uMoHfKgVW4</td>
+                                <td>War On Poverty</td>
+                                <td>14-Mar-2022</td>
+                                <td>Dry Goods</td>
+                                <td><label class="badge badge-danger">Looted</label></td>                        
+                              </tr>
+                              <tr>
+                                <td>1018</td>
+                                <td>uMoHfKgVW4</td>
+                                <td>War On Poverty</td>
+                                <td>14-Mar-2022</td>
+                                <td>Vegetables</td>
+                                <td><label class="badge badge-danger">Looted</label></td>
+                              </tr>                              
+                              <tr>
+                                <td>1019</td>
+                                <td>71MoUzHBQm</td>
+                                <td>War On Poverty</td>
+                                <td>14-Mar-2022</td>
+                                <td>Dry Goods</td>
+                                <td><label class="badge badge-danger">Looted</label></td>
+                              </tr>
+                              <tr>
+                                <td>1019</td>
+                                <td>71MoUzHBQm</td>
+                                <td>War On Poverty</td>
+                                <td>14-Mar-2022</td>
+                                <td>Vegetables</td>
+                                <td><label class="badge badge-danger">Looted</label></td>
+                              </tr>                              
+                              <tr>
+                                <td>1020</td>
+                                <td>gIfyWjZobS</td>
+                                <td>War On Poverty</td>
+                                <td>14-Mar-2022</td>
+                                <td>Vegetables</td>
+                                <td><label class="badge badge-danger">Looted</label></td>
+                              </tr>
+                              <tr>
+                                <td>1022</td>
+                                <td>ruV2xOMfLc</td>
+                                <td>War On Poverty</td>
+                                <td>14-Mar-2022</td>
+                                <td>Dry Goods</td>
+                                <td><label class="badge badge-danger">Looted</label></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:partials/_footer.html -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+
+  <!-- partial:partials/_footer.html -->
+  <footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Dashboard Web App Is Developed by <a href="https://www.mahquests.co.za/" target="_blank">MaH Quests Enterprises</a></span>
+      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2022. All rights reserved.</span>
+    </div>
+  </footer>
+  <!-- partial -->
+
+</div>
+<!-- container-scroller -->
+
+<!-- plugins:js -->
+<script src="../vendors/js/vendor.bundle.base.js"></script>
+<script src="../vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="../vendors/dragula/dragula.min.js"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="../js/off-canvas.js"></script>
+<script src="../js/hoverable-collapse.js"></script>
+<script src="../js/template.js"></script>
+<script src="../js/settings.js"></script>
+<script src="../js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="../js/dragula.js"></script>
+<!-- End custom js for this page-->
+</body>
+
+</html>
+
