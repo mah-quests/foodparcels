@@ -30,7 +30,10 @@
           if(count($result) > 0){
             foreach($result as $row) {
 
-              //Populate the stock activities table (foodbank_stock_details_tbl )
+              $new_stock_qty = $row->stock_level_amount;
+              $current_stock_name = $row->stock_name;
+
+              //Populate the stock activities table (foodbank_stock_details_tbl)
               $stock_data = array(
                 'unique_code' => $unique_code,
                 'stock_type' => $row->stock_type,
@@ -42,7 +45,7 @@
                 'stock_exp_date'  => $row->stock_exp_date,
                 'user_id' => $_SESSION['user_id'],
                 'status' => "Completed",
-                'supplier_ref' => $row->unique_code,     
+                'supplier_ref' => $row->unique_code
               );
 
    
@@ -55,11 +58,13 @@
               curl_close($client);
               $result = json_decode($response, true);  
 
+              $current_stock = $row->stock_name;
+              $stock_amount = $row->stock_level_amount;
 
               //Update Supplier Status Stock Detail table
               $stock_data = array(
                 'status' => "complete",
-                'stockdetail_id' => $row_id,     
+                'stockdetail_id' => $row_id
               );
 
    
@@ -70,13 +75,11 @@
               curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
               $response = curl_exec($client);
               curl_close($client);
-              $result = json_decode($response, true);  
-
 
               //Update Supplier Status Stock Level table
               $stock_data = array(
                 'status' => "processed",
-                'unique_code' => $row->unique_code,     
+                'unique_code' => $row->unique_code   
               );
 
    
@@ -87,12 +90,81 @@
               curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
               $response = curl_exec($client);
               curl_close($client);
-              $result = json_decode($response, true);  
 
+
+            } 
+          }
+
+
+
+          if ($current_stock_name == "Maize Meal"){
+              $current_stock_name = "Maize+Meal";
+          } 
+      
+          if ($current_stock_name == "Maize-Meal"){
+              $current_stock_name = "Maize+Meal";
+          }     
+      
+          if ($current_stock_name == "Cooking Oil"){
+              $current_stock_name = "Cooking+Oil";
+          } 
+      
+          if ($current_stock_name == "Baked Beans"){
+              $current_stock_name = "Baked+Beans";
+          } 
+      
+          if ($current_stock_name == "All Purpose Soap"){
+              $current_stock_name = "All+Purpose+Soap";
+          } 
+      
+          if ($current_stock_name == "Soya Mince"){
+              $current_stock_name = "Soya+Mince";
+          }     
+      
+          //Get the current stock level before updating
+      
+          $stock_detail_api_url = $APIBASE."delivery_notice_exec.php?action=get_stock_amount&location=".$_SESSION['region']."&stock_name=".$current_stock_name."";
+      
+          $client = curl_init($stock_detail_api_url);
+          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+          $response = curl_exec($client);
+          $result = json_decode($response);
+      
+          if(count($result) > 0){
+              foreach($result as $row) {
+      
+                  $stock_id = $row->stock_id;
+                  $current_stock_level = $row->current_stock_level;
+                  $old_stock_level = $row->old_stock_level;
+                  $updated_stock_level = $row->updated_stock_level;
+      
               }
           }
- 
-
+      
+          
+          $unique_code = $unique_code;
+          $received_stock = $new_stock_qty;
+          $new_stock_level = $current_stock_level + $received_stock;
+      
+          $actual_stock_data = array(
+              'unique_code' => $unique_code,
+              'current_stock_level' => $new_stock_level,
+              'old_stock_level' => $current_stock_level,
+              'updated_stock_level' => $received_stock,
+              'update_activity' => "Added Fully Stock From The Supplier",
+              'stock_id' => $stock_id
+          );
+      
+          $api_url = $APIBASE."delivery_notice_exec.php?action=update_stock_level";
+          $client = curl_init($api_url);
+          curl_setopt($client, CURLOPT_POST, true);
+          curl_setopt($client, CURLOPT_POSTFIELDS, $actual_stock_data);
+          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+          $response = curl_exec($client);
+          curl_close($client);
+          $result = json_decode($response, true); 
+    
+          }
         }
       }
 
@@ -171,10 +243,46 @@
               $result = json_decode($response, true);  
 
 
-              }
-          }
- 
+              //Get the current stock level before updating
+              $api_url = $APIBASE."delivery_notice_exec.php?action=get_stock_amount&region=".$_SESSION['region']."&stock_name=".$row->stock_name."";
+              $client = curl_init($api_url);
+              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+              $response = curl_exec($client);
+              $result = json_decode($response);
 
+              foreach($result as $currentrow) {
+                  $cs_unique_code = $currentrow->unique_code;
+                  $cs_current_stock_level = $currentrow->current_stock_level;
+                  $cs_old_stock_level = $_POST['stock_level_amount'];
+                  $cs_updated_stock_level = $currentrow->updated_stock_level;
+                  $cs_stock_id = $currentrow->stock_id;
+
+
+                  $cs_update_activity = "Added Partial Stock From The Supplier";
+                  $cs_new_stock_level = ($cs_updated_stock_level + $cs_old_stock_level);
+    
+                  //Update The Actual Stock Count
+                  $actual_stock_data = array(
+                    'unique_code' => $cs_unique_code,
+                    'current_stock_level' => $cs_new_stock_level,
+                    'old_stock_level' => $cs_current_stock_level,
+                    'updated_stock_level' => $_POST['stock_level_amount'],
+                    'update_activity' => $cs_update_activity,
+                    'stock_id' => $cs_stock_id
+                  );
+    
+                  $api_url = $APIBASE."delivery_notice_exec.php?action=update_stock_level";
+                  $client = curl_init($api_url);
+                  curl_setopt($client, CURLOPT_POST, true);
+                  curl_setopt($client, CURLOPT_POSTFIELDS, $actual_stock_data);
+                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                  $response = curl_exec($client);
+                  curl_close($client);
+                  $result = json_decode($response, true);  
+
+              }
+            }
+          }
         }
       }
 
@@ -227,6 +335,31 @@
               $result = json_decode($response, true);  
 
 
+
+              //Update Status
+              $rejected_data = array(
+                'supplier_unique_code' => $row->unique_code,
+                'manager_unique_code' => $unique_code,
+                'supplier_delivery_date' => $row->create_date,
+                'stock_type' => $row->stock_type,
+                'stock_name' => $row->stock_name,
+                'rejected_amounts' => $row->stock_level_amount,
+                'status' => "food bank rejected",
+                'reason_of_rejection' => $_POST['rejection_notes'],
+                'logged_by' => $_SESSION['name'],
+                'logged_by_user_id' => $_SESSION['user_id'],   
+              );
+
+   
+              $api_url = $APIBASE."delivery_notice_exec.php?action=add_rejected_stock";
+              $client = curl_init($api_url);
+              curl_setopt($client, CURLOPT_POST, true);
+              curl_setopt($client, CURLOPT_POSTFIELDS, $rejected_data);
+              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+              $response = curl_exec($client);
+              curl_close($client);
+              $result = json_decode($response, true);                
+
               }
           }
  
@@ -234,11 +367,52 @@
         }
       }      
 
+      $activities_data = array(
+        'unique_code' => $unique_code,
+        'action_performed' => "The foodbank manager has processed a Goods Delivery Note, ",
+        'performed_by' => $_SESSION['name'],
+        'user_id'  => $_SESSION['user_id'],
+        'region' => $_SESSION['region']  
+      );
+    
+      $api_url = $APIBASE."activity_notification_exec.php?action=add_user_activity";
+      $client = curl_init($api_url);
+      curl_setopt($client, CURLOPT_POST, true);
+      curl_setopt($client, CURLOPT_POSTFIELDS, $activities_data);
+      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+      $response = curl_exec($client);
+      curl_close($client);
+      $result = json_decode($response, true); 
+      
+      include_once "goods_receivables.php#food-bank-stock";
 
-    }
 
 
 ?>
+
+<script type="text/javascript">
+
+  function showHideReleventForm() {
+    var noOption = document.getElementById("item_rejected");
+
+    if (noOption.checked != true){
+
+
+      jQuery('#item-rejected-info').hide();
+      document.getElementById("item-rejected-info").style.visibility = 'hidden';
+
+      
+    } else {
+
+      jQuery('#item-rejected-info').show();
+      document.getElementById("item-rejected-info").style.visibility = 'visible';
+
+      
+    }
+    
+  }
+
+</script>
 
       <!-- partial -->
       <div class="main-panel">
@@ -278,6 +452,9 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Goods Delivery Stock Line Items - <span color:blue> Reference <?php echo $_GET['code'] ?></span></h4>
+                  <p class="card-description">
+                    As completed by the supplier. 
+                  </p>
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead>
@@ -309,35 +486,35 @@
                             {
                               $output .= '
                               <tr>
-                              <td>
-                                <div class="form-check">
-                                  <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" name="item_complete[]" id="item_complete[]" value="'.$row->stockdetail_id.'">
-                                      Complete
-                                  </label>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check">
-                                  <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" name="item_partial[]" id="item_partial[]" value="'.$row->stockdetail_id.'">
-                                      Partial
-                                  </label>
-                                </div>
-                              </td>  
-                              <td>
-                                <div class="form-check">
-                                  <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" name="item_rejected[]" id="item_partial[]" value="'.$row->stockdetail_id.'">
-                                      Rejected
-                                  </label>
-                                </div>
-                              </td>                                                            
-                              <td>'.$row->create_date.'</td>
-                              <td>'.$row->stock_type.'</td>
-                              <td>'.$row->stock_name.', '.$row->stock_brand.'</td>
-                              <td><input type="text" class="form-control" name="stock_level_amount" id="stock_level_amount" value="'.$row->stock_level_amount.'" ></td>
-                              <td>'.$row->stock_exp_date.'</td>
+                                <td>
+                                  <div class="form-check">
+                                    <label class="form-check-label">
+                                      <input type="checkbox" class="form-check-input" name="item_complete[]" id="item_complete[]" value="'.$row->stockdetail_id.'">
+                                        Complete
+                                    </label>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="form-check">
+                                    <label class="form-check-label">
+                                      <input type="checkbox" name="item_partial[]" onclick="showHideReleventForm(this.value)" id="item_partial[]" value="'.$row->stockdetail_id.'">
+                                        Partial
+                                    </label>
+                                  </div>
+                                </td>  
+                                <td>
+                                  <div class="form-check">
+                                    <label class="form-check-label">
+                                      <input type="checkbox" class="form-check-input" name="item_rejected[]" id="item_rejected[]" onclick="showHideReleventForm(this.value)" value="'.$row->stockdetail_id.'">
+                                        Rejected
+                                    </label>
+                                  </div>
+                                </td>                                                            
+                                <td>'.$row->create_date.'</td>
+                                <td>'.$row->stock_type.'</td>
+                                <td>'.$row->stock_name.', '.$row->stock_brand.'</td>
+                                <td>'.$row->stock_level_amount.'</td>
+                                <td>'.$row->stock_exp_date.'</td>
                               </tr>
                               ';
                             }
@@ -349,8 +526,22 @@
                       </tbody>
                     </table>
                   </div>
-                </div>
 
+                  <div id="dry-goods-info" style="display:none">
+                    <div class="row" align="center">
+                      <div class="col-md-1">
+                      </div>
+                      <div class="col-md-10">
+                        <tr>
+                          <td>
+                            <textarea class="form-control" name="rejection_notes" id="rejection_notes" rows="4" placeholder="If there's rejections. Enter the reason for stock rejection"></textarea>
+                          </td>
+                        </tr>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
                 <?php
 
                     $api_url = $APIBASE."delivery_notice_exec.php?action=show_supplier_stock_level&code=".$_GET['code']."";

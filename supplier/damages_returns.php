@@ -47,6 +47,38 @@
                             </tr>
                           </thead>
                           <tbody>
+
+                          <?php
+                                $api_url = $APIBASE."delivery_notice_exec.php?action=show_rejected_stock";
+                                $client = curl_init($api_url);
+                                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                $response = curl_exec($client);
+                                $result = json_decode($response);
+                                $output = '';
+
+                                if(count($result) > 0)
+                                {
+                                  foreach($result as $row)
+                                  {
+
+
+                                    $output .= '
+                                    <tr>
+                                    <td>'.$row->rejected_id.'</td>
+                                    <td>'.$row->manager_unique_code.'</td>
+                                    <td>'.$row->supplier_unique_code.'</td>
+                                    <td>'.$row->supplier_delivery_date.'</td>
+                                    <td>'.$row->reject_reported_date.'</td>
+                                    <td>'.$row->status.'</td>
+                                    <a href="view_damages_01.html"><button class="btn btn-outline-primary" >View</button></a>
+                                    </tr>
+                                    ';
+                                  }
+                                }
+
+                                echo $output;
+                            ?> 
+
                             <tr>
                               <td>1010</td>
                               <td>NaSpxd9J1O</td>

@@ -277,7 +277,7 @@ session_start();
               </a>
             </li>  
             <li class="nav-item">
-              <a class="nav-link" href="damages_returns.html">
+              <a class="nav-link" href="damages_returns.php">
                 <i class="menu-icon ti ti-back-left"></i>
                 <span class="menu-title">Damages & Returns </span>
               </a>

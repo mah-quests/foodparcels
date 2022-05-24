@@ -61,46 +61,11 @@
                           echo $output;
 											?>                      
 
-                        <div class="alert alert-success" role="alert">
-                          <a href="view_receivables_register_01.html" target="_blank">
-                            [12-Mar-2022] - The Supplier has created a new goods delivery transaction. Delivery marked for 15-Mar-2022
-                          </a>
-                        </div>
-                        <div class="alert alert-success" role="alert">
-                          <a href="#">
-                            [8-Mar-2022] - Weekly parcel delivery report generated and sent to M&E.
-                          </a>
-                        </div>
-                        <div class="alert alert-warning" role="alert">
-                          <a href="#">
-                            [6-Mar-2022] - Overall stock levels are under 40%
-                          </a>
-                        </div>
-                        <div class="alert alert-success" role="alert">
-                          <a href="#">
-                            [8-Mar-2022] - Weekly parcel delivery report generated and sent to M&E.
-                          </a>
-                        </div>
-                        <div class="alert alert-danger" role="alert">
-                          <a href="#">
-                            [25-Feb-2022] - Victor Molotsane reported damages on the stock to the supplier.
-                          </a>
-                        </div>
-                        <div class="alert alert-success" role="alert">
-                          <a href="#">
-                            [21-Mar-2022] - Food Distribution Web Application Update. Reference: SYS209 upgrade
-                          </a>
-                        </div>
                       </div>
                     </div>
                   </div>
-
-
                 </div>
               </div>
-
-
-
             </div>
           </div>
         </div>

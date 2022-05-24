@@ -2,68 +2,62 @@
 
 class DeliveryNoticeClass
 {
-   private $connect = '';
+    private $connect = '';
 
-   function __construct()
-   {
-      $this->database_connection();
-   }
+    function __construct()
+    {
+        $this->database_connection();
+    }
 
-   
-   function database_connection()
-   {
-      $this->connect = new PDO("mysql:host=localhost;dbname=foodbank", "foodbank", "foodbank");
-      
-   }
-
-   function getSupplierStockLevels()
-   {
-      $query = "SELECT * FROM supplier_stock_level_tbl ORDER BY stocklevel_id DESC";
-      $statement = $this->connect->prepare($query);
-      if($statement->execute())
-      {
-         while($row = $statement->fetch(PDO::FETCH_ASSOC))
-         {
-            $data[] = $row;
-         }
-         return $data;
-      }
-   }
-
-
-   function getTopFiftySupplierStockLevels(){
-
-      $query = "SELECT * FROM supplier_stock_level_tbl ORDER BY stocklevel_id DESC LIMIT 20";
-      
-      $statement = $this->connect->prepare($query);
-      
-      if($statement->execute())
-      {
-         while($row = $statement->fetch(PDO::FETCH_ASSOC))
-         {
-            $data[] = $row;
-         }
-         return $data;
-      }
-   }
-
-
-   function getSupplierStockByUser($user_id){
-
-    $query = "SELECT * FROM supplier_stock_level_tbl WHERE user_id='".$user_id."' ORDER BY stocklevel_id DESC";
-
-        $statement = $this->connect->prepare($query);
+    function database_connection()
+    {
+        $this->connect = new PDO("mysql:host=localhost;dbname=foodbank", "foodbank", "foodbank");
         
-        if($statement->execute()){
-            while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+    }
+
+    function getFoodBankStock()
+    {
+        $query = "SELECT * FROM foodbank_stock_details_tbl ORDER BY stockdetail_id DESC";
+        $statement = $this->connect->prepare($query);
+        if($statement->execute())
+        {
+            while($row = $statement->fetch(PDO::FETCH_ASSOC))
+            {
                 $data[] = $row;
-                }
-                
-                return $data;
+            }
+            return $data;
         }
     }
 
+    function getSupplierStockLevels()
+    {
+        $query = "SELECT * FROM supplier_stock_level_tbl ORDER BY stocklevel_id DESC";
+        $statement = $this->connect->prepare($query);
+        if($statement->execute())
+        {
+            while($row = $statement->fetch(PDO::FETCH_ASSOC))
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }
+    }
 
+    function getTopFiftySupplierStockLevels(){
+
+        $query = "SELECT * FROM supplier_stock_level_tbl ORDER BY stocklevel_id DESC LIMIT 20";
+        
+        $statement = $this->connect->prepare($query);
+        
+        if($statement->execute())
+        {
+            while($row = $statement->fetch(PDO::FETCH_ASSOC))
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }
+    }
 
     function getSupplierStockByRow($id){
 
@@ -78,9 +72,8 @@ class DeliveryNoticeClass
                     
                     return $data;
             }
-        }
+    }
 
-        
     function getSupplierPoliciesByRegion($region){
 
         $query = "SELECT * FROM supplier_stock_level_tbl WHERE region='".$region."' ORDER BY stocklevel_id DESC";
@@ -94,7 +87,7 @@ class DeliveryNoticeClass
                     
                     return $data;
             }
-        }    
+    } 
 
     function getStockItemDetails($code){
 
@@ -110,7 +103,6 @@ class DeliveryNoticeClass
                     return $data;
             }
     }
-
 
     function getDeliveryStockDetails($code){
 
@@ -166,8 +158,6 @@ class DeliveryNoticeClass
 
     }
 
-
-
     function addSupplierStock(){
 
         $form_data = array(
@@ -204,7 +194,6 @@ class DeliveryNoticeClass
         return $data;
 
     }
-
 
     function addFoodBankStock(){
 
@@ -243,8 +232,6 @@ class DeliveryNoticeClass
         return $data;
 
     }
-
-
 
     function updateDeliveryNote(){
 
@@ -291,7 +278,6 @@ class DeliveryNoticeClass
         return $data;
     } 
 
-
     function updateDeliveryNoteStatus(){
 
         $form_data = array(
@@ -320,19 +306,26 @@ class DeliveryNoticeClass
         return $data;
     } 
 
-    function updateStockDetailStatus(){
+    function updateActualStockLevel(){
 
         $form_data = array(
-            ':status'  => $_POST["status"],
-            ':stockdetail_id'  => $_POST["stockdetail_id"]
+            ':unique_code'  => $_POST["unique_code"],
+            ':current_stock_level'  => $_POST["current_stock_level"],
+            ':old_stock_level'  => $_POST["old_stock_level"],
+            ':updated_stock_level'  => $_POST["updated_stock_level"],
+            ':update_activity'  => $_POST["update_activity"],
+            ':stock_id'  => $_POST["stock_id"]
         );
 
         $query = "
-        UPDATE supplier_stock_details_tbl 
+        UPDATE actual_stocklevel_tbl 
         SET 
-            status = :status
-
-        WHERE stockdetail_id = :stockdetail_id
+            unique_code = :unique_code, 
+            current_stock_level = :current_stock_level, 
+            old_stock_level = :old_stock_level, 
+            updated_stock_level = :updated_stock_level, 
+            update_activity = :update_activity 
+        WHERE stock_id = :stock_id
         ";
 
         $statement = $this->connect->prepare($query);
@@ -346,9 +339,8 @@ class DeliveryNoticeClass
             );
         }
         return $data;
-    }     
 
-
+    }   
 
     function deleteDeliveryNote($id){
         $query = "DELETE FROM supplier_stock_level_tbl WHERE stocklevel_id = '".$id."'";
@@ -366,7 +358,6 @@ class DeliveryNoticeClass
 
         return $data;
     }
-
 
     function addStockItems(){
 
@@ -403,7 +394,56 @@ class DeliveryNoticeClass
 
     }    
 
+    function showRejectedStockItems()
+    {
+        $query = "SELECT * FROM stock_rejected_tbl ORDER BY rejected_id DESC";
+        $statement = $this->connect->prepare($query);
+        if($statement->execute())
+        {
+            while($row = $statement->fetch(PDO::FETCH_ASSOC))
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }
+    }
 
+    function addRejectedItems(){
+
+        $form_data = array(
+            ':supplier_unique_code'  => $_POST["supplier_unique_code"],
+            ':manager_unique_code'  => $_POST["manager_unique_code"],
+            ':supplier_delivery_date'  => $_POST["supplier_delivery_date"],
+            ':stock_type'  => $_POST["stock_type"],
+            ':stock_name'  => $_POST["stock_name"],
+            ':rejected_amounts'  => $_POST["rejected_amounts"],
+            ':status'  => $_POST["status"],
+            ':reason_of_rejection'  => $_POST["reason_of_rejection"],
+            ':logged_by'  => $_POST["logged_by"],
+            ':logged_by_user_id'  => $_POST["logged_by_user_id"]
+        );
+
+        $query = "
+        INSERT INTO stock_rejected_tbl 
+        (supplier_unique_code, manager_unique_code, supplier_delivery_date, stock_type, stock_name, rejected_amounts, status, reason_of_rejection, logged_by, logged_by_user_id) 
+        VALUES 
+        (:supplier_unique_code, :manager_unique_code, :supplier_delivery_date, :stock_type, :stock_name, :rejected_amounts, :status, :reason_of_rejection, :logged_by, :logged_by_user_id)
+        ";
+
+        $statement = $this->connect->prepare($query);
+        if($statement->execute($form_data)){
+            $data[] = array(
+                'success' => '1'
+            );
+        } else {
+            $data[] = array(
+                'success' => '0'
+            );
+        }
+
+        return $data;
+
+    }   
 
     function updateStockItems(){
 
@@ -446,6 +486,41 @@ class DeliveryNoticeClass
         return $data;
     } 
 
+    function getCurrenttockCount($location, $stock_name){
+
+        $query = "SELECT * FROM actual_stocklevel_tbl WHERE region='".$location."' AND stock_name='".$stock_name."'";
+    
+            $statement = $this->connect->prepare($query);
+            
+            if($statement->execute()){
+                while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                    $data[] = $row;
+                    }
+                    
+                    return $data;
+            }
+    }    
+    
+    function getSupplierStockByUser($user_id){
+
+        $query = "SELECT * FROM supplier_stock_level_tbl WHERE user_id='".$user_id."' ORDER BY stocklevel_id DESC";
+
+        $statement = $this->connect->prepare($query);
+        
+        if($statement->execute())
+        {
+            while($row = $statement->fetch(PDO::FETCH_ASSOC))
+            {
+                $data[] = $row;
+            }
+            
+            return $data;
+        }
+    }
+
+    function updateStockDetailStatus(){
+        
+    }
 
 }
 

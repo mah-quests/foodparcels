@@ -15,6 +15,26 @@ if($_GET["action"] == 'add_supplier_stock')
  $data = $api_object->addSupplierStock();
 }
 
+if($_GET["action"] == 'show_foodbank_stock')
+{
+ $data = $api_object->getFoodBankStock();
+}
+
+if($_GET["action"] == 'update_stock_level')
+{
+ $data = $api_object->updateActualStockLevel();
+}
+
+if($_GET["action"] == 'add_rejected_stock')
+{
+ $data = $api_object->addRejectedItems();
+}
+
+if($_GET["action"] == 'show_rejected_stock')
+{
+ $data = $api_object->showRejectedStockItems();
+}
+
 if($_GET["action"] == 'add_foodbank_stock')
 {
  $data = $api_object->addFoodBankStock();
@@ -53,6 +73,11 @@ if($_GET["action"] == 'show_supplier_stock_detail')
 if($_GET["action"] == 'show_supplier_stock_level')
 {
  $data = $api_object->getDeliveryStockDetails($_GET["code"]);
+}
+
+if($_GET["action"] == 'get_stock_amount')
+{
+ $data = $api_object->getCurrenttockCount($_GET["location"], $_GET["stock_name"]);
 }
 
 echo json_encode($data);

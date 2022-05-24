@@ -47,7 +47,7 @@
                       <tbody>
 
 											<?php
-                          $api_url = $APIBASE."delivery_notice_exec.php?action=show_user_stock_detail&code=".$_GET['code']."";
+                          $api_url = $APIBASE."delivery_notice_exec.php?action=show_supplier_stock_detail&code=".$_GET['code']."";
                           $client = curl_init($api_url);
                           curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                           $response = curl_exec($client);

@@ -55,7 +55,7 @@
                                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                 $response = curl_exec($client);
                                 $result = json_decode($response);
-                                $output = '';
+                                $output_region = '';
 
                                 if(count($result) > 0)
                                 {
@@ -78,7 +78,7 @@
 
                                     }
 
-                                    $output .= '
+                                    $output_region .= '
                                     <tr>
                                     <td>'.$row->stocklevel_id.'</td>
                                     <td>'.$row->unique_code.'</td>
@@ -92,89 +92,19 @@
                                     </tr>
                                     ';
                                   }
+                                } else {
+                                  $output_region .= '
+                                  <center>
+                                    <tr>
+                                      <td> No Data To Display </td>
+                                    </tr>
+                                  </center>
+                                  ';
                                 }
 
-                                echo $output;
+                                echo $output_region;
 											      ?>                      
 
-
-                              <tr>
-                                <td>1011</td>
-                                <td>KYcd435VxX</td>
-                                <td>War On Poverty</td>
-                                <td>15-Mar-2022</td>                          
-                                <td>Dry Goods</td>
-                                <td><label class="badge badge-success">Completed</label></td>
-                                <td>
-                                  <a target="_blank" href="view_rcvbl_reg_complete.html"><button class="btn btn-outline-primary" >View</button></a>
-                                </td>                          
-                              </tr>                              
-                              <tr>
-                                <td>1010</td>
-                                <td>9Yy3gm5VIK</td>
-                                <td>War On Poverty</td>
-                                <td>14-Mar-2022</td>                          
-                                <td>Dry Goods</td>
-                                <td><label class="badge badge-danger">Under Supply</label></td>
-                                <td>
-                                  <a target="_blank" href="view_rcvbl_reg_under_supply.html"><button class="btn btn-outline-primary" >View</button></a>
-                                </td>                          
-                              </tr>
-                              <tr>
-                                <td>1012</td>
-                                <td>L21k5j7B4o</td>
-                                <td>ART</td>
-                                <td>13-Feb-2022</td>                          
-                                <td>Dry Goods</td>
-                                <td><label class="badge badge-warning">Over Supply</label></td>
-                                <td> 
-                                  <a target="_blank" href="view_rcvbl_reg_over_supply.html"><button class="btn btn-outline-primary" >View</button></a>
-                                </td>                           
-                              </tr>
-                              <tr>
-                                <td>1018</td>
-                                <td>uMoHfKgVW4</td>
-                                <td>War On Poverty</td>
-                                <td>12-Jan-2022</td>                          
-                                <td>Vegetables</td>
-                                <td><label class="badge badge-success">Completed</label></td>
-                                <td>
-                                  <button class="btn btn-outline-primary" >View</button>
-                                </td>                           
-                              </tr>
-                              <tr>
-                                <td>1019</td>
-                                <td>71MoUzHBQm</td>
-                                <td>Donations</td>
-                                <td>11-Jan-2022</td>                          
-                                <td>Solidarity Fund</td>
-                                <td><label class="badge badge-success">Completed</label></td>
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>                           
-                              </tr>
-                              <tr>
-                                <td>1020</td>
-                                <td>gIfyWjZobS</td>
-                                <td>ART</td>
-                                <td>8-Dec-2021</td>                          
-                                <td>Vegetables</td>
-                                <td><label class="badge badge-warning">Over Supply</label></td>
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>                           
-                              </tr>
-                              <tr>
-                                <td>1022</td>
-                                <td>ruV2xOMfLc</td>
-                                <td>ART</td>
-                                <td>12-Nov-2021</td>                          
-                                <td>Dry Goods</td>
-                                <td><label class="badge badge-warning">Over Supply</label></td>
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>                           
-                              </tr>
                             </tbody>
                           </table>
                         </div>
@@ -183,75 +113,61 @@
                   </div>
 
                   <br><br>
-                  <div class="col-lg-12 grid-margin stretch-card">
+                  <div class="col-lg-12 grid-margin stretch-card" id="food-bank-stock">
                     <div class="card">
                       <div class="card-body">
                         <h4 class="card-title">Food Bank Stock History</h4>
-                        <p class="card-description">
-                          over the past 24 months
-                        </p>
                         <div class="table-responsive">
                           <table class="table table-hover">
-                            <thead align="center">
+                            <thead>
                               <tr>
                                 <th>Transaction</th>
-                                <th>Reference</th>
-                                <th>Project Name</th>
-                                <th>Date of delivery</th>
+                                <th>Created Date</th>
                                 <th>Stock Type</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>Item Details</th>
+                                <th>Quantity</th>
+                                <th>Manufactured Date</th>
+                                <th>Expiry Date</th>
                               </tr>
                             </thead>
-                            <tbody align="center">
+                            <tbody>
 
                             <?php
-                                $api_url = $APIBASE."delivery_notice_exec.php?action=show_region_stock&region=".$_SESSION['region']."";
+                                $api_url = $APIBASE."delivery_notice_exec.php?action=show_foodbank_stock";
                                 $client = curl_init($api_url);
                                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                 $response = curl_exec($client);
                                 $result = json_decode($response);
-                                $output = '';
+                                $bank_history_output = '';
 
                                 if(count($result) > 0)
                                 {
                                   foreach($result as $row)
                                   {
-                                    $status = $row->status;
 
-                                    if ($status == 'progress') {
-                                      $status_button = '<label class="badge badge-warning">In progress</label>';
-                                    } else if ($status == 'completed') {
-                                      $status_button = '<label class="badge badge-success">Completed</label>';
-                                    } else if ($status == 'processed') {
-                                      $status_button = '<label class="badge badge-success">Processed</label>';
-                                    } else if ($status == 'rejected') {
-                                      $status_button = '<label class="badge badge-danger">Rejected</label>';
 
-                                    } else {
-
-                                      $status_button = '<label class="badge badge-primary">Unknown</label>';
-
-                                    }
-
-                                    $output .= '
+                                    $bank_history_output .= '
                                     <tr>
-                                    <td>'.$row->stocklevel_id.'</td>
-                                    <td>'.$row->unique_code.'</td>
-                                    <td>'.$row->project_name.'</td>
-                                    <td>'.$row->est_date_of_delivery.'</td>
+                                    <td>'.$row->stockdetail_id.'</td>
+                                    <td>'.$row->create_date_time.'</td>
                                     <td>'.$row->stock_type.'</td>
-                                    <td>'.$status_button.'</td>
-                                    <td>
-                                      <a target="_blank" href="action_stock_manifest.php?code='.$row->unique_code.'"><button class="btn btn-outline-primary" >Receivals</button></a>
-                                    </td>
+                                    <td>'.$row->stock_name.', '.$row->stock_brand.'</td>
+                                    <td>'.$row->stock_level_amount.'</td>
+                                    <td>'.$row->stock_man_date.'</td>
+                                    <td>'.$row->stock_exp_date.'</td>
                                     </tr>
                                     ';
                                   }
+                                } else {
+                                  $bank_history_output .= '
+                                    <tr align="center">
+                                      <td align="center"> No Data To Display </td>
+                                    </tr>
+                                    ';
                                 }
 
-                                echo $output;
-											      ?>                      
+                                echo $bank_history_output;
+                            ?>                      
 
                             </tbody>
                           </table>
@@ -259,6 +175,7 @@
                       </div>
                     </div>
                   </div>
+
 
                 </div>
               </div>
