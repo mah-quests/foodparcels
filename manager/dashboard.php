@@ -1,7 +1,10 @@
 <?php
   include_once "include/header.php";
+  include("../config/connect.php");
   error_reporting(0);
   session_start();
+
+  $location = $_SESSION['region'];
 
 ?>
         <!-- partial -->
@@ -61,161 +64,365 @@
 
 
                       <h3>Stock Level Percentage</h3><br>
-                      <div class="row" align="center">
-                        <div class="col-md-2 grid-margin">
-                          <div class="card bg-facebook d-flex align-items-center">
-                            <div class="card-body">
-                              <div class="d-flex flex-row align-items-center">
-                                <i class=""></i>
-                                <div class="ms-3">
-                                  <h6 class="text-white">Joburg Stock</h6>
-                                  <h2 class="mt-2 card-text text-white">30%</h2>
-                                </div>
-                              </div>
+                  <div class="row" align="center">
+                    <div class="col-md-2 grid-margin">
+                      <div class="card bg-facebook d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-white">Joburg Stock</h6>
+                              <h2 class="mt-2 card-text text-white">30%</h2>
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-2 grid-margin">
-                          <div class="card d-flex align-items-center">
-                            <div class="card-body">
-                              <div class="d-flex flex-row align-items-center">
-                                <i class=""></i>
-                                <div class="ms-3">
-                                  <h6 class="text-google">Maize-Meal</h6>
-                                  <h2 class="mt-2 text-muted card-text">1308</h2>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-2 grid-margin">
-                          <div class="card d-flex align-items-center">
-                            <div class="card-body">
-                              <div class="d-flex flex-row align-items-center">
-                                <i class=""></i>
-                                <div class="ms-3">
-                                  <h6 class="text-linkedin">Rice</h6>
-                                  <h2 class="mt-2 text-muted card-text">1581</h2>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-2 grid-margin">
-                          <div class="card d-flex align-items-center">
-                            <div class="card-body">
-                              <div class="d-flex flex-row align-items-center">
-                                <i class=""></i>
-                                <div class="ms-3">
-                                  <h6 class="text-dribbble">Sugar</h6>
-                                  <h2 class="mt-2 text-muted card-text">1440</h2>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-2 grid-margin">
-                          <div class="card d-flex align-items-center">
-                            <div class="card-body">
-                              <div class="d-flex flex-row align-items-center">
-                                <i class=""></i>
-                                <div class="ms-3">
-                                  <h6 class="text-reddit">Cooking Oil</h6>
-                                  <h2 class="mt-2 text-muted card-text">1381</h2>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-2 grid-margin">
-                          <div class="card d-flex align-items-center">
-                            <div class="card-body">
-                              <div class="d-flex flex-row align-items-center">
-                                <i class=""></i>
-                                <div class="ms-3">
-                                  <h6 class="text-behance">Tea</h6>
-                                  <h2 class="mt-2 text-muted card-text">380</h2>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>    
-
-                        <div class="col-md-2 grid-margin">
-                        </div>
-
-                        <div class="col-md-2 grid-margin">
-                          <div class="card d-flex align-items-center">
-                            <div class="card-body">
-                              <div class="d-flex flex-row align-items-center">
-                                <i class=""></i>
-                                <div class="ms-3">
-                                  <h6 class="text-google">Vegetables</h6>
-                                  <h2 class="mt-2 text-muted card-text">42%</h2>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>  
-
-
-                        <div class="col-md-2 grid-margin">
-                          <div class="card d-flex align-items-center">
-                            <div class="card-body">
-                              <div class="d-flex flex-row align-items-center">
-                                <i class=""></i>
-                                <div class="ms-3">
-                                  <h6 class="text-linkedin">Canned food</h6>
-                                  <h2 class="mt-2 text-muted card-text">2338</h2>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> 
-
-                        <div class="col-md-2 grid-margin">
-                          <div class="card d-flex align-items-center">
-                            <div class="card-body">
-                              <div class="d-flex flex-row align-items-center">
-                                <i class=""></i>
-                                <div class="ms-3">
-                                  <h6 class="text-dribbble">Soap</h6>
-                                  <h2 class="mt-2 text-muted card-text">1388</h2>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> 
-
-                        <div class="col-md-2 grid-margin">
-                          <div class="card d-flex align-items-center">
-                            <div class="card-body">
-                              <div class="d-flex flex-row align-items-center">
-                                <i class=""></i>
-                                <div class="ms-3">
-                                  <h6 class="text-reddit">Soya Mince</h6>
-                                  <h2 class="mt-2 text-muted card-text">1690</h2>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>                                         
-
-
-                        <div class="col-md-2 grid-margin">
-                          <div class="card d-flex align-items-center">
-                            <div class="card-body">
-                              <div class="d-flex flex-row align-items-center">
-                                <i class=""></i>
-                                <div class="ms-3">
-                                  <h6 class="text-behance">Other</h6>
-                                  <h2 class="mt-2 text-muted card-text">28%</h2>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>   
                       </div>
+                    </div>
+
+                <?php 
+
+                  $stock_name = "Maize+Meal";
+                  $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
+                  $client = curl_init($api_url);
+                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                  $response = curl_exec($client);
+                  $result = json_decode($response);
+
+                  foreach($result as $row)
+                  {
+
+                  ?>                       
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-google">Maize-Meal</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  <?php 
+                    }
+
+                    $stock_name = "Rice";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+  
+                    foreach($result as $row)
+                    {
+                    
+                  ?>
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-linkedin">Rice</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  <?php 
+
+                    }
+
+                    $stock_name = "Sugar";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+  
+                    foreach($result as $row)
+                    {
+                    
+                  ?>                    
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-dribbble">Sugar</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  <?php 
+                  
+                    }
+
+                    $stock_name = "Cooking+Oil";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+  
+                    foreach($result as $row)
+                    {
+                    
+                  ?>   
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-reddit">Cooking Oil</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  <?php 
+                  
+                    }
+
+                    $stock_name = "Tea";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+  
+                    foreach($result as $row)
+                    {
+                    
+                  ?>   
+                  
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-behance">Tea</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>    
+
+                <?php 
+
+                    } 
+
+                ?>
+
+                    <div class="col-md-2 grid-margin">
+                    </div>
+
+                  <?php 
+                  
+                    $stock_name = "Baked+Beans";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+  
+                    foreach($result as $row)
+                    {
+                    
+                  ?>                       
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-linkedin">Baked Beans</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+
+                  <?php 
+                  
+                    }
+
+                    $stock_name = "All+Purpose+Soap";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+  
+                    foreach($result as $row)
+                    {
+                    
+                  ?>                       
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-linkedin">Soap</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+
+                  <?php 
+                  
+                    }
+
+                    $stock_name = "Soya+Mince";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+  
+                    foreach($result as $row)
+                    {
+                    
+                  ?>                    
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-dribbble">Soya Mince</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+
+                  <?php 
+                  
+                    }
+
+                    $stock_name = "Cabbage";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+  
+                    foreach($result as $row)
+                    {
+                    
+                  ?>  
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-reddit">Cabbage</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>                                         
+
+                  <?php 
+                  
+                    }
+
+                    $stock_name = "Potatoes";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+  
+                    foreach($result as $row)
+                    {
+                    
+                  ?>  
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-behance">Potatoes</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+
+                    <div class="col-md-2 grid-margin">
+                    </div>                    
+
+                  <?php 
+                  
+                    }
+
+                    $stock_name = "Pumpkin";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+  
+                    foreach($result as $row)
+                    {
+                    
+                  ?>  
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-behance">Pumpkin</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+                    
+                 <?php 
+                    } 
+                  ?>                                       
+
+
+                  </div>
 
 
 

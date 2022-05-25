@@ -271,7 +271,7 @@ session_start();
               </a>
             </li>          
             <li class="nav-item">
-              <a class="nav-link" href="donations.html">
+              <a class="nav-link" href="donations.php">
                 <i class="menu-icon ti ti-gift"></i>
                 <span class="menu-title">Donations </span>
               </a>

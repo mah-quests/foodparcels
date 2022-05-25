@@ -384,8 +384,7 @@
       curl_close($client);
       $result = json_decode($response, true); 
       
-      include_once "goods_receivables.php#food-bank-stock";
-
+      header("Location: goods_receivables.php#food-bank-stock");
 
 ?>
 
@@ -511,7 +510,7 @@
                               </td>                                                            
                               <td>'.$row->create_date.'</td>
                               <td>'.$row->stock_type.'</td>
-                              <td>'.$row->stock_name.', '.$row->stock_brand.'</td>
+                              <td>'.$row->stock_name.', <br>'.$row->stock_brand.'</td>
                               <td><input type="text" class="form-control" name="stock_level_amount" id="stock_level_amount" value="'.$row->stock_level_amount.'" ></td>
                               <td>'.$row->stock_exp_date.'</td>
                               </tr>

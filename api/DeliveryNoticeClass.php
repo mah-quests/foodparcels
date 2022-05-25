@@ -133,14 +133,15 @@ class DeliveryNoticeClass
             ':truck_details'  => $_POST["truck_details"],
             ':truck_registration_num'  => $_POST["truck_registration_num"], 
             ':user_id'  => $_POST["user_id"], 
-            ':status'  => 'Pending'
+            ':status'  => $_POST["status"],
+            ':previous_reference'  => $_POST["previous_reference"]
         );
 
         $query = "
         INSERT INTO supplier_stock_level_tbl 
-        (unique_code, region, project_name, stock_type, est_date_of_delivery, stock_status, driver_full_name, driver_cellphone, truck_details, truck_registration_num, user_id, status) 
+        (unique_code, region, project_name, stock_type, est_date_of_delivery, stock_status, driver_full_name, driver_cellphone, truck_details, truck_registration_num, user_id, status, previous_reference) 
         VALUES 
-        (:unique_code, :region, :project_name, :stock_type, :est_date_of_delivery, :stock_status, :driver_full_name, :driver_cellphone, :truck_details, :truck_registration_num, :user_id, :status)
+        (:unique_code, :region, :project_name, :stock_type, :est_date_of_delivery, :stock_status, :driver_full_name, :driver_cellphone, :truck_details, :truck_registration_num, :user_id, :status,:previous_reference)
         ";
 
         $statement = $this->connect->prepare($query);
