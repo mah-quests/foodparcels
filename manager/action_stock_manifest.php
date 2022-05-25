@@ -387,7 +387,6 @@
       include_once "goods_receivables.php#food-bank-stock";
 
 
-
 ?>
 
 <script type="text/javascript">
@@ -486,35 +485,35 @@
                             {
                               $output .= '
                               <tr>
-                                <td>
-                                  <div class="form-check">
-                                    <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input" name="item_complete[]" id="item_complete[]" value="'.$row->stockdetail_id.'">
-                                        Complete
-                                    </label>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div class="form-check">
-                                    <label class="form-check-label">
-                                      <input type="checkbox" name="item_partial[]" onclick="showHideReleventForm(this.value)" id="item_partial[]" value="'.$row->stockdetail_id.'">
-                                        Partial
-                                    </label>
-                                  </div>
-                                </td>  
-                                <td>
-                                  <div class="form-check">
-                                    <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input" name="item_rejected[]" id="item_rejected[]" onclick="showHideReleventForm(this.value)" value="'.$row->stockdetail_id.'">
-                                        Rejected
-                                    </label>
-                                  </div>
-                                </td>                                                            
-                                <td>'.$row->create_date.'</td>
-                                <td>'.$row->stock_type.'</td>
-                                <td>'.$row->stock_name.', '.$row->stock_brand.'</td>
-                                <td>'.$row->stock_level_amount.'</td>
-                                <td>'.$row->stock_exp_date.'</td>
+                              <td>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="item_complete[]" id="item_complete[]" value="'.$row->stockdetail_id.'">
+                                      Complete
+                                  </label>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="item_partial[]" id="item_partial[]" value="'.$row->stockdetail_id.'">
+                                      Partial
+                                  </label>
+                                </div>
+                              </td>  
+                              <td>
+                                <div class="form-check">
+                                  <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="item_rejected[]" id="item_rejected[]" onclick="showHideReleventForm(this.value)" value="'.$row->stockdetail_id.'">
+                                      Rejected
+                                  </label>
+                                </div>
+                              </td>                                                            
+                              <td>'.$row->create_date.'</td>
+                              <td>'.$row->stock_type.'</td>
+                              <td>'.$row->stock_name.', '.$row->stock_brand.'</td>
+                              <td><input type="text" class="form-control" name="stock_level_amount" id="stock_level_amount" value="'.$row->stock_level_amount.'" ></td>
+                              <td>'.$row->stock_exp_date.'</td>
                               </tr>
                               ';
                             }
@@ -527,7 +526,7 @@
                     </table>
                   </div>
 
-                  <div id="dry-goods-info" style="display:none">
+                  <div id="item-rejected-info">
                     <div class="row" align="center">
                       <div class="col-md-1">
                       </div>
