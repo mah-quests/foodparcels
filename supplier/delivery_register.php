@@ -28,7 +28,8 @@
         'truck_registration_num'  => $_POST['truck_registration'],
         'unique_code' => $unique_code,
         'user_id' => $_SESSION['user_id'],
-        'status' => 'progress'
+        'status' => 'progress',
+        'previous_reference'  => $_POST['previous_reference']
       );
     
       $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_delivery_note";
@@ -384,6 +385,21 @@
     
   }
 
+
+  function showHideReferenceInput() {
+    var noOption = document.getElementById("new_existing").value;
+    if (noOption == "Existing") {
+      jQuery('#old-reference-info').show();
+      document.getElementById("old-reference-info").style.visibility = 'visible';
+
+    } else {
+
+      jQuery('#old-reference-info').hide();
+      document.getElementById("old-reference-info").style.visibility = 'hidden';
+    }
+    
+  }  
+
 </script>
 
       <div class="main-panel">
@@ -424,6 +440,25 @@
                       <h4 class="card-title">Delivery Register Form</h4>
 
                       <form action="" method="POST">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="new_existing">Is this a new or existing delivery?</label>
+                                <select class="form-control" id="new_existing" name="new_existing" onchange="showHideReferenceInput(this.value)"  required>
+                                  <option selected></option>
+                                  <option>New</option>
+                                  <option>Existing</option>
+                                </select>
+                              </div>  
+                            </div>
+                            <div class="col-md-6" id="old-reference-info" style="display:none">
+                              <div class="form-group">
+                                <label for="previous_reference">Existing Reference Number</label>
+                                <input type="text" class="form-control" name="previous_reference" id="previous_reference" placeholder="Enter Exisiting Reference">
+                              </div>
+                            </div>
+                        </div>
 
                         <div class="row">
                           <div class="col-md-6">

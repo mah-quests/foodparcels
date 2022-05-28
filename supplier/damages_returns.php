@@ -61,6 +61,22 @@
                                   foreach($result as $row)
                                   {
 
+                                    $status = $row->status;
+
+                                    if ($status == 'progress') {
+                                      $status_button = '<label class="badge badge-warning">In progress</label>';
+                                    } else if ($status == 'completed') {
+                                      $status_button = '<label class="badge badge-success">Completed</label>';
+                                    } else if ($status == 'resolved') {
+                                    $status_button = '<label class="badge badge-success">Resolved</label>';                              
+                                    } else if ($status == 'food bank rejected') {
+                                      $status_button = '<label class="badge badge-danger">Rejected On Delivery</label>';
+      
+                                    } else {
+      
+                                      $status_button = '<label class="badge badge-primary">Unknown</label>';
+      
+                                    }                                    
 
                                     $output .= '
                                     <tr>
@@ -69,8 +85,10 @@
                                     <td>'.$row->supplier_unique_code.'</td>
                                     <td>'.$row->supplier_delivery_date.'</td>
                                     <td>'.$row->reject_reported_date.'</td>
-                                    <td>'.$row->status.'</td>
-                                    <a href="view_damages_01.html"><button class="btn btn-outline-primary" >View</button></a>
+                                    <td>'.$status_button.'</td>
+                                    <td>
+                                      <a target="_blank" href="view_damages_01.html"><button class="btn btn-outline-primary" >View</button></a>
+                                    </td>
                                     </tr>
                                     ';
                                   }
@@ -79,50 +97,6 @@
                                 echo $output;
                             ?> 
 
-                            <tr>
-                              <td>1010</td>
-                              <td>NaSpxd9J1O</td>
-                              <td>9Yy3gm5VIK</td>
-                              <td>13-Feb-2022</td>                          
-                              <td>16-Feb-2022</td>
-                              <td><label class="badge badge-danger">Lodged</label></td>
-                              <td>
-                                <a href="view_damages_01.html"><button class="btn btn-outline-primary" >View</button></a>
-                              </td>                          
-                            </tr>
-                            <tr>
-                              <td>1012</td>
-                              <td>R5ps2V8hxH</td>
-                              <td>L21k5j7B4o</td>
-                              <td>13-Feb-2022</td>                          
-                              <td>14-Feb-2022</td>
-                              <td><label class="badge badge-warning">In progress</label></td>
-                              <td>
-                                <button class="btn btn-outline-primary">View</button>
-                              </td>                           
-                            </tr>
-                            <tr>
-                              <td>1018</td>
-                              <td>HhqSe2DaAV</td>
-                              <td>uMoHfKgVW4</td>
-                              <td>8-Dec-2021</td>                          
-                              <td>8-Dec-2021</td>
-                              <td><label class="badge badge-success">Resolved</label></td>
-                              <td>
-                                <a href="view_damages_03.html"><button class="btn btn-outline-primary" >View</button></a>
-                              </td>                           
-                            </tr>
-                            <tr>
-                              <td>1019</td>
-                              <td>IxYRb68XHA</td>
-                              <td>ruV2xOMfLc</td>
-                              <td>12-Nov-2021</td>                          
-                              <td>13-Nov-2021</td>
-                              <td><label class="badge badge-success">Resolved</label></td>
-                              <td>
-                                <button class="btn btn-outline-primary">View</button>
-                              </td>                           
-                            </tr>
                           </tbody>
                         </table>
                       </div>

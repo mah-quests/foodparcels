@@ -5,69 +5,50 @@
   session_start();
 
   $location = $_SESSION['region'];
-
+  
 ?>
 
-
-      <div class="main-panel">
-        <div class="content-wrapper">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="home-tab">
-                <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                  <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item">
-                      <a class="nav-link ps-0" href="../index.php" >Back</a>
-                    </li>
-                    <li> 
-                      
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link active border-0"  id="more-tab" data-bs-toggle="tab" href="#joburg" role="tab" aria-selected="false">Jo’burg</a>
-                    </li>
-                  </ul>
-                  <div>
-                    <div class="btn-wrapper">
-                      <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
-                      <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
-                      <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="home-tab">
+                  <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active border-0"  id="more-tab" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
+                          Distribution Center Stock Levels
+                        </a>
+                      </li>
+                    </ul>
+                    <div>
+                      <div class="btn-wrapper">
+                        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
+                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
+                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="tab-content tab-content-basic">
-                  <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <div class="statistics-details d-flex align-items-center justify-content-between">
-                          <div>
-                            <p class="statistics-title">Contract Number</p>
-                            <h3 class="rate-percentage">2021/098/89</h3>
-                          </div>
-                          <div>
-                            <p class="statistics-title">Contract Duration</p>
-                            <h3 class="rate-percentage">(7)/24</h3>
-                          </div>
-                          <div>
-                            <p class="statistics-title">Next Delivery</p>
-                            <h3 class="rate-percentage">15-Mar-2022</h3>
-                          </div>
-                          <div class="d-none d-md-block">
-                            <p class="statistics-title">Avg. Time on Site</p>
-                            <h3 class="rate-percentage">6 hrs</h3>
-                          </div>
-                            <div class="d-none d-md-block">
-                              <p class="statistics-title">New Requests</p>
-                              <h3 class="rate-percentage">3</h3>
-                            </div>
-                          <div class="d-none d-md-block">
-                            <p class="statistics-title">Avg Resolution Time</p>
-                            <h3 class="rate-percentage">1.5 days</h3>
-                          </div>
-                        </div>
-                      </div>
-                    </div> 
+                  <br><br>
 
-                  <h3>Stock Level Percentage</h3><br>
+
+                  <div class="row" align="center">
+                    <div class="content-wrapper">
+                      <div class="row">
+                        <div class="col-lg-12 grid-margin stretch-card">
+                          <div class="card">
+                            <div class="card-body">
+                              <h4 class="card-title">Overall Stock Levels </h4>
+                              <canvas id="barChart"></canvas>
+                            </div>
+                          </div>
+                        </div>            
+                      </div>
+                    </div>
+                  </div>
+
+                  <h3>Overall Stock Levels</h3><br>
                   <div class="row" align="center">
                     <div class="col-md-2 grid-margin">
                       <div class="card bg-facebook d-flex align-items-center">
@@ -428,45 +409,223 @@
 
                   </div>
 
-                  <div class="row" align="center">
-                    <div class="content-wrapper">
-                      <div class="row">
-                        <div class="col-lg-12 grid-margin stretch-card">
-                          <div class="card">
-                            <div class="card-body">
-                              <h4 class="card-title">Stock Levels At The Distribution Center</h4>
-                              <canvas id="barChart"></canvas>
+
+                  <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Stock Levels Breakdown</h4>
+                        <div class="mt-4">
+                          <div class="accordion accordion-bordered" id="accordion-2" role="tablist">
+                            <div class="card">
+                              <div class="card-header" role="tab" id="heading-4">
+                                <h6 class="mb-0">
+                                  <a data-bs-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
+                                    War On Poverty - Stock Levels - [16%]
+                                  </a>
+                                </h6>
+                              </div>
+                              <div id="collapse-4" class="collapse" role="tabpanel" aria-labelledby="heading-4" data-bs-parent="#accordion-2">
+                                <div class="card-body">
+
+
+                                  <div class="card" align="center">
+                                    <div class="card-body">
+                                      <div class="popover-static-demo">
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Maize-Meal</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center">805</h1>
+                                          </div>
+                                        </div>
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-warning">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Rice</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center">811</h1>
+                                          </div>
+                                        </div>
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-danger">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Cooking Oil</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center">821</h1>
+                                          </div>
+                                        </div>
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-info">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Canned food</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center">1338</h1>
+                                          </div>
+                                        </div>
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-primary">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Vegetables</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center">22%</h1>
+                                          </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+
+
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card">
+                              <div class="card-header" role="tab" id="heading-5">
+                                <h6 class="mb-0">
+                                  <a class="collapsed" data-bs-toggle="collapse" href="#collapse-5" aria-expanded="false" aria-controls="collapse-5">
+                                   AntiRetroviral Treatment (ART) - [13%]
+                                 </a>
+                               </h6>
+                             </div>
+                             <div id="collapse-5" class="collapse" role="tabpanel" aria-labelledby="heading-5" data-bs-parent="#accordion-2">
+                              <div class="card-body">
+
+                                <div class="card" align="center">
+                                  <div class="card-body">
+                                    <div class="popover-static-demo">
+                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
+                                        <div class="arrow"></div>
+                                        <h3 class="popover-header" align="center">Maize-Meal</h3>
+                                        <div class="popover-body">
+                                          <h1 align="center">503</h1>
+                                        </div>
+                                      </div>
+                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-warning">
+                                        <div class="arrow"></div>
+                                        <h3 class="popover-header" align="center">Rice</h3>
+                                        <div class="popover-body">
+                                          <h1 align="center">770</h1>
+                                        </div>
+                                      </div>
+                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-danger">
+                                        <div class="arrow"></div>
+                                        <h3 class="popover-header" align="center">Sugar</h3>
+                                        <div class="popover-body">
+                                          <h1 align="center">1440</h1>
+                                        </div>
+                                      </div>
+                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-info">
+                                        <div class="arrow"></div>
+                                        <h3 class="popover-header" align="center">Cooking Oil</h3>
+                                        <div class="popover-body">
+                                          <h1 align="center">560</h1>
+                                        </div>
+                                      </div>
+                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-primary">
+                                        <div class="arrow"></div>
+                                        <h3 class="popover-header" align="center">Tea</h3>
+                                        <div class="popover-body">
+                                          <h1 align="center">380</h1>
+                                        </div>
+                                      </div>
+                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
+                                        <div class="arrow"></div>
+                                        <h3 class="popover-header" align="center">Vegetables</h3>
+                                        <div class="popover-body">
+                                          <h1 align="center">20%</h1>
+                                        </div>
+                                      </div>
+                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-warning">
+                                        <div class="arrow"></div>
+                                        <h3 class="popover-header" align="center">Canned food</h3>
+                                        <div class="popover-body">
+                                          <h1 align="center">1000</h1>
+                                        </div>
+                                      </div>
+                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-danger">
+                                        <div class="arrow"></div>
+                                        <h3 class="popover-header" align="center">Soap</h3>
+                                        <div class="popover-body">
+                                          <h1 align="center">1388</h1>
+                                        </div>
+                                      </div>
+                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-info">
+                                        <div class="arrow"></div>
+                                        <h3 class="popover-header" align="center">Soya Mince</h3>
+                                        <div class="popover-body">
+                                          <h1 align="center">1690</h1>
+                                        </div>
+                                      </div>                   
+                                      <div class="clearfix"></div>
+                                    </div>
+                                  </div>
+                                </div>
+
+
+
+                              </div>
                             </div>
                           </div>
-                        </div>            
+                          <div class="card">
+                            <div class="card-header" role="tab" id="heading-6">
+                              <h6 class="mb-0">
+                                <a class="collapsed" data-bs-toggle="collapse" href="#collapse-5" aria-expanded="true" aria-controls="collapse-5">
+                                  Other Projects - [1%]
+                                </a>
+                              </h6>
+                            </div>
+                            <div id="collapse-6" class="collapse show" role="tabpanel" aria-labelledby="heading-6" data-bs-parent="#accordion-2">
+                              <div class="card-body">
+
+
+                                <div class="card" align="center">
+                                  <div class="card-body">
+                                    <div class="popover-static-demo">
+                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
+                                        <div class="arrow"></div>
+                                        <h3 class="popover-header" align="center">Other</h3>
+                                        <div class="popover-body">
+                                          <h1 align="center">28%</h1>
+                                        </div>
+                                      </div>
+                                      <div class="clearfix"></div>
+                                    </div>
+                                  </div>
+                                </div>
+
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-
-
-                  </div>
-                </div>
-
+                </div>                
 
               </div>
             </div>
+
           </div>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
-        <footer class="footer">
-          <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Dashboard Web App Is Developed by <a href="https://www.mahquests.co.za/" target="_blank">MaH Quests Enterprises</a></span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2022. All rights reserved.</span>
-          </div>
-        </footer>
-        <!-- partial -->
       </div>
-      <!-- main-panel ends -->
     </div>
-    <!-- page-body-wrapper ends -->
+    <!-- content-wrapper ends -->
+
   </div>
-  <!-- container-scroller -->
+  <!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+
+<!-- partial:partials/_footer.html -->
+<footer class="footer">
+  <div class="d-sm-flex justify-content-center justify-content-sm-between">
+    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Dashboard Web App Is Developed by <a href="https://www.mahquests.co.za/" target="_blank">MaH Quests Enterprises</a></span>
+    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2022. All rights reserved.</span>
+  </div>
+</footer>
+<!-- partial -->
+
+</div>
+<!-- container-scroller -->
+
 
 <?php
 
