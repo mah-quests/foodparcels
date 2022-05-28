@@ -20,6 +20,16 @@ if($_GET["action"] == 'show_foodbank_stock')
  $data = $api_object->getFoodBankStock();
 }
 
+if($_GET["action"] == 'show_foodbank_stock_by_id')
+{
+ $data = $api_object->getFoodBankStockById($_GET["id"]);
+}
+
+if($_GET["action"] == 'update_foodbank_stock')
+{
+ $data = $api_object->updateFoodBankStockLevel();
+}
+
 if($_GET["action"] == 'update_stock_level')
 {
  $data = $api_object->updateActualStockLevel();

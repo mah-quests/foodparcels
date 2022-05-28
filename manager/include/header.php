@@ -17,6 +17,7 @@ session_start();
   <link rel="stylesheet" href="../vendors/typicons/typicons.css">
   <link rel="stylesheet" href="../vendors/simple-line-icons/css/simple-line-icons.css">
   <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- endinject -->
   <!-- Plugin css for this page -->
   <link rel="stylesheet" href="../vendors/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -284,19 +285,19 @@ session_start();
             </li>             
             <li class="nav-item nav-category">PACKAGING MGNT</li>
             <li class="nav-item">
-              <a class="nav-link" href="stock_level.html">
+              <a class="nav-link" href="stock_level.php">
                 <i class="menu-icon ti ti-align-justify"></i>
                 <span class="menu-title">Stock Level</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="items_list.html">
+              <a class="nav-link" href="items_list.php">
                 <i class="menu-icon ti ti-menu"></i>
                 <span class="menu-title">Items List</span>
               </a>
             </li>          
             <li class="nav-item">
-              <a class="nav-link" href="floor_plan.html">
+              <a class="nav-link" href="floor_plan.php">
                 <i class="menu-icon mdi mdi-border-inside"></i>
                 <span class="menu-title">Floor Plan </span>
               </a>

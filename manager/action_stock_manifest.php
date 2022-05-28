@@ -76,22 +76,24 @@
               $response = curl_exec($client);
               curl_close($client);
 
-              //Update Supplier Status Stock Level table
-              $stock_data = array(
-                'status' => "processed",
-                'unique_code' => $row->unique_code   
-              );
 
-   
-              $api_url = $APIBASE."delivery_notice_exec.php?action=update_delivery_status";
-              $client = curl_init($api_url);
-              curl_setopt($client, CURLOPT_POST, true);
-              curl_setopt($client, CURLOPT_POSTFIELDS, $stock_data);
-              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-              $response = curl_exec($client);
-              curl_close($client);
+              if (strlen($unique_code) > 1 ){
 
+                //Update Supplier Status Stock Level table
+                $stock_data = array(
+                  'status' => "processed",
+                  'unique_code' => $row->unique_code   
+                );
 
+                $api_url = $APIBASE."delivery_notice_exec.php?action=update_delivery_status";
+                $client = curl_init($api_url);
+                curl_setopt($client, CURLOPT_POST, true);
+                curl_setopt($client, CURLOPT_POSTFIELDS, $stock_data);
+                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($client);
+                curl_close($client);                
+
+              }
             } 
           }
 
@@ -165,9 +167,8 @@
           $result = json_decode($response, true); 
     
           }
-        }
       }
-
+      
       if(!empty($_POST['item_partial'])){
         foreach($_POST['item_partial'] as $row_id){
 
@@ -182,19 +183,22 @@
           if(count($result) > 0){
             foreach($result as $row) {
 
-              //Populate the stock activities table (foodbank_stock_details_tbl )
+              $new_stock_qty = $_POST['stock_level_amount'];
+              $current_stock_name = $row->stock_name;
+
+              //Populate the stock activities table (foodbank_stock_details_tbl)
               $stock_data = array(
                 'unique_code' => $unique_code,
                 'stock_type' => $row->stock_type,
                 'stock_name' => $row->stock_name,
                 'stock_brand'  => $row->stock_brand,
-                'stock_level_amount' => $_POST['stock_level_amount'],
+                'stock_level_amount' => $new_stock_qty,
                 'stock_batch_number'  => $row->stock_batch_number,
                 'stock_man_date' => $row->stock_man_date,
                 'stock_exp_date'  => $row->stock_exp_date,
                 'user_id' => $_SESSION['user_id'],
                 'status' => "Completed",
-                'supplier_ref' => $row->unique_code,     
+                'supplier_ref' => $row->unique_code
               );
 
    
@@ -207,11 +211,13 @@
               curl_close($client);
               $result = json_decode($response, true);  
 
+              $current_stock = $row->stock_name;
+              $stock_amount = $_POST['stock_level_amount'];
 
               //Update Supplier Status Stock Detail table
               $stock_data = array(
-                'status' => "partial",
-                'stockdetail_id' => $row_id,     
+                'status' => "complete",
+                'stockdetail_id' => $row_id
               );
 
    
@@ -222,69 +228,99 @@
               curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
               $response = curl_exec($client);
               curl_close($client);
-              $result = json_decode($response, true);  
 
 
+              if (strlen($unique_code) > 1 ){
 
-              //Update Status
-              $stock_data = array(
-                'status' => "processed",
-                'unique_code' => $row->unique_code,     
-              );
+                //Update Supplier Status Stock Level table
+                $stock_data = array(
+                  'status' => "processed",
+                  'unique_code' => $row->unique_code   
+                );
 
-   
-              $api_url = $APIBASE."delivery_notice_exec.php?action=update_delivery_status";
-              $client = curl_init($api_url);
-              curl_setopt($client, CURLOPT_POST, true);
-              curl_setopt($client, CURLOPT_POSTFIELDS, $stock_data);
-              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-              $response = curl_exec($client);
-              curl_close($client);
-              $result = json_decode($response, true);  
-
-
-              //Get the current stock level before updating
-              $api_url = $APIBASE."delivery_notice_exec.php?action=get_stock_amount&region=".$_SESSION['region']."&stock_name=".$row->stock_name."";
-              $client = curl_init($api_url);
-              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-              $response = curl_exec($client);
-              $result = json_decode($response);
-
-              foreach($result as $currentrow) {
-                  $cs_unique_code = $currentrow->unique_code;
-                  $cs_current_stock_level = $currentrow->current_stock_level;
-                  $cs_old_stock_level = $_POST['stock_level_amount'];
-                  $cs_updated_stock_level = $currentrow->updated_stock_level;
-                  $cs_stock_id = $currentrow->stock_id;
-
-
-                  $cs_update_activity = "Added Partial Stock From The Supplier";
-                  $cs_new_stock_level = ($cs_updated_stock_level + $cs_old_stock_level);
-    
-                  //Update The Actual Stock Count
-                  $actual_stock_data = array(
-                    'unique_code' => $cs_unique_code,
-                    'current_stock_level' => $cs_new_stock_level,
-                    'old_stock_level' => $cs_current_stock_level,
-                    'updated_stock_level' => $_POST['stock_level_amount'],
-                    'update_activity' => $cs_update_activity,
-                    'stock_id' => $cs_stock_id
-                  );
-    
-                  $api_url = $APIBASE."delivery_notice_exec.php?action=update_stock_level";
-                  $client = curl_init($api_url);
-                  curl_setopt($client, CURLOPT_POST, true);
-                  curl_setopt($client, CURLOPT_POSTFIELDS, $actual_stock_data);
-                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                  $response = curl_exec($client);
-                  curl_close($client);
-                  $result = json_decode($response, true);  
+                $api_url = $APIBASE."delivery_notice_exec.php?action=update_delivery_status";
+                $client = curl_init($api_url);
+                curl_setopt($client, CURLOPT_POST, true);
+                curl_setopt($client, CURLOPT_POSTFIELDS, $stock_data);
+                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($client);
+                curl_close($client);                
 
               }
-            }
+            } 
           }
-        }
-      }
+
+
+
+          if ($current_stock_name == "Maize Meal"){
+              $current_stock_name = "Maize+Meal";
+          } 
+      
+          if ($current_stock_name == "Maize-Meal"){
+              $current_stock_name = "Maize+Meal";
+          }     
+      
+          if ($current_stock_name == "Cooking Oil"){
+              $current_stock_name = "Cooking+Oil";
+          } 
+      
+          if ($current_stock_name == "Baked Beans"){
+              $current_stock_name = "Baked+Beans";
+          } 
+      
+          if ($current_stock_name == "All Purpose Soap"){
+              $current_stock_name = "All+Purpose+Soap";
+          } 
+      
+          if ($current_stock_name == "Soya Mince"){
+              $current_stock_name = "Soya+Mince";
+          }     
+      
+          //Get the current stock level before updating
+      
+          $stock_detail_api_url = $APIBASE."delivery_notice_exec.php?action=get_stock_amount&location=".$_SESSION['region']."&stock_name=".$current_stock_name."";
+      
+          $client = curl_init($stock_detail_api_url);
+          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+          $response = curl_exec($client);
+          $result = json_decode($response);
+      
+          if(count($result) > 0){
+              foreach($result as $row) {
+      
+                  $stock_id = $row->stock_id;
+                  $current_stock_level = $row->current_stock_level;
+                  $old_stock_level = $row->old_stock_level;
+                  $updated_stock_level = $row->updated_stock_level;
+      
+              }
+          }
+      
+          
+          $unique_code = $unique_code;
+          $received_stock = $new_stock_qty;
+          $new_stock_level = $current_stock_level + $received_stock;
+      
+          $actual_stock_data = array(
+              'unique_code' => $unique_code,
+              'current_stock_level' => $new_stock_level,
+              'old_stock_level' => $current_stock_level,
+              'updated_stock_level' => $received_stock,
+              'update_activity' => "Added Fully Stock From The Supplier",
+              'stock_id' => $stock_id
+          );
+      
+          $api_url = $APIBASE."delivery_notice_exec.php?action=update_stock_level";
+          $client = curl_init($api_url);
+          curl_setopt($client, CURLOPT_POST, true);
+          curl_setopt($client, CURLOPT_POSTFIELDS, $actual_stock_data);
+          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+          $response = curl_exec($client);
+          curl_close($client);
+          $result = json_decode($response, true); 
+    
+          }
+      }      
 
       if(!empty($_POST['item_rejected'])){
         foreach($_POST['item_rejected'] as $row_id){
@@ -317,23 +353,23 @@
               $result = json_decode($response, true);  
 
 
+              if (strlen($unique_code) > 1 ){
 
-              //Update Status
-              $stock_data = array(
-                'status' => "processed",
-                'unique_code' => $row->unique_code,     
-              );
+                //Update Supplier Status Stock Level table
+                $stock_data = array(
+                  'status' => "processed",
+                  'unique_code' => $row->unique_code   
+                );
 
-   
-              $api_url = $APIBASE."delivery_notice_exec.php?action=update_delivery_status";
-              $client = curl_init($api_url);
-              curl_setopt($client, CURLOPT_POST, true);
-              curl_setopt($client, CURLOPT_POSTFIELDS, $stock_data);
-              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-              $response = curl_exec($client);
-              curl_close($client);
-              $result = json_decode($response, true);  
+                $api_url = $APIBASE."delivery_notice_exec.php?action=update_delivery_status";
+                $client = curl_init($api_url);
+                curl_setopt($client, CURLOPT_POST, true);
+                curl_setopt($client, CURLOPT_POSTFIELDS, $stock_data);
+                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($client);
+                curl_close($client);                
 
+              }
 
 
               //Update Status
@@ -385,6 +421,8 @@
       $result = json_decode($response, true); 
       
       header("Location: goods_receivables.php#food-bank-stock");
+
+    }
 
 ?>
 

@@ -29,6 +29,20 @@ class DeliveryNoticeClass
         }
     }
 
+    function getFoodBankStockById($id)
+    {
+        $query = "SELECT * FROM foodbank_stock_details_tbl WHERE stockdetail_id='".$id."'";
+        $statement = $this->connect->prepare($query);
+        if($statement->execute())
+        {
+            while($row = $statement->fetch(PDO::FETCH_ASSOC))
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }
+    }    
+
     function getSupplierStockLevels()
     {
         $query = "SELECT * FROM supplier_stock_level_tbl ORDER BY stocklevel_id DESC";
@@ -306,6 +320,36 @@ class DeliveryNoticeClass
         }
         return $data;
     } 
+
+    function updateFoodBankStockLevel(){
+
+        $form_data = array(
+            ':allocated'  => $_POST["allocated"],
+            ':stockdetail_id'  => $_POST["stockdetail_id"]
+        );
+
+        $query = "
+        UPDATE foodbank_stock_details_tbl 
+        SET 
+        
+            allocated = :allocated 
+
+        WHERE stockdetail_id = :stockdetail_id
+        ";
+
+        $statement = $this->connect->prepare($query);
+        if($statement->execute($form_data)){
+            $data[] = array(
+                'success' => '1'
+            );
+        } else {
+            $data[] = array(
+                'success' => '0'
+            );
+        }
+        return $data;
+
+    }  
 
     function updateActualStockLevel(){
 
