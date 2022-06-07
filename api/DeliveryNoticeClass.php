@@ -15,9 +15,9 @@ class DeliveryNoticeClass
         
     }
 
-    function getFoodBankStock()
+    function getFoodBankStock($location)
     {
-        $query = "SELECT * FROM foodbank_stock_details_tbl ORDER BY stockdetail_id DESC";
+        $query = "SELECT * FROM foodbank_stock_details_tbl WHERE region='".$location."'";
         $statement = $this->connect->prepare($query);
         if($statement->execute())
         {
@@ -148,14 +148,15 @@ class DeliveryNoticeClass
             ':truck_registration_num'  => $_POST["truck_registration_num"], 
             ':user_id'  => $_POST["user_id"], 
             ':status'  => $_POST["status"],
-            ':previous_reference'  => $_POST["previous_reference"]
+            ':previous_reference'  => $_POST["previous_reference"],
+            ':delivery_month'  => $_POST["delivery_month"]
         );
 
         $query = "
         INSERT INTO supplier_stock_level_tbl 
-        (unique_code, region, project_name, stock_type, est_date_of_delivery, stock_status, driver_full_name, driver_cellphone, truck_details, truck_registration_num, user_id, status, previous_reference) 
+        (unique_code, region, project_name, stock_type, est_date_of_delivery, stock_status, driver_full_name, driver_cellphone, truck_details, truck_registration_num, user_id, status, previous_reference, delivery_month) 
         VALUES 
-        (:unique_code, :region, :project_name, :stock_type, :est_date_of_delivery, :stock_status, :driver_full_name, :driver_cellphone, :truck_details, :truck_registration_num, :user_id, :status,:previous_reference)
+        (:unique_code, :region, :project_name, :stock_type, :est_date_of_delivery, :stock_status, :driver_full_name, :driver_cellphone, :truck_details, :truck_registration_num, :user_id, :status, :previous_reference, :delivery_month)
         ";
 
         $statement = $this->connect->prepare($query);
@@ -185,14 +186,17 @@ class DeliveryNoticeClass
             ':stock_man_date'  => $_POST["stock_man_date"],
             ':stock_exp_date'  => $_POST["stock_exp_date"],
             ':user_id'  => $_POST["user_id"], 
-            ':status'  => 'Pending'            
+            ':status'  => $_POST["status"],
+            ':project_name'  => $_POST["project_name"],
+            ':region'  => $_POST["region"],
+            ':delivery_month'  => $_POST["delivery_month"]
         );
 
         $query = "
         INSERT INTO supplier_stock_details_tbl 
-        (unique_code, stock_type, stock_name, stock_brand, stock_level_amount, stock_batch_number, stock_man_date, stock_exp_date, user_id, status) 
+        (unique_code, stock_type, stock_name, stock_brand, stock_level_amount, stock_batch_number, stock_man_date, stock_exp_date, user_id, status, project_name, region, delivery_month) 
         VALUES 
-        (:unique_code, :stock_type, :stock_name, :stock_brand, :stock_level_amount, :stock_batch_number, :stock_man_date, :stock_exp_date, :user_id, :status)
+        (:unique_code, :stock_type, :stock_name, :stock_brand, :stock_level_amount, :stock_batch_number, :stock_man_date, :stock_exp_date, :user_id, :status, :project_name, :region, :delivery_month)
         ";
 
         $statement = $this->connect->prepare($query);
@@ -222,18 +226,42 @@ class DeliveryNoticeClass
             ':stock_man_date'  => $_POST["stock_man_date"],
             ':stock_exp_date'  => $_POST["stock_exp_date"],
             ':user_id'  => $_POST["user_id"], 
+            ':region'  => $_POST["region"],
             ':status'  => $_POST["status"], 
-            ':supplier_ref'  => $_POST["supplier_ref"]
+            ':project_name'  => $_POST["project_name"],
+            ':supplier_ref'  => $_POST["supplier_ref"],            
+            ':delivery_month'  => $_POST["delivery_month"]
         );
 
         $query = "
         INSERT INTO foodbank_stock_details_tbl
-        (unique_code, stock_type, stock_name, stock_brand, stock_level_amount, stock_batch_number, stock_man_date, stock_exp_date, user_id, status, supplier_ref) 
+        (unique_code, stock_type, stock_name, stock_brand, stock_level_amount, stock_batch_number, stock_man_date, stock_exp_date, user_id, region, status, project_name, supplier_ref, delivery_month) 
         VALUES 
-        (:unique_code, :stock_type, :stock_name, :stock_brand, :stock_level_amount, :stock_batch_number, :stock_man_date, :stock_exp_date, :user_id, :status, :supplier_ref)
+        (:unique_code, :stock_type, :stock_name, :stock_brand, :stock_level_amount, :stock_batch_number, :stock_man_date, :stock_exp_date, :user_id, :region, :status, :project_name, :supplier_ref, :delivery_month)
         ";
 
         $statement = $this->connect->prepare($query);
+
+
+        if($statement->execute($form_data)){
+            $data[] = array(
+                'success' => '1'
+            );
+        } else {
+            $data[] = array(
+                'failed' => '0'
+            );
+        }        
+
+        $query = "
+        INSERT INTO foodbank_stock_movement_tbl
+        (unique_code, stock_type, stock_name, stock_brand, stock_level_amount, stock_batch_number, stock_man_date, stock_exp_date, user_id, region, status, project_name, supplier_ref, delivery_month) 
+        VALUES 
+        (:unique_code, :stock_type, :stock_name, :stock_brand, :stock_level_amount, :stock_batch_number, :stock_man_date, :stock_exp_date, :user_id, :region, :status, :project_name, :supplier_ref, :delivery_month)
+        ";
+
+        $statement = $this->connect->prepare($query);
+
         if($statement->execute($form_data)){
             $data[] = array(
                 'success' => '1'
@@ -465,14 +493,17 @@ class DeliveryNoticeClass
             ':status'  => $_POST["status"],
             ':reason_of_rejection'  => $_POST["reason_of_rejection"],
             ':logged_by'  => $_POST["logged_by"],
-            ':logged_by_user_id'  => $_POST["logged_by_user_id"]
+            ':logged_by_user_id'  => $_POST["logged_by_user_id"],
+            ':project_name'  => $_POST["project_name"],
+            ':region'  => $_POST["region"],
+            ':delivery_month'  => $_POST["delivery_month"]
         );
 
         $query = "
         INSERT INTO stock_rejected_tbl 
-        (supplier_unique_code, manager_unique_code, supplier_delivery_date, stock_type, stock_name, rejected_amounts, status, reason_of_rejection, logged_by, logged_by_user_id) 
+        (supplier_unique_code, manager_unique_code, supplier_delivery_date, stock_type, stock_name, rejected_amounts, status, reason_of_rejection, logged_by, logged_by_user_id, project_name, region, delivery_month) 
         VALUES 
-        (:supplier_unique_code, :manager_unique_code, :supplier_delivery_date, :stock_type, :stock_name, :rejected_amounts, :status, :reason_of_rejection, :logged_by, :logged_by_user_id)
+        (:supplier_unique_code, :manager_unique_code, :supplier_delivery_date, :stock_type, :stock_name, :rejected_amounts, :status, :reason_of_rejection, :logged_by, :logged_by_user_id, :project_name, :region, :delivery_month)
         ";
 
         $statement = $this->connect->prepare($query);
@@ -564,8 +595,60 @@ class DeliveryNoticeClass
     }
 
     function updateStockDetailStatus(){
+
+        $form_data = array(
+            ':status'  => $_POST["status"],
+            ':stockdetail_id'  => $_POST["stockdetail_id"]
+        );
+
+        $query = "
+        UPDATE supplier_stock_details_tbl 
+        SET 
+            status = :status
+
+        WHERE stockdetail_id = :stockdetail_id
+        ";
+
+        $statement = $this->connect->prepare($query);
+        if($statement->execute($form_data)){
+            $data[] = array(
+                'success' => '1'
+            );
+        } else {
+            $data[] = array(
+                'success' => '0'
+            );
+        }
+        return $data;        
         
     }
+
+    function updateCurrentStockFoodPack(){
+
+        $form_data = array(
+            ':region'  => $_POST["region"]
+        );
+
+        $query = "
+        UPDATE actual_stocklevel_tbl 
+        SET 
+            current_stock_level = current_stock_level - 1
+
+        WHERE region = :region
+        ";
+
+        $statement = $this->connect->prepare($query);
+        if($statement->execute($form_data)){
+            $data[] = array(
+                'success' => '1'
+            );
+        } else {
+            $data[] = array(
+                'success' => '0'
+            );
+        }
+        return $data;
+    } 
 
 }
 

@@ -303,13 +303,13 @@ session_start();
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="add_food_pack.html">
+              <a class="nav-link" href="add_food_pack.php">
                 <i class="menu-icon ti ti-plus"></i>
                 <span class="menu-title">Add Food Packs </span>
               </a>
             </li> 
             <li class="nav-item">
-              <a class="nav-link" href="food_parcels.html">
+              <a class="nav-link" href="food_parcels.php">
                 <i class="menu-icon icon icon-bag"></i>
                 <span class="menu-title">Food Parcels </span>
               </a>

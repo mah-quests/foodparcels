@@ -34,7 +34,27 @@
                   </div>
                   <br><br>
 
-                  <h3>War On Poverty (W-O-P) Stock Levels</h3><br>
+                  <h3>War On Poverty (WOP) Stock Levels</h3><br>
+
+                <?php 
+
+                  $project_name = "War+On+Poverty";
+                  $api_url = $APIBASE."stock_levels_exec.php?action=show_region_total_project&location=".$location."&project_name=".$project_name."";
+                  $client = curl_init($api_url);
+                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                  $response = curl_exec($client);
+                  $result = json_decode($response);
+
+                  foreach($result as $row)
+                  {
+                    
+                    $ceiling = 16400;
+                    $region_totals = $row->total;
+                    $stock_percentage = ($region_totals / $ceiling) * 100;
+
+                  }
+                  ?>   
+
                   <div class="row" align="center">
                     <div class="col-md-2 grid-margin">
                       <div class="card bg-facebook d-flex align-items-center">
@@ -42,13 +62,35 @@
                           <div class="d-flex flex-row align-items-center">
                             <i class=""></i>
                             <div class="ms-3">
-                              <h6 class="text-white">W-O-P Stock</h6>
-                              <h2 class="mt-2 card-text text-white">16%</h2>
+                              <h6 class="text-white">WOP Stock % </h6>
+                              <h2 class="mt-2 card-text text-white"><?php echo number_format((float)$stock_percentage, 2, '.', ''); ?>%</h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+
+                    <?php 
+
+                      $project_name = "War+On+Poverty";
+                      $stock_name = "Maize+Meal";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+
+                        if($row->total == ""){
+                          $total = 0;
+                        } else {
+                          $total = $row->total;
+                        }
+                        
+                      ?>                    
+
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
                         <div class="card-body">
@@ -56,12 +98,36 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-google">Maize-Meal</h6>
-                              <h2 class="mt-2 text-muted card-text">805</h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+
+                    <?php 
+
+                      }
+
+                      $project_name = "War+On+Poverty";
+                      $stock_name = "Rice";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+
+                        if($row->total == ""){
+                          $total = 0;
+                        } else {
+                          $total = $row->total;
+                        }   
+                        
+                      ?>
+
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
                         <div class="card-body">
@@ -69,53 +135,355 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-linkedin">Rice</h6>
-                              <h2 class="mt-2 text-muted card-text">811</h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+
+                    <?php 
+
+                      }
+
+                      $project_name = "War+On+Poverty";
+                      $stock_name = "Sugar";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+                      
+                      ?>                 
+
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
                         <div class="card-body">
                           <div class="d-flex flex-row align-items-center">
                             <i class=""></i>
                             <div class="ms-3">
-                              <h6 class="text-dribbble">Cooking Oil</h6>
-                              <h2 class="mt-2 text-muted card-text">821</h2>
+                              <h6 class="text-dribbble">Sugar</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+
+                  <?php 
+
+                    }
+
+                    $project_name = "War+On+Poverty";
+                    $stock_name = "Cooking+Oil";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+
+                    foreach($result as $row)
+                    {   
+
+                      if($row->total == ""){
+                        $total = 0;
+                      } else {
+                        $total = $row->total;
+                      }                                               
+                    
+                    ?>
+
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
                         <div class="card-body">
                           <div class="d-flex flex-row align-items-center">
                             <i class=""></i>
                             <div class="ms-3">
-                              <h6 class="text-reddit">Canned food</h6>
-                              <h2 class="mt-2 text-muted card-text">1338</h2>
+                              <h6 class="text-reddit">Cooking Oil</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+
+                    <?php 
+
+                      }
+
+                      $project_name = "War+On+Poverty";
+                      $stock_name = "Tea";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+
+                        if($row->total == ""){
+                          $total = 0;
+                        } else {
+                          $total = $row->total;
+                        }                                               
+                      
+                      ?>    
+                  
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
                         <div class="card-body">
                           <div class="d-flex flex-row align-items-center">
                             <i class=""></i>
                             <div class="ms-3">
-                              <h6 class="text-behance">Vegetables</h6>
-                              <h2 class="mt-2 text-muted card-text">22%</h2>
+                              <h6 class="text-behance">Tea</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>    
 
-                  </div>
+
+                    <div class="col-md-2 grid-margin">
+                    </div>  
+
+              <?php 
+
+                }
+
+                $project_name = "War+On+Poverty";
+                $stock_name = "Baked+Beans";
+                $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                $client = curl_init($api_url);
+                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($client);
+                $result = json_decode($response);
+
+                foreach($result as $row)
+                {   
+
+                  if($row->total == ""){
+                    $total = 0;
+                  } else {
+                    $total = $row->total;
+                  }                                               
+                
+                ?>                       
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-linkedin">Baked Beans</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+
+                    <?php 
+
+                      }
+
+                      $project_name = "War+On+Poverty";
+                      $stock_name = "All+Purpose+Soap";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+
+                        if($row->total == ""){
+                          $total = 0;
+                        } else {
+                          $total = $row->total;
+                        }                                               
+                      
+                      ?>                      
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-linkedin">Soap</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+
+                    <?php 
+
+                      }
+
+                      $project_name = "War+On+Poverty";
+                      $stock_name = "Soya+Mince";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+
+                        if($row->total == ""){
+                          $total = 0;
+                        } else {
+                          $total = $row->total;
+                        }                                               
+                      
+                      ?>                      
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-dribbble">Soya Mince</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+
+                <?php 
+
+                  }
+
+                  $project_name = "War+On+Poverty";
+                  $stock_name = "Cabbage";
+                  $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                  $client = curl_init($api_url);
+                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                  $response = curl_exec($client);
+                  $result = json_decode($response);
+
+                  foreach($result as $row)
+                  {   
+
+                    if($row->total == ""){
+                      $total = 0;
+                    } else {
+                      $total = $row->total;
+                    }                                               
+                  
+                  ?>  
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-reddit">Cabbage</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>                                         
+
+                  <?php 
+
+                    }
+
+                    $project_name = "War+On+Poverty";
+                    $stock_name = "Potatoes";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+
+                    foreach($result as $row)
+                    {   
+
+                      if($row->total == ""){
+                        $total = 0;
+                      } else {
+                        $total = $row->total;
+                      }                                               
+                    
+                    ?>  
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-behance">Potatoes</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+
+                    <div class="col-md-2 grid-margin">
+                    </div>                    
+
+                  <?php 
+
+                    }
+
+                    $project_name = "War+On+Poverty";
+                    $stock_name = "Pumpkin";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+
+                    foreach($result as $row)
+                    {   
+
+                      if($row->total == ""){
+                        $total = 0;
+                      } else {
+                        $total = $row->total;
+                      }                                               
+                    
+                    ?>  
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-behance">Pumpkin</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+                    
+                 <?php 
+                    } 
+                  ?>                                       
+
+
+              </div>
+
+
 
 
                   <div class="content-wrapper">
@@ -147,7 +515,7 @@
                                     curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                     $response = curl_exec($client);
                                     $result = json_decode($response);
-                                    $bank_history_output = '';
+                                    $wop_output = '';
 
                                     if(count($result) > 0)
                                     {
@@ -179,7 +547,7 @@
                                         <td>'.$row->stock_exp_date.'</td>
                                         <td>'.$number_of_days.'</td>
                                         <td>
-                                          <a href="wop_maizemeal_details.html"><button class="btn btn-outline-primary" >View</button></a>
+                                          <a href="#"><button class="btn btn-outline-primary" >View</button></a>
                                         </td>
                                         </tr>
                                         ';
@@ -208,6 +576,29 @@
 
 
                   <h3>AntiRetroviral Treatment (ART) Stock Levels</h3><br>
+
+
+
+
+                <?php 
+
+                  $project_name = "ART";
+                  $api_url = $APIBASE."stock_levels_exec.php?action=show_region_total_project&location=".$location."&project_name=".$project_name."";
+                  $client = curl_init($api_url);
+                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                  $response = curl_exec($client);
+                  $result = json_decode($response);
+
+                  foreach($result as $row)
+                  {
+                    
+                    $ceiling = 16400;
+                    $region_totals = $row->total;
+                    $stock_percentage = ($region_totals / $ceiling) * 100;
+
+                  }
+                  ?>   
+
                   <div class="row" align="center">
                     <div class="col-md-2 grid-margin">
                       <div class="card bg-facebook d-flex align-items-center">
@@ -215,13 +606,35 @@
                           <div class="d-flex flex-row align-items-center">
                             <i class=""></i>
                             <div class="ms-3">
-                              <h6 class="text-white">A-R-T Stock</h6>
-                              <h2 class="mt-2 card-text text-white">13%</h2>
+                              <h6 class="text-white">WOP Stock % </h6>
+                              <h2 class="mt-2 card-text text-white"><?php echo number_format((float)$stock_percentage, 2, '.', ''); ?>%</h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+
+                    <?php 
+
+                      $project_name = "ART";
+                      $stock_name = "Maize+Meal";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+
+                        if($row->total == ""){
+                          $total = 0;
+                        } else {
+                          $total = $row->total;
+                        }
+                        
+                      ?>                    
+
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
                         <div class="card-body">
@@ -229,12 +642,36 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-google">Maize-Meal</h6>
-                              <h2 class="mt-2 text-muted card-text">503</h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+
+                    <?php 
+
+                      }
+
+                      $project_name = "ART";
+                      $stock_name = "Rice";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+
+                        if($row->total == ""){
+                          $total = 0;
+                        } else {
+                          $total = $row->total;
+                        }   
+                        
+                      ?>
+
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
                         <div class="card-body">
@@ -242,12 +679,30 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-linkedin">Rice</h6>
-                              <h2 class="mt-2 text-muted card-text">770</h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+
+                    <?php 
+
+                      }
+
+                      $project_name = "ART";
+                      $stock_name = "Sugar";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+                      
+                      ?>                 
+
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
                         <div class="card-body">
@@ -255,12 +710,36 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-dribbble">Sugar</h6>
-                              <h2 class="mt-2 text-muted card-text">1440</h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+
+                  <?php 
+
+                    }
+
+                    $project_name = "ART";
+                    $stock_name = "Cooking+Oil";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+
+                    foreach($result as $row)
+                    {   
+
+                      if($row->total == ""){
+                        $total = 0;
+                      } else {
+                        $total = $row->total;
+                      }                                               
+                    
+                    ?>
+
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
                         <div class="card-body">
@@ -268,12 +747,36 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-reddit">Cooking Oil</h6>
-                              <h2 class="mt-2 text-muted card-text">560</h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+
+                    <?php 
+
+                      }
+
+                      $project_name = "ART";
+                      $stock_name = "Tea";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+
+                        if($row->total == ""){
+                          $total = 0;
+                        } else {
+                          $total = $row->total;
+                        }                                               
+                      
+                      ?>    
+                  
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
                         <div class="card-body">
@@ -281,15 +784,39 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-behance">Tea</h6>
-                              <h2 class="mt-2 text-muted card-text">380</h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>    
 
+
                     <div class="col-md-2 grid-margin">
-                    </div>
+                    </div>  
+
+              <?php 
+
+                }
+
+                $project_name = "ART";
+                $stock_name = "Baked+Beans";
+                $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                $client = curl_init($api_url);
+                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($client);
+                $result = json_decode($response);
+
+                foreach($result as $row)
+                {   
+
+                  if($row->total == ""){
+                    $total = 0;
+                  } else {
+                    $total = $row->total;
+                  }                                               
+                
+                ?>                       
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -297,14 +824,36 @@
                           <div class="d-flex flex-row align-items-center">
                             <i class=""></i>
                             <div class="ms-3">
-                              <h6 class="text-google">Vegetables</h6>
-                              <h2 class="mt-2 text-muted card-text">20%</h2>
+                              <h6 class="text-linkedin">Baked Beans</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>  
 
+                    <?php 
+
+                      }
+
+                      $project_name = "ART";
+                      $stock_name = "All+Purpose+Soap";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+
+                        if($row->total == ""){
+                          $total = 0;
+                        } else {
+                          $total = $row->total;
+                        }                                               
+                      
+                      ?>                      
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -312,27 +861,36 @@
                           <div class="d-flex flex-row align-items-center">
                             <i class=""></i>
                             <div class="ms-3">
-                              <h6 class="text-linkedin">Canned food</h6>
-                              <h2 class="mt-2 text-muted card-text">1000</h2>
+                              <h6 class="text-linkedin">Soap</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div> 
 
-                    <div class="col-md-2 grid-margin">
-                      <div class="card d-flex align-items-center">
-                        <div class="card-body">
-                          <div class="d-flex flex-row align-items-center">
-                            <i class=""></i>
-                            <div class="ms-3">
-                              <h6 class="text-dribbble">Soap</h6>
-                              <h2 class="mt-2 text-muted card-text">1388</h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> 
+                    <?php 
+
+                      }
+
+                      $project_name = "ART";
+                      $stock_name = "Soya+Mince";
+                      $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                      $client = curl_init($api_url);
+                      curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                      $response = curl_exec($client);
+                      $result = json_decode($response);
+
+                      foreach($result as $row)
+                      {   
+
+                        if($row->total == ""){
+                          $total = 0;
+                        } else {
+                          $total = $row->total;
+                        }                                               
+                      
+                      ?>                      
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -340,15 +898,134 @@
                           <div class="d-flex flex-row align-items-center">
                             <i class=""></i>
                             <div class="ms-3">
-                              <h6 class="text-reddit">Soya Mince</h6>
-                              <h2 class="mt-2 text-muted card-text">1690</h2>
+                              <h6 class="text-dribbble">Soya Mince</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+
+                <?php 
+
+                  }
+
+                  $project_name = "ART";
+                  $stock_name = "Cabbage";
+                  $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                  $client = curl_init($api_url);
+                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                  $response = curl_exec($client);
+                  $result = json_decode($response);
+
+                  foreach($result as $row)
+                  {   
+
+                    if($row->total == ""){
+                      $total = 0;
+                    } else {
+                      $total = $row->total;
+                    }                                               
+                  
+                  ?>  
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-reddit">Cabbage</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>                                         
+
+                  <?php 
+
+                    }
+
+                    $project_name = "ART";
+                    $stock_name = "Potatoes";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+
+                    foreach($result as $row)
+                    {   
+
+                      if($row->total == ""){
+                        $total = 0;
+                      } else {
+                        $total = $row->total;
+                      }                                               
                     
-                  </div>
+                    ?>  
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-behance">Potatoes</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+
+                    <div class="col-md-2 grid-margin">
+                    </div>                    
+
+                  <?php 
+
+                    }
+
+                    $project_name = "ART";
+                    $stock_name = "Pumpkin";
+                    $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+
+                    foreach($result as $row)
+                    {   
+
+                      if($row->total == ""){
+                        $total = 0;
+                      } else {
+                        $total = $row->total;
+                      }                                               
+                    
+                    ?>  
+
+                    <div class="col-md-2 grid-margin">
+                      <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                            <i class=""></i>
+                            <div class="ms-3">
+                              <h6 class="text-behance">Pumpkin</h6>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $total ?></h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+                    
+                 <?php 
+                    } 
+                  ?>                                       
+
+
+              </div>
 
 
                   <div class="content-wrapper">
@@ -380,7 +1057,7 @@
                                     curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                     $response = curl_exec($client);
                                     $result = json_decode($response);
-                                    $bank_history_output = '';
+                                    $art_output = '';
 
                                     if(count($result) > 0)
                                     {
@@ -403,7 +1080,7 @@
                                           $number_of_days = 56;
                                         }                                            
 
-                                        $wop_output .= '
+                                        $art_output .= '
                                         <tr>
                                         <td>'.$row->stockdetail_id.'</td>
                                         <td>'.$row->stock_type.'</td>
@@ -418,14 +1095,14 @@
                                         ';
                                       }
                                     } else {
-                                    $wop_output .= '
+                                    $art_output .= '
                                       <tr align="center">
                                         <td align="center"> No Data To Display </td>
                                       </tr>
                                       ';
                                   }
 
-                                    echo $wop_output;
+                                    echo $art_output;
                                 ?>      
 
                                   
@@ -441,6 +1118,7 @@
 
 
                   <h3>Other Projects Stock Levels</h3><br>
+
                   <div class="row" align="center">
                     <div class="col-md-2 grid-margin">
                       <div class="card bg-facebook d-flex align-items-center">
@@ -449,46 +1127,7 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-white">Other Stock</h6>
-                              <h2 class="mt-2 card-text text-white">28%</h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-2 grid-margin">
-                      <div class="card d-flex align-items-center">
-                        <div class="card-body">
-                          <div class="d-flex flex-row align-items-center">
-                            <i class=""></i>
-                            <div class="ms-3">
-                              <h6 class="text-google">1L Fresh Milk</h6>
-                              <h2 class="mt-2 text-muted card-text">112</h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-2 grid-margin">
-                      <div class="card d-flex align-items-center">
-                        <div class="card-body">
-                          <div class="d-flex flex-row align-items-center">
-                            <i class=""></i>
-                            <div class="ms-3">
-                              <h6 class="text-linkedin">Gas Stove</h6>
-                              <h2 class="mt-2 text-muted card-text">55</h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-2 grid-margin">
-                      <div class="card d-flex align-items-center">
-                        <div class="card-body">
-                          <div class="d-flex flex-row align-items-center">
-                            <i class=""></i>
-                            <div class="ms-3">
-                              <h6 class="text-dribbble">Coffee Tins</h6>
-                              <h2 class="mt-2 text-muted card-text">531</h2>
+                              <h2 class="mt-2 card-text text-white">0%</h2>
                             </div>
                           </div>
                         </div>
@@ -520,38 +1159,8 @@
                                   </thead>
                                   <tbody>
                                     <tr>
-                                      <td>1</td>
-                                      <td>Dry Goods</td>
-                                      <td>1L Fresh Milk</td>
-                                      <td>112</td>
-                                      <td>2022-04-15</td>
-                                      <td>45</td>
-                                      <td>
-                                        <a href="#"><button class="btn btn-outline-primary" >View</button></a>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>2</td>
-                                      <td>Other</td>
-                                      <td>Gas Stove</td>
-                                      <td>55</td>
-                                      <td>2024-12-31</td>
-                                      <td>635</td>
-                                      <td>
-                                        <a href="#"><button class="btn btn-outline-primary" >View</button></a>
-                                      </td>                                      
-                                    </tr>
-                                    <tr>
-                                      <td>3</td>
-                                      <td>Other</td>
-                                      <td>Coffee Tins</td>
-                                      <td>531</td>
-                                      <td>2023-04-31</td>
-                                      <td>435</td>
-                                      <td>
-                                        <a href="#"><button class="btn btn-outline-primary" >View</button></a>
-                                      </td>
-                                    </tr>                                    
+
+                                    </tr>                                 
                                   </tbody>
                                 </table>
                               </div>

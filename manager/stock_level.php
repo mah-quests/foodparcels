@@ -48,6 +48,23 @@
                     </div>
                   </div>
 
+                <?php 
+
+                  
+                  $api_url = $APIBASE."stock_levels_exec.php?action=show_region_total&location=".$location."";
+                  $client = curl_init($api_url);
+                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                  $response = curl_exec($client);
+                  $result = json_decode($response);
+
+                  foreach($result as $row)
+                  {
+                    $ceiling = 31400;
+                    $region_totals = $row->total;
+                    $stock_percentage = ($region_totals / $ceiling) * 100;
+
+                  ?>  
+
                   <h3>Overall Stock Levels</h3><br>
                   <div class="row" align="center">
                     <div class="col-md-2 grid-margin">
@@ -57,7 +74,7 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-white">Joburg Stock</h6>
-                              <h2 class="mt-2 card-text text-white">30%</h2>
+                              <h2 class="mt-2 card-text text-white"><?php echo number_format((float)$stock_percentage, 2, '.', ''); ?>%</h2>
                             </div>
                           </div>
                         </div>
@@ -65,6 +82,8 @@
                     </div>
 
                 <?php 
+
+                  }
 
                   $stock_name = "Maize+Meal";
                   $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
@@ -409,6 +428,24 @@
 
                   </div>
 
+                <?php 
+
+                  $project_name = "War+On+Poverty";
+                  $api_url = $APIBASE."stock_levels_exec.php?action=show_region_total_project&location=".$location."&project_name=".$project_name."";
+                  $client = curl_init($api_url);
+                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                  $response = curl_exec($client);
+                  $result = json_decode($response);
+
+                  foreach($result as $row)
+                  {
+                    
+                    $ceiling = 16400;
+                    $region_totals = $row->total;
+                    $stock_percentage = ($region_totals / $ceiling) * 100;
+
+                  }
+                  ?>                    
 
                   <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
@@ -420,154 +457,755 @@
                               <div class="card-header" role="tab" id="heading-4">
                                 <h6 class="mb-0">
                                   <a data-bs-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
-                                    War On Poverty - Stock Levels - [16%]
+                                    War On Poverty - Stock Levels - [<?php echo number_format((float)$stock_percentage, 2, '.', ''); ?> % ] 
                                   </a>
                                 </h6>
                               </div>
                               <div id="collapse-4" class="collapse" role="tabpanel" aria-labelledby="heading-4" data-bs-parent="#accordion-2">
                                 <div class="card-body">
-
-
                                   <div class="card" align="center">
                                     <div class="card-body">
                                       <div class="popover-static-demo">
+
+                                        <?php 
+
+                                          $project_name = "War+On+Poverty";
+                                          $stock_name = "Maize+Meal";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }
+                                            
+                                          ?>
+
                                         <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
                                           <div class="arrow"></div>
-                                          <h3 class="popover-header" align="center">Maize-Meal</h3>
+                                          <h3 class="popover-header" align="center">Maize Meal</h3>
                                           <div class="popover-body">
-                                            <h1 align="center">805</h1>
+                                            <h1 align="center"><?php echo $total ?></h1>
                                           </div>
                                         </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "War+On+Poverty";
+                                          $stock_name = "Rice";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }   
+                                            
+                                          ?>
+
                                         <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-warning">
                                           <div class="arrow"></div>
                                           <h3 class="popover-header" align="center">Rice</h3>
                                           <div class="popover-body">
-                                            <h1 align="center">811</h1>
+                                            <h1 align="center"><?php echo $total ?></h1>
                                           </div>
                                         </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "War+On+Poverty";
+                                          $stock_name = "Sugar";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+                                          
+                                          ?>
+                                        
                                         <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-danger">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Sugar</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "War+On+Poverty";
+                                          $stock_name = "Cooking+Oil";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-info">
                                           <div class="arrow"></div>
                                           <h3 class="popover-header" align="center">Cooking Oil</h3>
                                           <div class="popover-body">
-                                            <h1 align="center">821</h1>
+                                            <h1 align="center"><?php echo $total ?></h1>
                                           </div>
                                         </div>
-                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-info">
-                                          <div class="arrow"></div>
-                                          <h3 class="popover-header" align="center">Canned food</h3>
-                                          <div class="popover-body">
-                                            <h1 align="center">1338</h1>
-                                          </div>
-                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "War+On+Poverty";
+                                          $stock_name = "Tea";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>                                        
+
                                         <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-primary">
                                           <div class="arrow"></div>
-                                          <h3 class="popover-header" align="center">Vegetables</h3>
+                                          <h3 class="popover-header" align="center">Tea</h3>
                                           <div class="popover-body">
-                                            <h1 align="center">22%</h1>
+                                            <h1 align="center"><?php echo $total ?></h1>
                                           </div>
                                         </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "War+On+Poverty";
+                                          $stock_name = "Baked+Beans";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>   
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Baked Beans</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "War+On+Poverty";
+                                          $stock_name = "All+Purpose+Soap";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>                                           
+
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-warning">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Soap</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "War+On+Poverty";
+                                          $stock_name = "Soya+Mince";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>                                           
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-danger">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Soya Mince</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "War+On+Poverty";
+                                          $stock_name = "Cabbage";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>  
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-info">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Cabbage</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "War+On+Poverty";
+                                          $stock_name = "Potatoes";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>  
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-primary">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Potatoes</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "War+On+Poverty";
+                                          $stock_name = "Pumpkin";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>  
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Pumpkin</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+                                          }
+                                        ?>                                        
+
                                         <div class="clearfix"></div>
                                       </div>
                                     </div>
                                   </div>
-                                  
-
-
                                 </div>
                               </div>
                             </div>
+
+                            <?php 
+
+                              $project_name = "ART";
+                              $api_url = $APIBASE."stock_levels_exec.php?action=show_region_total_project&location=".$location."&project_name=".$project_name."";
+                              $client = curl_init($api_url);
+                              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                              $response = curl_exec($client);
+                              $result = json_decode($response);
+
+                              foreach($result as $row)
+                              {
+                                
+                                $ceiling = 15000;
+                                $region_totals = $row->total;
+                                $stock_percentage = ($region_totals / $ceiling) * 100;
+
+                              }
+                              ?>             
+
+
                             <div class="card">
                               <div class="card-header" role="tab" id="heading-5">
                                 <h6 class="mb-0">
                                   <a class="collapsed" data-bs-toggle="collapse" href="#collapse-5" aria-expanded="false" aria-controls="collapse-5">
-                                   AntiRetroviral Treatment (ART) - [13%]
+                                   AntiRetroviral Treatment (ART) - [<?php echo number_format((float)$stock_percentage, 2, '.', ''); ?> % ] 
                                  </a>
                                </h6>
                              </div>
-                             <div id="collapse-5" class="collapse" role="tabpanel" aria-labelledby="heading-5" data-bs-parent="#accordion-2">
-                              <div class="card-body">
 
-                                <div class="card" align="center">
-                                  <div class="card-body">
-                                    <div class="popover-static-demo">
-                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
-                                        <div class="arrow"></div>
-                                        <h3 class="popover-header" align="center">Maize-Meal</h3>
-                                        <div class="popover-body">
-                                          <h1 align="center">503</h1>
+                        <div id="collapse-5" class="collapse" role="tabpanel" aria-labelledby="heading-5" data-bs-parent="#accordion-2">
+                                <div class="card-body">
+                                  <div class="card" align="center">
+                                    <div class="card-body">
+                                      <div class="popover-static-demo">
+
+                                        <?php 
+
+                                          $project_name = "ART";
+                                          $stock_name = "Maize+Meal";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }   
+
+                                          ?>
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Maize Meal</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
                                         </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "ART";
+                                          $stock_name = "Rice";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                             
+                                            
+                                          ?>
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-warning">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Rice</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "ART";
+                                          $stock_name = "Sugar";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>
+                                        
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-danger">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Sugar</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "ART";
+                                          $stock_name = "Cooking+Oil";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                            
+                                          
+                                          ?>
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-info">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Cooking Oil</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "ART";
+                                          $stock_name = "Tea";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>                                        
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-primary">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Tea</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "ART";
+                                          $stock_name = "Baked+Beans";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>   
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Baked Beans</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "ART";
+                                          $stock_name = "All+Purpose+Soap";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>                                           
+
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-warning">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Soap</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "ART";
+                                          $stock_name = "Soya+Mince";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>                                           
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-danger">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Soya Mince</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "ART";
+                                          $stock_name = "Cabbage";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>  
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-info">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Cabbage</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "ART";
+                                          $stock_name = "Potatoes";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>  
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-primary">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Potatoes</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+
+                                          }
+
+                                          $project_name = "ART";
+                                          $stock_name = "Pumpkin";
+                                          $api_url = $APIBASE."stock_levels_exec.php?action=stock_name_total_region&location=".$location."&stock_name=".$stock_name."&project_name=".$project_name."";
+                                          $client = curl_init($api_url);
+                                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                          $response = curl_exec($client);
+                                          $result = json_decode($response);
+
+                                          foreach($result as $row)
+                                          {   
+
+                                            if($row->total == ""){
+                                              $total = 0;
+                                            } else {
+                                              $total = $row->total;
+                                            }                                               
+                                          
+                                          ?>  
+
+                                        <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
+                                          <div class="arrow"></div>
+                                          <h3 class="popover-header" align="center">Pumpkin</h3>
+                                          <div class="popover-body">
+                                            <h1 align="center"><?php echo $total ?></h1>
+                                          </div>
+                                        </div>
+
+                                        <?php 
+                                          }
+                                        ?>                                        
+
+                                        <div class="clearfix"></div>
                                       </div>
-                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-warning">
-                                        <div class="arrow"></div>
-                                        <h3 class="popover-header" align="center">Rice</h3>
-                                        <div class="popover-body">
-                                          <h1 align="center">770</h1>
-                                        </div>
-                                      </div>
-                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-danger">
-                                        <div class="arrow"></div>
-                                        <h3 class="popover-header" align="center">Sugar</h3>
-                                        <div class="popover-body">
-                                          <h1 align="center">1440</h1>
-                                        </div>
-                                      </div>
-                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-info">
-                                        <div class="arrow"></div>
-                                        <h3 class="popover-header" align="center">Cooking Oil</h3>
-                                        <div class="popover-body">
-                                          <h1 align="center">560</h1>
-                                        </div>
-                                      </div>
-                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-primary">
-                                        <div class="arrow"></div>
-                                        <h3 class="popover-header" align="center">Tea</h3>
-                                        <div class="popover-body">
-                                          <h1 align="center">380</h1>
-                                        </div>
-                                      </div>
-                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-success">
-                                        <div class="arrow"></div>
-                                        <h3 class="popover-header" align="center">Vegetables</h3>
-                                        <div class="popover-body">
-                                          <h1 align="center">20%</h1>
-                                        </div>
-                                      </div>
-                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-warning">
-                                        <div class="arrow"></div>
-                                        <h3 class="popover-header" align="center">Canned food</h3>
-                                        <div class="popover-body">
-                                          <h1 align="center">1000</h1>
-                                        </div>
-                                      </div>
-                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-danger">
-                                        <div class="arrow"></div>
-                                        <h3 class="popover-header" align="center">Soap</h3>
-                                        <div class="popover-body">
-                                          <h1 align="center">1388</h1>
-                                        </div>
-                                      </div>
-                                      <div class="popover bs-popover-bottom bs-popover-bottom-demo popover-info">
-                                        <div class="arrow"></div>
-                                        <h3 class="popover-header" align="center">Soya Mince</h3>
-                                        <div class="popover-body">
-                                          <h1 align="center">1690</h1>
-                                        </div>
-                                      </div>                   
-                                      <div class="clearfix"></div>
                                     </div>
                                   </div>
                                 </div>
-
-
-
                               </div>
-                            </div>
+
+
                           </div>
                           <div class="card">
                             <div class="card-header" role="tab" id="heading-6">
                               <h6 class="mb-0">
                                 <a class="collapsed" data-bs-toggle="collapse" href="#collapse-5" aria-expanded="true" aria-controls="collapse-5">
-                                  Other Projects - [1%]
+                                  Other Projects - [0%]
                                 </a>
                               </h6>
                             </div>
@@ -582,7 +1220,7 @@
                                         <div class="arrow"></div>
                                         <h3 class="popover-header" align="center">Other</h3>
                                         <div class="popover-body">
-                                          <h1 align="center">28%</h1>
+                                          <h1 align="center">0%</h1>
                                         </div>
                                       </div>
                                       <div class="clearfix"></div>
