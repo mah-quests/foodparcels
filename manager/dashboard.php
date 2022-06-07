@@ -63,7 +63,25 @@
 
 
 
-                      <h3>Stock Level Percentage</h3><br>
+                  <h3>Stock Level Percentage</h3><br>
+
+                <?php 
+
+                  
+                  $api_url = $APIBASE."stock_levels_exec.php?action=show_region_total&location=".$location."";
+                  $client = curl_init($api_url);
+                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                  $response = curl_exec($client);
+                  $result = json_decode($response);
+
+                  foreach($result as $row)
+                  {
+                    $ceiling = 31400;
+                    $region_totals = $row->total;
+                    $stock_percentage = ($region_totals / $ceiling) * 100;
+
+                  ?>  
+
                   <div class="row" align="center">
                     <div class="col-md-2 grid-margin">
                       <div class="card bg-facebook d-flex align-items-center">
@@ -72,7 +90,7 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-white">Joburg Stock</h6>
-                              <h2 class="mt-2 card-text text-white">30%</h2>
+                              <h2 class="mt-2 card-text text-white"><?php echo number_format((float)$stock_percentage, 2, '.', ''); ?>%</h2>
                             </div>
                           </div>
                         </div>
@@ -81,6 +99,7 @@
 
                 <?php 
 
+                  }
                   $stock_name = "Maize+Meal";
                   $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
                   $client = curl_init($api_url);

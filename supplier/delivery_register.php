@@ -29,7 +29,8 @@
         'unique_code' => $unique_code,
         'user_id' => $_SESSION['user_id'],
         'status' => 'progress',
-        'previous_reference'  => $_POST['previous_reference']
+        'previous_reference'  => $_POST['previous_reference'],
+        'delivery_month' => $_POST['delivery_month']
       );
     
       $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_delivery_note";
@@ -67,7 +68,10 @@
         'stock_man_date' => $_POST['maize_meal_man_date'],
         'stock_exp_date'  => $_POST['maize_meal_exp_date'],
         'user_id' => $_SESSION['user_id'],
-        'status' => 'pending'        
+        'status' => 'pending',
+        'project_name' => $_POST['project_name'],
+        'region' => $_SESSION['region'],
+        'delivery_month' => $_POST['delivery_month']
       );
     
       $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_stock";
@@ -93,7 +97,10 @@
           'stock_man_date' => $_POST['rice_man_date'],
           'stock_exp_date'  => $_POST['rice_exp_date'],
           'user_id' => $_SESSION['user_id'],
-          'status' => 'pending'          
+          'status' => 'pending',
+          'project_name' => $_POST['project_name'],
+          'region' => $_SESSION['region'],
+          'delivery_month' => $_POST['delivery_month']          
         );
       
         $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_stock";
@@ -119,7 +126,10 @@
           'stock_man_date' => $_POST['sugar_man_date'],
           'stock_exp_date'  => $_POST['sugar_exp_date'],
           'user_id' => $_SESSION['user_id'],
-          'status' => 'pending'          
+          'status' => 'pending',
+          'project_name' => $_POST['project_name'],
+          'region' => $_SESSION['region'],
+          'delivery_month' => $_POST['delivery_month']          
         );
       
         $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_stock";
@@ -145,7 +155,10 @@
           'stock_man_date' => $_POST['cooking_oil_man_date'],
           'stock_exp_date'  => $_POST['cooking_oil_exp_date'],
           'user_id' => $_SESSION['user_id'],
-          'status' => 'pending'          
+          'status' => 'pending',
+          'project_name' => $_POST['project_name'],
+          'region' => $_SESSION['region'],
+          'delivery_month' => $_POST['delivery_month']          
         );
       
         $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_stock";
@@ -171,7 +184,10 @@
           'stock_man_date' => $_POST['tea_man_date'],
           'stock_exp_date'  => $_POST['tea_exp_date'],
           'user_id' => $_SESSION['user_id'],
-          'status' => 'pending'          
+          'status' => 'pending',
+          'project_name' => $_POST['project_name'],
+          'region' => $_SESSION['region'],
+          'delivery_month' => $_POST['delivery_month']          
         );
       
         $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_stock";
@@ -197,7 +213,10 @@
             'stock_man_date' => $_POST['baked_beans_man_date'],
             'stock_exp_date'  => $_POST['baked_beans_exp_date'],
             'user_id' => $_SESSION['user_id'],
-            'status' => 'pending'            
+            'status' => 'pending',
+            'project_name' => $_POST['project_name'],
+            'region' => $_SESSION['region'],
+            'delivery_month' => $_POST['delivery_month']            
           );
         
           $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_stock";
@@ -223,7 +242,10 @@
             'stock_man_date' => $_POST['soap_man_date'],
             'stock_exp_date'  => $_POST['soap_exp_date'],
             'user_id' => $_SESSION['user_id'],
-            'status' => 'pending'            
+            'status' => 'pending',
+            'project_name' => $_POST['project_name'],
+            'region' => $_SESSION['region'],
+            'delivery_month' => $_POST['delivery_month']            
           );
         
           $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_stock";
@@ -249,7 +271,10 @@
             'stock_man_date' => $_POST['soya_man_date'],
             'stock_exp_date'  => $_POST['soya_exp_date'],
             'user_id' => $_SESSION['user_id'],
-            'status' => 'pending'            
+            'status' => 'pending',
+            'project_name' => $_POST['project_name'],
+            'region' => $_SESSION['region'],
+            'delivery_month' => $_POST['delivery_month']            
           );
         
           $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_stock";
@@ -264,6 +289,8 @@
 
         //Cabbage
         if ($_POST['cabbage_quantity'] > 0 ){
+
+          $expiry_date = date('Y-m-d', strtotime($_POST['cabbage_date_unearthed']. ' + 91 days'));
       
           $cabbage_data = array(
             'unique_code' => $unique_code,
@@ -273,9 +300,12 @@
             'stock_level_amount' => $_POST['cabbage_quantity'],
             'stock_batch_number'  => $_POST['cabbage_batch_number'],
             'stock_man_date' => $_POST['cabbage_date_unearthed'],
-            'stock_exp_date'  => $_POST['cabbage_province'],
+            'stock_exp_date'  => $expiry_date,
             'user_id' => $_SESSION['user_id'],
-            'status' => 'pending'            
+            'status' => 'pending',
+            'project_name' => $_POST['project_name'],
+            'region' => $_SESSION['region'],
+            'delivery_month' => $_POST['delivery_month']            
           );
         
           $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_stock";
@@ -291,6 +321,8 @@
 
         //Potatoes
         if ($_POST['potatoes_quantity'] > 0 ){
+
+          $expiry_date = date('Y-m-d', strtotime($_POST['potatoes_date_unearthed']. ' + 61 days'));
       
           $potatoes_data = array(
             'unique_code' => $unique_code,
@@ -300,9 +332,12 @@
             'stock_level_amount' => $_POST['potatoes_quantity'],
             'stock_batch_number'  => $_POST['potatoes_batch_number'],
             'stock_man_date' => $_POST['potatoes_date_unearthed'],
-            'stock_exp_date'  => $_POST['potatoes_province'],
+            'stock_exp_date'  => $expiry_date,
             'user_id' => $_SESSION['user_id'],
-            'status' => 'pending'            
+            'status' => 'pending',
+            'project_name' => $_POST['project_name'],
+            'region' => $_SESSION['region'],
+            'delivery_month' => $_POST['delivery_month']            
           );
         
           $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_stock";
@@ -318,6 +353,8 @@
 
         //Pumpkin
         if ($_POST['pumpkin_quantity'] > 0 ){
+
+          $expiry_date = date('Y-m-d', strtotime($_POST['pumpkin_date_unearthed']. ' + 56 days'));
       
           $pumpkin_data = array(
             'unique_code' => $unique_code,
@@ -327,9 +364,12 @@
             'stock_level_amount' => $_POST['pumpkin_quantity'],
             'stock_batch_number'  => $_POST['pumpkin_batch_number'],
             'stock_man_date' => $_POST['pumpkin_date_unearthed'],
-            'stock_exp_date'  => $_POST['pumpkin_province'],
+            'stock_exp_date'  => $expiry_date,
             'user_id' => $_SESSION['user_id'],
-            'status' => 'pending'            
+            'status' => 'pending',
+            'project_name' => $_POST['project_name'],
+            'region' => $_SESSION['region'],
+            'delivery_month' => $_POST['delivery_month']            
           );
         
           $api_url = $APIBASE."delivery_notice_exec.php?action=add_supplier_stock";
@@ -360,6 +400,19 @@
           curl_close($client);
           $result = json_decode($response, true);  
 
+
+
+          $success = "<br>Finished adding a Supplier Delivery Note! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+          <script type='text/javascript'>
+              function countdown() {
+                var i = document.getElementById('counter');
+                if (parseInt(i.innerHTML)<=0) {
+                  location.href = 'delivery_history.php';
+                }
+                i.innerHTML = parseInt(i.innerHTML)-1;
+              }
+              setInterval(function(){ countdown(); },1000);
+              </script>'";             
 
     }
 ?>
@@ -442,7 +495,13 @@
                       <form action="" method="POST">
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="delivery_month">Delivery Month</label>
+                                <input type="month" class="form-control" name="delivery_month" id="delivery_month" required>
+                              </div>
+                            </div>                          
+                            <div class="col-md-4">
                               <div class="form-group">
                                 <label for="new_existing">Is this a new or existing delivery?</label>
                                 <select class="form-control" id="new_existing" name="new_existing" onchange="showHideReferenceInput(this.value)"  required>
@@ -452,7 +511,7 @@
                                 </select>
                               </div>  
                             </div>
-                            <div class="col-md-6" id="old-reference-info" style="display:none">
+                            <div class="col-md-4" id="old-reference-info" style="display:none">
                               <div class="form-group">
                                 <label for="previous_reference">Existing Reference Number</label>
                                 <input type="text" class="form-control" name="previous_reference" id="previous_reference" placeholder="Enter Exisiting Reference">

@@ -133,7 +133,7 @@
                             <tbody>
 
                             <?php
-                                $api_url = $APIBASE."delivery_notice_exec.php?action=show_foodbank_stock";
+                                $api_url = $APIBASE."delivery_notice_exec.php?action=&location=".$_SESSION['region']."";
                                 $client = curl_init($api_url);
                                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                 $response = curl_exec($client);

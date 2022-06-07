@@ -53,13 +53,13 @@
                               {
                                 foreach($result as $row)
                                 {
-                                  if($row->allocated_floor_space == "FL-SQ-01"){
+                                  if($row->allocated_floor_space == "FL_SQ_01"){
 
                                   $output_fsq1 .= '
 
                                   <div class="alert alert-fill-primary" role="alert">
                                     <i class="ti-info-alt"></i>
-                                      ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->stock_exp_date.']
+                                    ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->project_name.'] - ['.$row->stock_exp_date.']
                                   </div>
 
                                   ';
@@ -94,13 +94,13 @@
                               {
                                 foreach($result as $row)
                                 {
-                                  if($row->allocated_floor_space == "FL-SQ-02"){
+                                  if($row->allocated_floor_space == "FL_SQ_02"){
 
                                   $output_fsq2 .= '
 
                                   <div class="alert alert-fill-success" role="alert">
                                     <i class="ti-info-alt"></i>
-                                      ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->stock_exp_date.']
+                                    ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->project_name.'] - ['.$row->stock_exp_date.']
                                   </div>
 
                                   ';
@@ -138,13 +138,13 @@
                               {
                                 foreach($result as $row)
                                 {
-                                  if($row->allocated_floor_space == "FL-SQ-03"){
+                                  if($row->allocated_floor_space == "FL_SQ_03"){
 
                                   $output_fsq3 .= '
 
                                   <div class="alert alert-fill-info" role="alert">
                                     <i class="ti-info-alt"></i>
-                                      ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->stock_exp_date.']
+                                    ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->project_name.'] - ['.$row->stock_exp_date.']
                                   </div>
 
                                   ';
@@ -180,13 +180,13 @@
                               {
                                 foreach($result as $row)
                                 {
-                                  if($row->allocated_floor_space == "FL-SQ-04"){
+                                  if($row->allocated_floor_space == "FL_SQ_04"){
 
                                   $output_fsq4 .= '
 
                                   <div class="alert alert-fill-warning" role="alert">
                                     <i class="ti-info-alt"></i>
-                                      ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->stock_exp_date.']
+                                    ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->project_name.'] - ['.$row->stock_exp_date.']
                                   </div>
 
                                   ';
@@ -224,13 +224,13 @@
                               {
                                 foreach($result as $row)
                                 {
-                                  if($row->allocated_floor_space == "STG-RM-SQ-01"){
+                                  if($row->allocated_floor_space == "STG_RM_SQ_01"){
 
                                   $output_fsq4 .= '
 
                                   <div class="alert alert-fill-primary" role="alert">
                                     <i class="ti-info-alt"></i>
-                                      ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->stock_exp_date.']
+                                      ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->project_name.'] - ['.$row->stock_exp_date.']
                                   </div>
 
                                   ';
@@ -265,13 +265,13 @@
                               {
                                 foreach($result as $row)
                                 {
-                                  if($row->allocated_floor_space == "STG-RM-SQ-01"){
+                                  if($row->allocated_floor_space == "STG_RM_SQ_02"){
 
                                   $output_fsq4 .= '
 
                                   <div class="alert alert-fill-success" role="alert">
                                     <i class="ti-info-alt"></i>
-                                      ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->stock_exp_date.']
+                                    ['.$row->items_qty.'] - ['.$row->stock_name.'] - ['.$row->stock_brand.'] - ['.$row->project_name.'] - ['.$row->stock_exp_date.']
                                   </div>
 
                                   ';
@@ -292,81 +292,80 @@
             </div>
 
             <br>
-            <div class="col-lg-12 grid-margin stretch-card" id="food-bank-stock">
-              <div class="card">
-                <div class="card-body">
-                <h4 class="card-title">Floor Square Unallocated Stock</h4>
-                  <div class="table-responsive">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Transaction</th>
-                          <th>Created Date</th>
-                          <th>Stock Type</th>
-                          <th>Item Details</th>
-                          <th>Quantity</th>
-                          <th>Expiry Date</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+            <div class="card">
+              <div class="card-body">
+              <h4 class="card-title">Floor Square Unallocated Stock</h4>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Transaction</th>
+                        <th>Created Date</th>
+                        <th>Stock Type</th>
+                        <th>Item Details</th>
+                        <th>Quantity</th>
+                        <th>Expiry Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
 
-                      <?php
-                          $api_url = $APIBASE."delivery_notice_exec.php?action=show_foodbank_stock";
-                          $client = curl_init($api_url);
-                          curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                          $response = curl_exec($client);
-                          $result = json_decode($response);
-                          $bank_history_output = '';
+                    <?php
+                        $api_url = $APIBASE."delivery_notice_exec.php?action=show_foodbank_stock&location=".$_SESSION['region']."";
+                        $client = curl_init($api_url);
+                        curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                        $response = curl_exec($client);
+                        $result = json_decode($response);
+                        $unallocated_output = '';
 
-                          if(count($result) > 0)
+                        if(count($result) > 0)
+                        {
+                          foreach($result as $row)
                           {
-                            foreach($result as $row)
-                            {
 
-                              $row_id = $row->stockdetail_id;
-                              
-                              if($row->allocated != "allocated" && $row->allocated != "partial"){
+                            $row_id = $row->stockdetail_id;
+                            
+                            if($row->allocated != "allocated" && $row->allocated != "partial"){
 
-                              $bank_history_output .= '
-                              <tr>
-                              <td>'.$row->stockdetail_id.'</td>
-                              <td>'.$row->create_date_time.'</td>
-                              <td>'.$row->stock_type.'</td>
-                              <td>'.$row->stock_name.', '.$row->stock_brand.'</td>
-                              <td>'.$row->stock_level_amount.'</td>
-                              <td>'.$row->stock_exp_date.'</td>
-                              <td>
-                                <a target="_blank" href="allocate_stock.php?id='.$row->stockdetail_id.'"><button class="btn btn-outline-primary">Allocate</button></a>
-                              </td>
-                              </tr>
-                              ';
-                            }
-                          }
-                        } else {
-                          $bank_history_output .= '
-                            <tr align="center">
-                              <td align="center"> No Data To Display </td>
+                            $unallocated_output .= '
+                            <tr>
+                            <td>'.$row->stockdetail_id.'</td>
+                            <td>'.$row->create_date_time.'</td>
+                            <td>'.$row->stock_type.'</td>
+                            <td>'.$row->stock_name.', '.$row->stock_brand.'</td>
+                            <td>'.$row->stock_level_amount.'</td>
+                            <td>'.$row->stock_exp_date.'</td>
+                            <td>
+                              <a target="_blank" href="allocate_stock.php?id='.$row->stockdetail_id.'"><button class="btn btn-outline-primary">Allocate</button></a>
+                            </td>
                             </tr>
                             ';
+                          }
                         }
+                      } else {
+                        $unallocated_output .= '
+                          <tr align="center">
+                            <td align="center"> No Data To Display </td>
+                          </tr>
+                          ';
+                      }
 
-                          echo $bank_history_output;
-                      ?>                      
+                        echo $unallocated_output;
+                    ?>                      
 
-                      </tbody>
-                    </table>
+                    </tbody>
+                  </table>
 
-                  </div>
                 </div>
               </div>
             </div>
+
 
             <br>
             <div class="col-lg-12 grid-margin stretch-card" id="partial-food-bank-stock">
               <div class="card">
                 <div class="card-body">
-                <h4 class="card-title"> Allocated Stock to Floor Square</h4>
+                <h4 class="card-title">Allocated Stock To Floor Square</h4>
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead>
@@ -377,18 +376,18 @@
                           <th>Item Details</th>
                           <th>Quantity</th>
                           <th>Manufactured Date</th>
-                          <th>Action</th>
+                          <th>Floor Allocation</th>
                         </tr>
                       </thead>
                       <tbody>
 
                       <?php
-                          $api_url = $APIBASE."stock_levels_exec.php?action=show_allocated_foodbank_stock";
+                          $api_url = $APIBASE."stock_levels_exec.php?action=show_allocated_foodbank_stock&location=".$_SESSION['region']."";
                           $client = curl_init($api_url);
                           curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                           $response = curl_exec($client);
                           $result = json_decode($response);
-                          $bank_history_output = '';
+                          $allocated_output = '';
 
                           if(count($result) > 0)
                           {
@@ -397,7 +396,7 @@
 
                               $row_id = $row->allocation_id;
 
-                              $partial_output .= '
+                              $allocated_output .= '
                               <tr>
                               <td>'.$row->allocation_id.'</td>
                               <td>'.$row->date_time.'</td>
@@ -405,21 +404,19 @@
                               <td>'.$row->stock_name.', '.$row->stock_brand.'</td>
                               <td>'.$row->items_qty.'</td>
                               <td>'.$row->stock_exp_date.'</td>
-                              <td>
-                                <a target="_blank" href="allocate_stock.php?id='.$row->stockdetail_id.'"><button class="btn btn-outline-primary">Allocate</button></a>
-                              </td>
+                              <td>'.$row->allocated_floor_space.'</td>
                               </tr>
                               ';
                             }
                           } else {
-                          $partial_output .= '
+                          $allocated_output .= '
                             <tr align="center">
                               <td align="center"> No Data To Display </td>
                             </tr>
                             ';
                         }
 
-                          echo $partial_output;
+                          echo $allocated_output;
                       ?>                      
 
                       </tbody>

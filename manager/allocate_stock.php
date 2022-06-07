@@ -16,25 +16,73 @@
 
       $unique_code = refGenerator();
 
-      $allocation_data = array(
-        'stock_type' => $_POST['stock_type'],
-        'stock_name' => $_POST['stock_name'],
-        'stock_brand'  => $_POST['stock_brand'],
-        'items_qty' => $_POST['items_qty'],
-        'stock_man_date' => $_POST['stock_man_date'],
-        'stock_exp_date' => $_POST['stock_exp_date'],
-        'allocated_floor_space'  => $_POST['floor_square'],
-        'unique_code' => $unique_code,
-        'region' => $_SESSION['region']
-      );
-    
-      $api_url = $APIBASE."stock_levels_exec.php?action=add_stock_floor_location";
+      $project_name = str_replace(' ', '+', $_POST['project_name']);
+      $location = str_replace(' ', '+', $_POST['region']);
+      $stock_name = str_replace(' ', '+', $_POST['stock_name']);
+      $stock_brand = str_replace(' ', '+', $_POST['stock_brand']);
+      $floor_square = str_replace(' ', '+', $_POST['floor_square']);
+
+
+      $api_url = $APIBASE."stock_levels_exec.php?action=check_allocated_stock&location=".$location."&stock_name=".$stock_name."&stock_brand=".$stock_brand."&project_name=".$project_name."&floor_square=".$floor_square."";
       $client = curl_init($api_url);
-      curl_setopt($client, CURLOPT_POST, true);
-      curl_setopt($client, CURLOPT_POSTFIELDS, $allocation_data);
       curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
       $response = curl_exec($client);
-      curl_close($client);
+      $result = json_decode($response);
+
+      if(count($result) > 0){
+        foreach($result as $row) {
+          
+          $current_stock_level = $row->items_qty;
+          $entered_stock_level = $_POST['items_qty'];
+          $items_qty = $current_stock_level + $entered_stock_level;
+
+              //Update Supplier Status Stock Detail table
+              $stock_data = array(
+                'items_qty' => $items_qty,
+                'location' => $_SESSION['region'],
+                'stock_name' =>  $_POST['stock_name'],
+                'stock_brand' => $_POST['stock_brand'],
+                'project_name' => $_POST['project_name'],
+                'floor_square' => $_POST['floor_square']
+              );
+
+   
+              $api_url = $APIBASE."stock_levels_exec.php?action=update_allocated_stock";
+              $client = curl_init($api_url);
+              curl_setopt($client, CURLOPT_POST, true);
+              curl_setopt($client, CURLOPT_POSTFIELDS, $stock_data);
+              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+              $response = curl_exec($client);
+              curl_close($client);          
+          
+
+
+        }
+      } else {
+
+        $allocation_data = array(
+          'stock_type' => $_POST['stock_type'],
+          'stock_name' => $_POST['stock_name'],
+          'stock_brand'  => $_POST['stock_brand'],
+          'items_qty' => $_POST['items_qty'],
+          'stock_man_date' => $_POST['stock_man_date'],
+          'stock_exp_date' => $_POST['stock_exp_date'],
+          'allocated_floor_space'  => $_POST['floor_square'],
+          'unique_code' => $unique_code,
+          'region' => $_POST['region'], 
+          'project_name' => $_POST['project_name'], 
+          'delivery_month' => $_POST['delivery_month']
+        );
+      
+        $api_url = $APIBASE."stock_levels_exec.php?action=add_stock_floor_location";
+        $client = curl_init($api_url);
+        curl_setopt($client, CURLOPT_POST, true);
+        curl_setopt($client, CURLOPT_POSTFIELDS, $allocation_data);
+        curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($client);
+        curl_close($client);
+
+      }
       
       
       if ($_POST['stock_level_amount'] == $_POST['items_qty']){
@@ -87,6 +135,7 @@
           }
           setInterval(function(){ countdown(); },1000);
           </script>'";      
+
 
     }
 
@@ -209,12 +258,12 @@
                                     <label for="floor_square">Floor Square Space</label>
                                     <select class="form-control" id="floor_square" name="floor_square" required>
                                       <option selected></option>
-                                      <option>FL-SQ-01</option>
-                                      <option>FL-SQ-02</option>
-                                      <option>FL-SQ-03</option>                            
-                                      <option>FL-SQ-04</option>
-                                      <option>STG-RM-SQ-01</option>
-                                      <option>STG-RM-SQ-02</option>                            
+                                      <option>FL_SQ_01</option>
+                                      <option>FL_SQ_02</option>
+                                      <option>FL_SQ_03</option>                            
+                                      <option>FL_SQ_04</option>
+                                      <option>STG_RM_SQ_01</option>
+                                      <option>STG_RM_SQ_02</option>                            
                                     </select>
                                   </div>  
                                 </div>                            
@@ -232,6 +281,9 @@
                                 <input type="hidden" id="stock_brand" name="stock_brand" value="<?php echo $row->stock_brand; ?>">
                                 <input type="hidden" id="stock_man_date" name="stock_man_date" value="<?php echo $row->stock_man_date; ?>">
                                 <input type="hidden" id="stock_exp_date" name="stock_exp_date" value="<?php echo $row->stock_exp_date; ?>">
+                                <input type="hidden" id="region" name="region" value="<?php echo $row->region; ?>">
+                                <input type="hidden" id="project_name" name="project_name" value="<?php echo $row->project_name; ?>">
+                                <input type="hidden" id="delivery_month" name="delivery_month" value="<?php echo $row->delivery_month; ?>">
 
                               </div>
 

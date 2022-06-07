@@ -44,8 +44,11 @@
                 'stock_man_date' => $row->stock_man_date,
                 'stock_exp_date'  => $row->stock_exp_date,
                 'user_id' => $_SESSION['user_id'],
+                'region' => $_SESSION['region'],
                 'status' => "Completed",
-                'supplier_ref' => $row->unique_code
+                'project_name'  => $row->project_name,                
+                'supplier_ref' => $row->unique_code,
+                'delivery_month' => $row->delivery_month
               );
 
    
@@ -183,22 +186,22 @@
           if(count($result) > 0){
             foreach($result as $row) {
 
-              $new_stock_qty = $_POST['stock_level_amount'];
-              $current_stock_name = $row->stock_name;
-
               //Populate the stock activities table (foodbank_stock_details_tbl)
               $stock_data = array(
                 'unique_code' => $unique_code,
                 'stock_type' => $row->stock_type,
                 'stock_name' => $row->stock_name,
                 'stock_brand'  => $row->stock_brand,
-                'stock_level_amount' => $new_stock_qty,
+                'stock_level_amount' => $_POST['stock_level_amount'],
                 'stock_batch_number'  => $row->stock_batch_number,
                 'stock_man_date' => $row->stock_man_date,
                 'stock_exp_date'  => $row->stock_exp_date,
+                'project_name'  => $row->project_name,
+                'region' => $_SESSION['region'],
                 'user_id' => $_SESSION['user_id'],
                 'status' => "Completed",
-                'supplier_ref' => $row->unique_code
+                'supplier_ref' => $row->unique_code,
+                'delivery_month' => $row->delivery_month
               );
 
    
@@ -211,12 +214,11 @@
               curl_close($client);
               $result = json_decode($response, true);  
 
-              $current_stock = $row->stock_name;
-              $stock_amount = $_POST['stock_level_amount'];
+              $current_stock_name = $row->stock_name;
 
               //Update Supplier Status Stock Detail table
               $stock_data = array(
-                'status' => "complete",
+                'status' => "partial",
                 'stockdetail_id' => $row_id
               );
 
@@ -250,7 +252,7 @@
             } 
           }
 
-
+          
 
           if ($current_stock_name == "Maize Meal"){
               $current_stock_name = "Maize+Meal";
@@ -298,7 +300,7 @@
       
           
           $unique_code = $unique_code;
-          $received_stock = $new_stock_qty;
+          $received_stock = $_POST['stock_level_amount'];
           $new_stock_level = $current_stock_level + $received_stock;
       
           $actual_stock_data = array(
@@ -306,7 +308,7 @@
               'current_stock_level' => $new_stock_level,
               'old_stock_level' => $current_stock_level,
               'updated_stock_level' => $received_stock,
-              'update_activity' => "Added Fully Stock From The Supplier",
+              'update_activity' => "Added Partial Stock From The Supplier",
               'stock_id' => $stock_id
           );
       
@@ -383,7 +385,10 @@
                 'status' => "food bank rejected",
                 'reason_of_rejection' => $_POST['rejection_notes'],
                 'logged_by' => $_SESSION['name'],
-                'logged_by_user_id' => $_SESSION['user_id'],   
+                'logged_by_user_id' => $_SESSION['user_id'],
+                'project_name' => $row->project_name,
+                'region' => $_SESSION['region'],
+                'delivery_month' => $row->delivery_month
               );
 
    
@@ -420,7 +425,19 @@
       curl_close($client);
       $result = json_decode($response, true); 
       
-      header("Location: goods_receivables.php#food-bank-stock");
+
+      $success = "<br>Finished processing the Supplier Delivery Stock! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+      <script type='text/javascript'>
+          function countdown() {
+            var i = document.getElementById('counter');
+            if (parseInt(i.innerHTML)<=0) {
+              location.href = 'goods_receivables.php#food-bank-stock';
+            }
+            i.innerHTML = parseInt(i.innerHTML)-1;
+          }
+          setInterval(function(){ countdown(); },1000);
+          </script>'";   
+
 
     }
 
@@ -563,19 +580,7 @@
                     </table>
                   </div>
 
-                  <div id="item-rejected-info">
-                    <div class="row" align="center">
-                      <div class="col-md-1">
-                      </div>
-                      <div class="col-md-10">
-                        <tr>
-                          <td>
-                            <textarea class="form-control" name="rejection_notes" id="rejection_notes" rows="4" placeholder="If there's rejections. Enter the reason for stock rejection"></textarea>
-                          </td>
-                        </tr>
-                      </div>
-                    </div>
-                  </div>
+
 
                 </div>
                 <?php
@@ -595,6 +600,21 @@
 
                         
                   ?>
+
+
+                    <div id="item-rejected-info">
+                      <div class="row" align="center">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-10">
+                          <tr>
+                            <td>
+                              <textarea class="form-control" name="rejection_notes" id="rejection_notes" rows="4" placeholder="If there's rejections. Enter the reason for stock rejection"></textarea>
+                            </td>
+                          </tr>
+                        </div>
+                      </div>
+                    </div>
 
                     <div align="center">
                       <input  class="btn btn-outline-primary btn-icon-text btn-lg" type="submit" name="submit" value="Submit">
