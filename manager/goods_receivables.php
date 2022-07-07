@@ -38,7 +38,7 @@
                           <table class="table table-hover">
                             <thead align="center">
                               <tr>
-                                <th>Transaction</th>
+                                <th>#</th>
                                 <th>Reference</th>
                                 <th>Project Name</th>
                                 <th>Date of delivery</th>
@@ -50,7 +50,7 @@
                             <tbody align="center">
 
                             <?php
-                                $api_url = $APIBASE."delivery_notice_exec.php?action=show_region_stock&region=".$_SESSION['region']."";
+                                $api_url = $APIBASE."delivery_notice_exec.php?action=show_region_stock_limit&region=".$_SESSION['region']."";
                                 $client = curl_init($api_url);
                                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                 $response = curl_exec($client);
@@ -121,7 +121,7 @@
                           <table class="table table-hover">
                             <thead>
                               <tr>
-                                <th>Transaction</th>
+                                <th>#</th>
                                 <th>Created Date</th>
                                 <th>Stock Type</th>
                                 <th>Item Details</th>
@@ -133,7 +133,7 @@
                             <tbody>
 
                             <?php
-                                $api_url = $APIBASE."delivery_notice_exec.php?action=&location=".$_SESSION['region']."";
+                                $api_url = $APIBASE."delivery_notice_exec.php?action=supplier_stock_region&region=".$_SESSION['region']."";
                                 $client = curl_init($api_url);
                                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                 $response = curl_exec($client);
@@ -149,7 +149,7 @@
                                     $bank_history_output .= '
                                     <tr>
                                     <td>'.$row->stockdetail_id.'</td>
-                                    <td>'.$row->create_date_time.'</td>
+                                    <td>'.$row->create_date.'</td>
                                     <td>'.$row->stock_type.'</td>
                                     <td>'.$row->stock_name.', '.$row->stock_brand.'</td>
                                     <td>'.$row->stock_level_amount.'</td>

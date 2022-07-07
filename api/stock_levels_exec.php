@@ -107,6 +107,12 @@ if($_GET["action"] == 'add_foodpack_details')
  $data = $api_object->addFoodpackDetails();
 }
 
+// Get the total stock levels for a given region
+if($_GET["action"] == 'show_stock_total_region')
+{
+ $data = $api_object->showStockTotalsRegion($_GET["location"]);
+}
+
 echo json_encode($data);
 
 ?>

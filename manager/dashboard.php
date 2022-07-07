@@ -468,6 +468,90 @@
                         </div>
                       </div>
                     </div>
+
+                  <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                      <h4 class="mb-3 mt-5" align="center">View Food Parcels At Different Lifecycle Stages</h4>
+                      <p class="w-75 mx-auto mb-5" align="center">To view the food parcels at different stages, from creating new food pack, to food packages in transit, and food packages delivered to beneficiaries.</p>
+                        <div class="row pricing-table">
+
+                          <?php
+                            $api_url = $APIBASE."foodpack_exec.php?action=show_foodpack_stage&location=".$location."";
+                            $client = curl_init($api_url);
+                            curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                            $response = curl_exec($client);
+                            $result = json_decode($response);
+                            $output_limit = '';
+
+                            if(count($result) > 0)
+                            {
+                              foreach($result as $row)
+                              {        
+                          ?>
+
+
+                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
+                            <div class="card border-primary border pricing-card-body">
+                              <div class="text-center pricing-card-head">
+                                <h3 class="text-primary">New <br>Food Packs</h3>
+                                <p>#</p>
+                                <h1 class="fw-normal mb-4"><?php echo $row->pack_in_foodbank ?></h1>
+                              </div>
+                              <ul class="list-unstyled plan-features">
+                              </ul>
+                              <div class="wrapper" align="center">
+                                <a href="food_parcels.php#stock" >
+                                  <input type='button' class="btn btn-outline-primary btn-block btn-lg"  value='View'>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
+                            <div class="card border border-success pricing-card-body">
+                              <div class="text-center pricing-card-head">
+                                <h3 class="text-success">Food Packs In Transit</h3>
+                                <p>#</p>
+                                <h1 class="fw-normal mb-4"><?php echo $row->pack_in_transit ?></h1>
+                              </div>
+                              <ul class="list-unstyled plan-features">
+                              </ul>
+                              <div class="wrapper" align="center">
+                              <a href="food_parcels.php#transit" >
+                                <input type='button' class="btn btn-success btn-block btn-lg"  value='View'>
+                              </a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
+                            <div class="card border border-danger pricing-card-body">
+                              <div class="text-center pricing-card-head">
+                                <h3 class="text-danger">Delivered Food Packs</h3>
+                                <p>#</p>
+                                <h1 class="fw-normal mb-4"><?php echo $row->pack_delivered ?></h1>
+                              </div>
+                              <ul class="list-unstyled plan-features">
+                              </ul>
+                              <div class="wrapper" align="center">
+                                <a href="food_parcels.php#delivered" >
+                                  <input type='button' class="btn btn-outline-danger btn-block btn-lg"  value='View '>
+                                </a>
+                              </div>                                  
+                            </div>
+                          </div>
+
+                          <?php
+                              }
+                            }
+                          ?>    
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>                    
+
+
                     <div class="row">
                       <div class="col-lg-12 d-flex flex-column">
                         <div class="row flex-grow">
@@ -507,108 +591,188 @@
                     </div>
 
 
-                    <div class="col-lg-12 grid-margin stretch-card">
-                      <div class="card">
-                        <div class="card-body">
-                          <h4 class="card-title">Distributed Food Parcels</h4>
-                          <p class="card-description">
-                            Food Parcels That Have Been Distributed In The Past Week
-                          </p>
-                          <div class="table-responsive">
-                            <table class="table table-hover">
-                              <thead>
-                                <tr>
-                                  <th>Transaction ID</th>
-                                  <th>Full Names</th>
-                                  <th>Phone</th>
-                                  <th>Alt Number </th>
-                                  <th>ID Number </th>
-                                  <th>Address</th>
-                                  <th>Actions</th>                       
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>51423</td>
-                                  <td>Mzameni Mzameni</td>
-                                  <td>0639925196</td>
-                                  <td>-</td>
-                                  <td>8611246082081</td>
-                                  <td>
-                                    Block 24/2 Jabulani Hostel
-                                  </td>
-                                  <td class="text-right">
-                                    <button class="btn btn-light">
-                                      <i class="ti-eye text-primary"></i>View
-                                    </button>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>51422</td>
-                                  <td>Sande Sande</td>
-                                  <td>0661851197</td>
-                                  <td>0619941100</td>
-                                  <td>9703186039087</td>
-                                  <td>
-                                    Block 24/1 Jabulani Hostels
-                                  </td>
-                                  <td class="text-right">
-                                    <button class="btn btn-light">
-                                      <i class="ti-eye text-primary"></i>View
-                                    </button>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>51421</td>
-                                  <td>Thulani Thulani</td>
-                                  <td>0661025577</td>
-                                  <td>0833159838</td>
-                                  <td>8409236284084</td>
-                                  <td>
-                                    Block 24/1 Jabulani Hostel
-                                  </td>
-                                  <td class="text-right">
-                                    <button class="btn btn-light">
-                                      <i class="ti-eye text-primary"></i>View
-                                    </button>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>47882</td>
-                                  <td>Siphiwe Hlongwane</td>
-                                  <td>0627650519</td>
-                                  <td></td>
-                                  <td>9309145133084</td>
-                                  <td>
-                                    25033 Bopanang street
-                                  </td>
-                                  <td class="text-right">
-                                    <button class="btn btn-light">
-                                      <i class="ti-eye text-primary"></i>View
-                                    </button>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>48407</td>
-                                  <td>Sifiso Dloboyi</td>
-                                  <td>0728482875</td>
-                                  <td>0843189838</td>
-                                  <td>9503015363082</td>
-                                  <td>
-                                   13566 Motha street 
-                                 </td>
-                                 <td class="text-right">
-                                  <button class="btn btn-light">
-                                    <i class="ti-eye text-primary"></i>View
-                                  </button>
-                                </td>
+                    <?php
+                    $api_url = $APIBASE."beneficiary_details_exec.php?action=show_beneficiary_stages&location=".$location."";
+                    $client = curl_init($api_url);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                    $response = curl_exec($client);
+                    $result = json_decode($response);
+                    $output_limit = '';
+
+                    if(count($result) > 0)
+                    {
+                      foreach($result as $row)
+                      {        
+                  ?>
+                  
+                  <br><br>
+                  <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                      <h4 class="mb-3 mt-5" align="center">View Beneficiaries At Different Lifecycle Stages</h4>
+                      <p class="w-75 mx-auto mb-5" align="center">To view the beneficiaries at different stages, from creating new beneficiaries, to eligable beneficiaries, and then post support beneficiaries.</p>
+                        <div class="row pricing-table">
+                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
+                            <div class="card border-primary border pricing-card-body">
+                              <div class="text-center pricing-card-head">
+                                <h3 class="text-primary">New <br>Beneficiaries</h3>
+                                <p># no-deliveries</p>
+                                <h1 class="fw-normal mb-4"><?php echo $row->tot_new_users ?></h1>
+                              </div>
+                              <ul class="list-unstyled plan-features">
+                              </ul>
+                              <div class="wrapper" align="center">
+                                <a href="beneficiary_stages.php#new" >
+                                  <input type='button' class="btn btn-outline-primary btn-block btn-lg"  value='View'>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
+                            <div class="card border border-success pricing-card-body">
+                              <div class="text-center pricing-card-head">
+                                <h3 class="text-success">Eligable Beneficiaries</h3>
+                                <p>1 - 3 deliveries</p>
+                                <h1 class="fw-normal mb-4"><?php echo $row->tot_delivered_users ?></h1>
+                              </div>
+                              <ul class="list-unstyled plan-features">
+                              </ul>
+                              <div class="wrapper" align="center">
+                              <a href="beneficiary_stages.php#delivered" >
+                                <input type='button' class="btn btn-success btn-block btn-lg"  value='View'>
+                              </a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
+                            <div class="card border border-danger pricing-card-body">
+                              <div class="text-center pricing-card-head">
+                                <h3 class="text-danger">Post-Support Beneficiaries</h3>
+                                <p># post intevension</p>
+                                <h1 class="fw-normal mb-4"><?php echo $row->tot_completed_users ?></h1>
+                              </div>
+                              <ul class="list-unstyled plan-features">
+                              </ul>
+                              <div class="wrapper" align="center">
+                                <a href="beneficiary_stages.php#post-delivery" >
+                                  <input type='button' class="btn btn-outline-primary btn-block btn-lg"  value='View '>
+                                </a>
+                              </div>                                  
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <?php
+                      }
+                    }
+                  ?>
+                  
+                  <div class="col-lg-12 grid-margin stretch-card" id="delivered" >
+                    <div class="card">
+                      <div class="card-body">
+                      <h4 class="card-title">Distributed Food Parcels</h4>
+                        <p class="card-description">
+                          Food Parcels That Have Been Distributed In The Past Week
+                        </p>
+                        <div class="table-responsive">
+                          <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Distribution <br> Date Time</th>
+                                <th>Full Names</th>
+                                <th>Phone</th>
+                                <th>ID Number </th>                                
+                                <th>Address</th>
+                                <th>No of <br>Deliveries</th>
+                                <th>Action</th>
                               </tr>
+                            </thead>
+                            <tbody>
+
+                            <?php
+                                // Update the API end-point
+                                $api_url = $APIBASE."beneficiary_details_exec.php?action=show_20_delivered_headofhouse&location=".$location."";
+                                $client = curl_init($api_url);
+                                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                $response = curl_exec($client);
+                                $result = json_decode($response);
+                                $delivered_output = '';
+
+                                if(count($result) > 0)
+                                {
+                                  foreach($result as $row)
+                                  {
+
+
+                                    $delivered_output .= '
+                                    <tr>
+                                    <td>'.$row->hoh_id.'</td>
+                                    <td>'.$row->hoh_date_time.'</td>
+                                    <td>'.$row->first_name.' '.$row->surname.'</td>
+                                    <td>'.$row->cellphone.'</td>
+                                    <td>'.$row->id_number.'</td>
+                                    <td>'.$row->home_address.'</td>
+                                    <td>'.$row->no_delivery_times.'</td>
+                                    <td>
+                                      <a target="_blank" href="view_beneficiary_details.php?code='.$row->unique_code.'"><button class="btn btn-outline-primary">View</button></a>
+                                    </td>                                    
+                                    </tr>
+                                    ';
+                                  }
+                                }
+
+                                echo $delivered_output;
+                                
+                            ?> 
+
+                            <?php
+                                // Update the API end-point
+                                $api_url = $APIBASE."beneficiary_details_exec.php?action=show_20_postdelivered_headofhouse&location=".$location."";
+                                $client = curl_init($api_url);
+                                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                $response = curl_exec($client);
+                                $result = json_decode($response);
+                                $delivered_output = '';
+
+                                if(count($result) > 0)
+                                {
+                                  foreach($result as $row)
+                                  {
+
+
+                                    $delivered_output .= '
+                                    <tr>
+                                    <td>'.$row->hoh_id.'</td>
+                                    <td>'.substr($row->hoh_date_time, 0, 11).'</td>
+                                    <td>'.$row->first_name.' '.$row->surname.'</td>
+                                    <td>'.$row->cellphone.'</td>
+                                    <td>'.$row->id_number.'</td>
+                                    <td>'.$row->home_address.'</td>
+                                    <td>'.$row->no_delivery_times.'</td>
+                                    <td>
+                                      <a target="_blank" href="view_beneficiary_details.php?code='.$row->unique_code.'"><button class="btn btn-outline-primary">View</button></a>
+                                    </td>
+                                    </tr>
+                                    ';
+                                  }
+                                }
+
+                                echo $delivered_output;
+                            ?> 
+
+
                             </tbody>
                           </table>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> 
+
+
                 </div>
               </div>
             </div>

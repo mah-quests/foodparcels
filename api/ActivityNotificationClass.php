@@ -46,6 +46,21 @@ class ActivityNotificationClass
     }
 
 
+    function getRegionActivitiesLimit20($region){
+
+        $query = "SELECT * FROM activities_tbl WHERE region='".$region."' ORDER BY activity_id DESC  LIMIT 20";
+    
+            $statement = $this->connect->prepare($query);
+            
+            if($statement->execute()){
+                while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                    $data[] = $row;
+                    }
+                    
+                    return $data;
+            }
+        }    
+
     function getUserActivities($user_id){
 
         $query = "SELECT * FROM activities_tbl WHERE user_id='".$user_id."' ORDER BY activity_id DESC";

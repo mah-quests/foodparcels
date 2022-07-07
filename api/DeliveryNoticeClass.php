@@ -88,6 +88,21 @@ class DeliveryNoticeClass
             }
     }
 
+    function getSupplierStockByRegion($region){
+
+        $query = "SELECT * FROM supplier_stock_details_tbl WHERE region='".$region."'";
+    
+            $statement = $this->connect->prepare($query);
+            
+            if($statement->execute()){
+                while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                    $data[] = $row;
+                    }
+                    
+                    return $data;
+            }
+    }
+
     function getSupplierPoliciesByRegion($region){
 
         $query = "SELECT * FROM supplier_stock_level_tbl WHERE region='".$region."' ORDER BY stocklevel_id DESC";
@@ -102,6 +117,21 @@ class DeliveryNoticeClass
                     return $data;
             }
     } 
+
+    function getSupplierPoliciesByRegionLm20($region){
+
+        $query = "SELECT * FROM supplier_stock_level_tbl WHERE region='".$region."' ORDER BY stocklevel_id DESC LIMIT 20";
+    
+            $statement = $this->connect->prepare($query);
+            
+            if($statement->execute()){
+                while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                    $data[] = $row;
+                    }
+                    
+                    return $data;
+            }
+    }     
 
     function getStockItemDetails($code){
 

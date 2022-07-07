@@ -28,6 +28,12 @@ if($_GET["action"] == 'region_activities')
  $data = $api_object->getRegionActivities($_GET["region"]);
 }
 
+// Show the only last 20 stock details in the 'activities_tbl', filter data using region
+if($_GET["action"] == 'last_20_region_activities')
+{
+ $data = $api_object->getRegionActivitiesLimit20($_GET["region"]);
+}
+
 echo json_encode($data);
 
 ?>

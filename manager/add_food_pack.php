@@ -1,10 +1,13 @@
 <?php
   include_once "include/header.php";
   include("../config/connect.php");
+  include("include/QR_BarCode.php");
+
   error_reporting(0);
   session_start();
 
   $location = $_SESSION['region'];
+  $qr = new QR_BarCode();
 
   if (isset($_POST['submit'])) {
 
@@ -351,6 +354,13 @@
           'foodpack_state' => "Food Bank"
 
         );
+
+        $url = $URLBASE."foodpack.php?code=".$unique_code;
+        //create text QR code
+        $qr->URL($url);
+
+        //Save QR in image
+        $qr->qrCode(200,'../qr-code/'.$unique_code.'.png');        
       
         $api_url = $APIBASE."stock_levels_exec.php?action=add_foodpack_summary";
         $client = curl_init($api_url);
