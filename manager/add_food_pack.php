@@ -1,10 +1,13 @@
 <?php
   include_once "include/header.php";
   include("../config/connect.php");
+  include("include/QR_BarCode.php");
+
   error_reporting(0);
   session_start();
 
   $location = $_SESSION['region'];
+  $qr = new QR_BarCode();
 
   if (isset($_POST['submit'])) {
 
@@ -351,6 +354,13 @@
           'foodpack_state' => "Food Bank"
 
         );
+
+        $url = $URLBASE."foodpack.php?code=".$unique_code;
+        //create text QR code
+        $qr->URL($url);
+
+        //Save QR in image
+        $qr->qrCode(200,'../qr-code/'.$unique_code.'.png');        
       
         $api_url = $APIBASE."stock_levels_exec.php?action=add_foodpack_summary";
         $client = curl_init($api_url);
@@ -431,6 +441,50 @@
 
     }
   }
+
+
+  function showEditMaizeMealField() {
+
+    var noOption = document.getElementById("maize_meal_status").value;
+
+    if (noOption == "Partial"){
+
+
+      jQuery('#maize_meal-readonly').hide();
+      document.getElementById("maize_meal-readonly").style.visibility = 'hidden';
+
+      jQuery('#maize_meal-edit').show();
+      document.getElementById("maize_meal-edit").style.visibility = 'visible';
+
+      jQuery('#maize_meal-rejected-notes').show();
+      document.getElementById("rejected-notes").style.visibility = 'visible';
+            
+    } else if (noOption == "Rejected"){
+
+      jQuery('#maize_meal-rejected-notes').show();
+      document.getElementById("rejected-notes").style.visibility = 'visible';
+
+      jQuery('#maize_meal-readonly').show();
+      document.getElementById("maize_meal-readonly").style.visibility = 'visible';
+
+      jQuery('#maize_meal-edit').hide();
+      document.getElementById("maize_meal-edit").style.visibility = 'hidden';   
+
+    
+    } else {
+
+      jQuery('#maize_meal-readonly').show();
+      document.getElementById("maize_meal-readonly").style.visibility = 'visible';
+
+      jQuery('#maize_meal-edit').hide();
+      document.getElementById("maize_meal-edit").style.visibility = 'hidden';      
+
+      jQuery('#maize_meal-rejected-notes').hide();
+      document.getElementById("rejected-notes").style.visibility = 'hidden';
+
+    }
+    
+  }  
 
 </script>
 
@@ -513,7 +567,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Maize Meal" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -563,7 +617,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Rice" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -611,7 +665,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Sugar" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -660,7 +714,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Cooking Oil" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -710,7 +764,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Tea" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -760,7 +814,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Baked Beans" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -809,7 +863,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "All Purpose Soap" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -858,7 +912,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Soya Mince" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -906,7 +960,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Cabbage" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -954,7 +1008,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Potatoes" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1002,7 +1056,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Pumpkin" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1055,7 +1109,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Maize Meal" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>"  readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1104,7 +1158,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Rice" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>"  readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1152,7 +1206,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Sugar" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>"  readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1201,7 +1255,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Cooking Oil" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1251,7 +1305,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Tea" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>"  readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1301,7 +1355,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Baked Beans" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>"  readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1350,7 +1404,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "All Purpose Soap" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1399,7 +1453,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Sugar" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1447,7 +1501,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Cabbage" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>"  readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1495,7 +1549,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Potatoes" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">
@@ -1543,7 +1597,7 @@
                                   <div class="col-md-3">
                                     <div class="form-group">
                                       <label for="item">Item</label>
-                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo "Pumpkin" ?>" readonly>
+                                      <input type="text" class="form-control" name="item" id="item" value="<?php echo $row->stock_name.', '.$row->stock_brand ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-3">

@@ -8,7 +8,7 @@ $(function() {
     labels: ["Maize-Meal", "Rice", "Sugar", "Cooking Oil", "Tea", "Vegetables","Canned food", "Soap", "Soya Mince", "Other"],
     datasets: [{
       label: '# of Items',
-      data: [1308, 1581, 1440, 1381, 380, 2200, 2338, 1388, 1690, 2800],
+      data: [138, 151, 140, 131, 380, 200, 238, 138, 190, 280],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',

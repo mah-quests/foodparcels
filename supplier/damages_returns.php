@@ -38,9 +38,9 @@
                           <thead>
                             <tr>
                               <th>Transaction</th>
-                              <th>New Reference</th>
                               <th>Initial Reference</th>
-                              <th>Date of delivery</th>
+                              <th>Stock Detail</th>
+                              <th># Rejected</th>
                               <th>Reported Date</th>
                               <th>Status</th>
                               <th>Action</th>
@@ -61,38 +61,40 @@
                                   foreach($result as $row)
                                   {
 
-                                    $status = $row->status;
+                                    if($row->region == $_SESSION['region']){
 
-                                    if ($status == 'progress') {
-                                      $status_button = '<label class="badge badge-warning">In progress</label>';
-                                    } else if ($status == 'completed') {
-                                      $status_button = '<label class="badge badge-success">Completed</label>';
-                                    } else if ($status == 'resolved') {
-                                    $status_button = '<label class="badge badge-success">Resolved</label>';                              
-                                    } else if ($status == 'food bank rejected') {
-                                      $status_button = '<label class="badge badge-danger">Rejected On Delivery</label>';
-      
-                                    } else {
-      
-                                      $status_button = '<label class="badge badge-primary">Unknown</label>';
-      
-                                    }                                    
+                                      $status = $row->status;
 
-                                    $output .= '
-                                    <tr>
-                                    <td>'.$row->rejected_id.'</td>
-                                    <td>'.$row->manager_unique_code.'</td>
-                                    <td>'.$row->supplier_unique_code.'</td>
-                                    <td>'.$row->supplier_delivery_date.'</td>
-                                    <td>'.$row->reject_reported_date.'</td>
-                                    <td>'.$status_button.'</td>
-                                    <td>
-                                      <a target="_blank" href="view_damages_01.html"><button class="btn btn-outline-primary" >View</button></a>
-                                    </td>
-                                    </tr>
-                                    ';
+                                      if ($status == 'progress') {
+                                        $status_button = '<label class="badge badge-warning">In progress</label>';
+                                      } else if ($status == 'completed') {
+                                        $status_button = '<label class="badge badge-success">Completed</label>';
+                                      } else if ($status == 'resolved') {
+                                      $status_button = '<label class="badge badge-success">Resolved</label>';                              
+                                      } else if ($status == 'food bank rejected') {
+                                        $status_button = '<label class="badge badge-danger">Rejected On <br> Delivery</label>';
+                                      } else if ($status == 'food bank operator rejected') {
+                                        $status_button = '<label class="badge badge-danger">Damaged Goods <br>  Returns</label>';
+                                      } else {
+                                        $status_button = '<label class="badge badge-primary">Unknown</label>';
+                                      }                                    
+
+                                      $output .= '
+                                      <tr>
+                                      <td>'.$row->rejected_id.'</td>
+                                      <td>'.$row->supplier_unique_code.'</td>
+                                      <td>'.$row->stock_type.', '.$row->stock_name.'</td>
+                                      <td>'.$row->rejected_amounts.'</td>
+                                      <td>'.substr($row->reject_reported_date, 0, 11).'</td>
+                                      <td>'.$status_button.'</td>
+                                      <td>
+                                        <a  href="#"><button class="btn btn-outline-primary" >View</button></a>
+                                      </td>
+                                      </tr>
+                                      ';
                                   }
                                 }
+                              }
 
                                 echo $output;
                             ?> 

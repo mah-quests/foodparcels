@@ -416,6 +416,61 @@ class StockLevelsClass
 
 } 
 
+function rejectStockInFoodBank(){
+
+    $form_data = array(
+        ':region'  => $_POST["region"]
+    );
+
+    $query = "
+    UPDATE actual_stocklevel_tbl 
+    SET 
+        current_stock_level = current_stock_level - 1
+
+    WHERE region = :region
+    ";
+
+    $statement = $this->connect->prepare($query);
+    if($statement->execute($form_data)){
+        $data[] = array(
+            'success' => '1'
+        );
+    } else {
+        $data[] = array(
+            'success' => '0'
+        );
+    }
+    return $data;
+} 
+
+
+function showStockTotalsRegion($region)
+{
+ $query = "
+ SELECT 
+ ( SELECT current_stock_level FROM actual_stocklevel_tbl WHERE stock_name='Maize Meal' AND region='".$region."' ) AS total_maize_meal, 
+ ( SELECT current_stock_level FROM actual_stocklevel_tbl WHERE stock_name='Rice' AND region='".$region."' ) AS total_rice, 
+ ( SELECT current_stock_level FROM actual_stocklevel_tbl WHERE stock_name='Sugar' AND region='".$region."' ) AS total_sugar, 
+ ( SELECT current_stock_level FROM actual_stocklevel_tbl WHERE stock_name='Cooking Oil' AND region='".$region."' ) AS total_cooking_oil, 
+ ( SELECT current_stock_level FROM actual_stocklevel_tbl WHERE stock_name='Tea' AND region='".$region."' ) AS total_tea, 
+ ( SELECT current_stock_level FROM actual_stocklevel_tbl WHERE stock_name='Baked Beans' AND region='".$region."' ) AS total_baked_beans, 
+ ( SELECT current_stock_level FROM actual_stocklevel_tbl WHERE stock_name='All Purpose Soap' AND region='".$region."' ) AS total_all_purpose_soap, 
+ ( SELECT current_stock_level FROM actual_stocklevel_tbl WHERE stock_name='Soya Mince' AND region='".$region."' ) AS total_soya_mince, 
+ ( SELECT current_stock_level FROM actual_stocklevel_tbl WHERE stock_name='Cabbage' AND region='".$region."' ) AS total_cabbage, 
+ ( SELECT current_stock_level FROM actual_stocklevel_tbl WHERE stock_name='Potatoes' AND region='".$region."' ) AS total_potatoes, 
+ ( SELECT current_stock_level FROM actual_stocklevel_tbl WHERE stock_name='Pumpkin' AND region='".$region."' ) AS total_pumpkin;
+ ";
+   $statement = $this->connect->prepare($query);
+   if($statement->execute())
+   {
+      while($row = $statement->fetch(PDO::FETCH_ASSOC))
+      {
+         $data[] = $row;
+      }
+      return $data;
+   }
+} 
+
 }
 
 ?>

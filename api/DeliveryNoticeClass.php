@@ -17,7 +17,7 @@ class DeliveryNoticeClass
 
     function getFoodBankStock($location)
     {
-        $query = "SELECT * FROM foodbank_stock_details_tbl WHERE region='".$location."'";
+        $query = "SELECT * FROM foodbank_stock_details_tbl WHERE region='".$location."' ORDER BY stockdetail_id DESC";
         $statement = $this->connect->prepare($query);
         if($statement->execute())
         {
@@ -88,6 +88,21 @@ class DeliveryNoticeClass
             }
     }
 
+    function getSupplierStockByRegion($region){
+
+        $query = "SELECT * FROM supplier_stock_details_tbl WHERE region='".$region."'";
+    
+            $statement = $this->connect->prepare($query);
+            
+            if($statement->execute()){
+                while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                    $data[] = $row;
+                    }
+                    
+                    return $data;
+            }
+    }
+
     function getSupplierPoliciesByRegion($region){
 
         $query = "SELECT * FROM supplier_stock_level_tbl WHERE region='".$region."' ORDER BY stocklevel_id DESC";
@@ -102,6 +117,21 @@ class DeliveryNoticeClass
                     return $data;
             }
     } 
+
+    function getSupplierPoliciesByRegionLm20($region){
+
+        $query = "SELECT * FROM supplier_stock_level_tbl WHERE region='".$region."' ORDER BY stocklevel_id DESC LIMIT 20";
+    
+            $statement = $this->connect->prepare($query);
+            
+            if($statement->execute()){
+                while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                    $data[] = $row;
+                    }
+                    
+                    return $data;
+            }
+    }     
 
     function getStockItemDetails($code){
 
@@ -649,6 +679,35 @@ class DeliveryNoticeClass
         }
         return $data;
     } 
+
+    function updateRejectedStockStatus(){
+
+        $form_data = array(
+            ':supplier_unique_code'  => $_POST["supplier_unique_code"],
+            ':stock_name'  => $_POST["stock_name"],
+            ':status'  => $_POST["status"]
+        );
+
+        $query = "
+        UPDATE stock_rejected_tbl 
+        SET 
+            status = :status
+
+        WHERE supplier_unique_code = :supplier_unique_code AND stock_name = :stock_name
+        ";
+
+        $statement = $this->connect->prepare($query);
+        if($statement->execute($form_data)){
+            $data[] = array(
+                'success' => '1'
+            );
+        } else {
+            $data[] = array(
+                'success' => '0'
+            );
+        }
+        return $data;
+    }     
 
 }
 

@@ -8,6 +8,7 @@
   
 ?>
 
+
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
@@ -32,24 +33,40 @@
                   </div>
                   <br><br>
 
+              <?php 
 
-                  <div class="row" align="center">
-                    <div class="content-wrapper">
-                      <div class="row">
-                        <div class="col-lg-12 grid-margin stretch-card">
-                          <div class="card">
-                            <div class="card-body">
-                              <h4 class="card-title">Overall Stock Levels </h4>
-                              <canvas id="barChart"></canvas>
-                            </div>
-                          </div>
-                        </div>            
+                $api_url = $APIBASE."stock_levels_exec.php?action=show_stock_total_region&location=".$location."";
+                $client = curl_init($api_url);
+                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($client);
+                $result = json_decode($response);
+
+                foreach($result as $row)
+                {
+
+              ?>  
+
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Stock Levels Breakdown</h4>
+                    <div class="mt-4">
+                      <div class="accordion accordion-bordered" id="accordion-2" role="tablist">
+                        <div class="card">
+                            <?php include '../graphs/stock_levels.php'; ?>
+                        </div>
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+
+              <?php 
+                  } 
+              ?>
+
 
                 <?php 
-
                   
                   $api_url = $APIBASE."stock_levels_exec.php?action=show_region_total&location=".$location."";
                   $client = curl_init($api_url);
@@ -59,7 +76,7 @@
 
                   foreach($result as $row)
                   {
-                    $ceiling = 31400;
+                    $ceiling = 16600;
                     $region_totals = $row->total;
                     $stock_percentage = ($region_totals / $ceiling) * 100;
 

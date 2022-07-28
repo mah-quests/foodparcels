@@ -1,48 +1,102 @@
 <?php 
+
+include("config/connect.php");
 error_reporting(0); // hide undefine index errors
 session_start(); // temp sessions
 
 if(isset($_POST['submit'])) 
 {
+
  $username = $_POST["username"];
- $password = $_POST["password"];
 
- if($username == "manager" && $password == "manager"){
-  $_SESSION['loggedin'] = TRUE;
-  $_SESSION['foodbank'] = 'Johannesburg Food Bank';
-  $_SESSION['name'] = 'Victor Molotsane';
-  $_SESSION['user_id'] = '7';
-  $_SESSION['region'] = 'Johannesburg';
-    header("refresh:0;url=manager/dashboard.php");
+ $api_url = $APIBASE."systems_users_exec.php?action=check_user_login&username=".$username."";
+ $client = curl_init($api_url);
+ curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+ $response = curl_exec($client);
+ $result = json_decode($response);
 
- } else if($username == "practitioner" && $password == "practitioner"){
 
-    header("refresh:0;url=practitioner/dashboard.html");
+ if(count($result) > 0){
+   foreach($result as $row) {
 
- } else if($username == "supplier" && $password == "supplier"){
-    $_SESSION['loggedin'] = TRUE;
-    $_SESSION['supplier'] = 'Ithemba Lethu Foods';
-    $_SESSION['name'] = 'Frans Modikwe';
-    $_SESSION['user_id'] = '6';
-    $_SESSION['region'] = 'Johannesburg';
-    header("refresh:0;url=supplier/dashboard.php");
+      $db_password = $row->password;
 
- } else if($username == "agent" && $password == "agent"){
+      if (password_verify($_POST['password'], $db_password)) {
 
-    header("refresh:0;url=delivery_agents/dashboard.html");    
+        $_SESSION['loggedin'] = TRUE;
+        $_SESSION['foodbank'] = $row->foodbank;
+        $_SESSION['name'] = $row->first_name.' '.$row->surname;
+        $_SESSION['user_id'] = $row->user_id;
+        $_SESSION['region'] = $row->region;
+        $_SESSION['role'] = $row->role;
 
- } else if($username == "security" && $password == "security"){
+        if($row->role == "manager"){
 
-    header("refresh:0;url=security/dashboard.html");    
+          $success = "<br>Username and Password match. Login successfully! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+          <script type='text/javascript'>
+              function countdown() {
+              var i = document.getElementById('counter');
+              if (parseInt(i.innerHTML)<=0) {
+                  location.href = 'manager/dashboard.php';
+              }
+              i.innerHTML = parseInt(i.innerHTML)-1;
+              }
+              setInterval(function(){ countdown(); },3000);
+              </script>'";  
 
- } else if($username == "beneficiary" && $password == "beneficiary"){
+          header("refresh:1;url=manager/dashboard.php");
 
-    header("refresh:0;url=beneficiary/receive_parcel.html");        
+        } else if ($row->role == "supplier"){
 
- } else{
 
-      header("refresh:0;url=index.php?id=invalid");
- }
+          $success = "<br>Username and Password match. Login successfully! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+          <script type='text/javascript'>
+              function countdown() {
+              var i = document.getElementById('counter');
+              if (parseInt(i.innerHTML)<=0) {
+                  location.href = 'supplier/dashboard.php';
+              }
+              i.innerHTML = parseInt(i.innerHTML)-1;
+              }
+              setInterval(function(){ countdown(); },3000);
+              </script>'";  
+
+          header("refresh:1;url=supplier/dashboard.php");
+        }                 
+
+      } else {
+
+        $error_message = "<br>The password entered is incorrect! Please try again<p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+        <script type='text/javascript'>
+            function countdown() {
+            var i = document.getElementById('counter');
+            if (parseInt(i.innerHTML)<=0) {
+                location.href = 'index.php';
+            }
+            i.innerHTML = parseInt(i.innerHTML)-1;
+            }
+            setInterval(function(){ countdown(); },3000);
+            </script>'";   
+
+      }
+
+   } 
+
+  } else {
+
+    $error_message = "<br>The username entered is incorrect! Please try again<p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+    <script type='text/javascript'>
+        function countdown() {
+        var i = document.getElementById('counter');
+        if (parseInt(i.innerHTML)<=0) {
+            location.href = 'index.php';
+        }
+        i.innerHTML = parseInt(i.innerHTML)-1;
+        }
+        setInterval(function(){ countdown(); },3000);
+        </script>'";      
+
+  }
 
 } 
 
@@ -79,20 +133,15 @@ if(isset($_POST['submit']))
           <div class="col-lg-6 d-flex align-items-center justify-content-center">
             <div class="auth-form-transparent text-left p-3">
 
-              <?php
-
-              $login_failed = $_GET["id"];
-
-              if ($login_failed == "invalid"){
-              echo '
-                  <div class="alert alert-fill-danger" role="alert" align="center">
-                    <i class="ti-info-alt"></i>
-                    Oh snap! Please enter correct Username and Password!
-                  </div>
-              ';                
-              }
-
-              ?>
+            <div align="center">
+                  <?php if (!empty($error_message)) {
+                    echo '<div class="alert alert-danger">' . $error_message . '</div>';
+                    }
+                    if (!empty($success)) {
+                      echo '<div class="alert alert-success">' . $success . '</div>';
+                    }
+					        ?>
+                </div>   
 
               <div>  
                 <img src="images/dsd-logo.png" alt="logo" width="300">
@@ -130,7 +179,7 @@ if(isset($_POST['submit']))
                       Keep me signed in
                     </label>
                   </div>
-                  <a href="#" class="auth-link text-black">Forgot password?</a>
+                  <a href="reset_password.php" class="auth-link text-black">Forgot password?</a>
                 </div>
                 <div class="my-3">
                     <input  class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Login">

@@ -55,8 +55,10 @@
 <script src="../js/settings.js"></script>
 <script src="../js/todolist.js"></script>
 <!-- endinject -->
-<!-- Custom js for this page-->
+<!-- Custom js for this page
 <script src="../js/chart.js"></script>
+-->
+
 <script src="../js/modal-demo.js"></script>
 
 <!-- plugins:js -->

@@ -1,6 +1,13 @@
 <?php 
 error_reporting(0);
 session_start();
+
+if($_SESSION['role'] != "supplier"){
+  session_destroy ();
+  header("refresh:1;url=../index.php");
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -190,7 +197,7 @@ session_start();
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
-              <a class="dropdown-item" href="../index.php"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+              <a class="dropdown-item" href="../logout.php"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
             </div>
           </li>
         </ul>

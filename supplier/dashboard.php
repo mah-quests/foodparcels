@@ -8,6 +8,49 @@
 
 ?>
 
+<!-- 
+
+[Total]: 
+Maize-Meal - 1400
+Rice - 1400 
+Sugar - 1400
+Cooking Oil - 1400 
+Tea - 1400 
+Baked Beans - 1400
+Soap - 1400
+Soya Mince - 1400
+Pumpkin - 1800
+Potatoes - 1800
+Cabbage - 1800
+
+
+[WoP]: 
+Maize-Meal - 700
+Rice - 700 
+Sugar - 700
+Cooking Oil - 700 
+Tea - 700 
+Baked Beans - 700
+Soap - 700
+Soya Mince - 700
+Pumpkin - 900
+Potatoes - 900
+Cabbage - 900
+
+[ART]: 
+Maize-Meal - 700
+Rice - 700 
+Sugar - 700
+Cooking Oil - 700 
+Tea - 700 
+Baked Beans - 700
+Soap - 700
+Soya Mince - 700
+Pumpkin - 900
+Potatoes - 900
+Cabbage - 900
+
+-->
 
       <div class="main-panel">
         <div class="content-wrapper">
@@ -80,7 +123,7 @@
 
                   foreach($result as $row)
                   {
-                    $ceiling = 31400;
+                    $ceiling = 16600;
                     $region_totals = $row->total;
                     $stock_percentage = ($region_totals / $ceiling) * 100;
 
@@ -448,20 +491,37 @@
 
                   </div>
 
-                  <div class="row" align="center">
-                    <div class="content-wrapper">
-                      <div class="row">
-                        <div class="col-lg-12 grid-margin stretch-card">
-                          <div class="card">
-                            <div class="card-body">
-                              <h4 class="card-title">Stock Levels At The Distribution Center</h4>
-                              <canvas id="barChart"></canvas>
-                            </div>
-                          </div>
-                        </div>            
+              <?php 
+
+                $api_url = $APIBASE."stock_levels_exec.php?action=show_stock_total_region&location=".$location."";
+                $client = curl_init($api_url);
+                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($client);
+                $result = json_decode($response);
+
+                foreach($result as $row)
+                {
+
+              ?>  
+
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Stock Levels Breakdown</h4>
+                    <div class="mt-4">
+                      <div class="accordion accordion-bordered" id="accordion-2" role="tablist">
+                        <div class="card">
+                            <?php include '../graphs/stock_levels.php'; ?>
+                        </div>
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+
+              <?php 
+                  } 
+              ?>
 
 
                   </div>

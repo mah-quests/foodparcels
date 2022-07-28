@@ -35,7 +35,7 @@
                         <h4 class="card-title">Notifications from the System</h4>
 
                         <?php
-                          $api_url = $APIBASE."activity_notification_exec.php?action=region_activities&region=".$_SESSION['region']."";
+                          $api_url = $APIBASE."activity_notification_exec.php?action=last_20_region_activities&region=".$_SESSION['region']."";
                           $client = curl_init($api_url);
                           curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                           $response = curl_exec($client);

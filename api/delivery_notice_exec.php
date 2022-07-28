@@ -84,10 +84,22 @@ if($_GET["action"] == 'supplier_stock_id')
  $data = $api_object->getSupplierStockByRow($_GET["id"]);
 }
 
+// Show specific stock details from the 'supplier_stock_details_tbl', filter data using id column (region)
+if($_GET["action"] == 'supplier_stock_region')
+{
+ $data = $api_object->getSupplierStockByRegion($_GET["region"]);
+}
+
 // Show specific stock details from the 'supplier_stock_details_tbl', filter data using region column (region)
 if($_GET["action"] == 'show_region_stock')
 {
  $data = $api_object->getSupplierPoliciesByRegion($_GET["region"]);
+}
+
+// Show specific stock details from the 'supplier_stock_details_tbl', filter data using region column (region)
+if($_GET["action"] == 'show_region_stock_limit')
+{
+ $data = $api_object->getSupplierPoliciesByRegionLm20($_GET["region"]);
 }
 
 // Show specific stock details from the 'supplier_stock_details_tbl', filter data using id column (unique_code)
@@ -112,6 +124,12 @@ if($_GET["action"] == 'get_stock_amount')
 if($_GET["action"] == 'after_foodpack_create')
 {
  $data = $api_object->updateCurrentStockFoodPack();
+}
+
+// Update the status column for a specific record using a unique_code as a reference. The database being updated is the 'supplier_stock_level_tbl' 
+if($_GET["action"] == 'update_rejected_stock_status')
+{
+ $data = $api_object->updateRejectedStockStatus();
 }
 
 echo json_encode($data);

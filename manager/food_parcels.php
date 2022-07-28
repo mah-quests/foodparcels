@@ -29,10 +29,96 @@
                       </div>
                     </div>
                   </div>
-                  <br>
 
-                  <br>
+
+                  
+                  <br><br>
                   <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                      <h4 class="mb-3 mt-5" align="center">View Food Parcels At Different Lifecycle Stages</h4>
+                      <p class="w-75 mx-auto mb-5" align="center">To view the food parcels at different stages, from creating new food pack, to food packages in transit, and food packages delivered to beneficiaries.</p>
+                        <div class="row pricing-table">
+
+                          <?php
+                            $api_url = $APIBASE."foodpack_exec.php?action=show_foodpack_stage&location=".$location."";
+                            $client = curl_init($api_url);
+                            curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                            $response = curl_exec($client);
+                            $result = json_decode($response);
+                            $output_limit = '';
+
+                            if(count($result) > 0)
+                            {
+                              foreach($result as $row)
+                              {        
+                          ?>
+
+
+                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
+                            <div class="card border-primary border pricing-card-body">
+                              <div class="text-center pricing-card-head">
+                                <h3 class="text-primary">New <br>Food Packs</h3>
+                                <p>#</p>
+                                <h1 class="fw-normal mb-4"><?php echo $row->pack_in_foodbank ?></h1>
+                              </div>
+                              <ul class="list-unstyled plan-features">
+                              </ul>
+                              <div class="wrapper" align="center">
+                                <a href="#stock" >
+                                  <input type='button' class="btn btn-outline-primary btn-block btn-lg"  value='View'>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
+                            <div class="card border border-success pricing-card-body">
+                              <div class="text-center pricing-card-head">
+                                <h3 class="text-success">Food Packs In Transit</h3>
+                                <p>#</p>
+                                <h1 class="fw-normal mb-4"><?php echo $row->pack_in_transit ?></h1>
+                              </div>
+                              <ul class="list-unstyled plan-features">
+                              </ul>
+                              <div class="wrapper" align="center">
+                              <a href="#transit" >
+                                <input type='button' class="btn btn-success btn-block btn-lg"  value='View'>
+                              </a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
+                            <div class="card border border-danger pricing-card-body">
+                              <div class="text-center pricing-card-head">
+                                <h3 class="text-danger">Delivered Food Packs</h3>
+                                <p>#</p>
+                                <h1 class="fw-normal mb-4"><?php echo $row->pack_delivered ?></h1>
+                              </div>
+                              <ul class="list-unstyled plan-features">
+                              </ul>
+                              <div class="wrapper" align="center">
+                                <a href="#delivered" >
+                                  <input type='button' class="btn btn-outline-danger btn-block btn-lg"  value='View '>
+                                </a>
+                              </div>                                  
+                            </div>
+                          </div>
+
+                          <?php
+                              }
+                            }
+                          ?>    
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+              
+
+                  
+                  <div class="col-lg-12 grid-margin stretch-card" id="stock">
                     <div class="card">
                       <div class="card-body">
                         <h4 class="card-title"> <i>Stock In The Food Bank </i></h4>
@@ -77,8 +163,8 @@
                                     <td>'.$row->pakaged_by.'</td>
                                     <td><label class="badge badge-danger">Food Bank</label></td>
                                     <td>
-                                    <a href="#"><button class="btn btn-outline-primary" >View</button></a>
-                                  </td>                                      
+                                      <a target="_blank" href="view_foodparcel_details.php?code='.$row->unique_code.'"><button class="btn btn-outline-primary">View</button></a>
+                                    </td>                                      
                                     </tr>
                                     ';
                                   }
@@ -114,7 +200,7 @@
 
 
                   <br>
-                  <div class="col-lg-12 grid-margin stretch-card">
+                  <div class="col-lg-12 grid-margin stretch-card" id="transit">
                     <div class="card">
                       <div class="card-body">
                         <h4 class="card-title"> <i>Stock On Transit </i></h4>
@@ -159,8 +245,8 @@
                                     <td>'.$row->pakaged_by.'</td>
                                     <td><label class="badge badge-success">In Transit</label></td>
                                     <td>
-                                    <a href="#"><button class="btn btn-outline-primary" >View</button></a>
-                                  </td>                                      
+                                      <a target="_blank" href="view_foodparcel_details.php?code='.$row->unique_code.'"><button class="btn btn-outline-primary">View</button></a>
+                                    </td>                                      
                                     </tr>
                                     ';
                                   }
@@ -197,7 +283,7 @@
 
 
                   <br>
-                  <div class="col-lg-12 grid-margin stretch-card">
+                  <div class="col-lg-12 grid-margin stretch-card"  id="delivered">
                     <div class="card">
                       <div class="card-body">
                         <h4 class="card-title"> <i>Delivered Food Parcels </i></h4>
@@ -242,8 +328,8 @@
                                     <td>'.$row->pakaged_by.'</td>
                                     <td><label class="badge badge-primary">Delivered</label></td>
                                     <td>
-                                    <a href="#"><button class="btn btn-outline-primary" >View</button></a>
-                                  </td>                                      
+                                      <a target="_blank" href="view_foodparcel_details.php?code='.$row->unique_code.'"><button class="btn btn-outline-primary">View</button></a>
+                                    </td>                                      
                                     </tr>
                                     ';
                                   }
