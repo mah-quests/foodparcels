@@ -76,7 +76,7 @@
 
                   foreach($result as $row)
                   {
-                    $ceiling = 31400;
+                    $ceiling = 16600;
                     $region_totals = $row->total;
                     $stock_percentage = ($region_totals / $ceiling) * 100;
 

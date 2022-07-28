@@ -107,7 +107,7 @@
 
                         <br><br>
                         <h6>
-                          <u>List Of Beneficiaries</u>
+                          <u>List Of Food Pack Items</u>
                         </h6>
                         <table class="table table-hover">
                             <thead>

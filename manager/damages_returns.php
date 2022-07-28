@@ -227,8 +227,7 @@
                                 <th>Reported Date</th>
                                 <th>Delivery Reference</th>
                                 <th>Project Name</th>
-                                <th>Stock Type</th>
-                                <th>Item</th>
+                                <th>Stock Detail</th>
                                 <th>Quantity</th>
                                 <th>Action</th>
                               </tr>
@@ -249,18 +248,32 @@
                                   {
 
 
+
+                                    $status = $row->status;
+
+                                    if ($status == 'progress') {
+                                      $status_button = '<label class="badge badge-warning">In progress</label>';
+                                    } else if ($status == 'completed') {
+                                      $status_button = '<label class="badge badge-success">Completed</label>';
+                                    } else if ($status == 'resolved') {
+                                    $status_button = '<label class="badge badge-success">Resolved</label>';                              
+                                    } else if ($status == 'food bank rejected') {
+                                      $status_button = '<label class="badge badge-danger">Rejected On <br> Delivery</label>';
+                                    } else if ($status == 'food bank operator rejected') {
+                                      $status_button = '<label class="badge badge-danger">Damaged Goods <br>  Returns</label>';
+                                    } else {
+                                      $status_button = '<label class="badge badge-primary">Unknown</label>';
+                                    }    
+
                                     $output .= '
                                     <tr>
                                     <td>'.$row->rejected_id.'</td>
-                                    <td>'.$row->reject_reported_date.'</td>
+                                    <td>'.substr($row->reject_reported_date, 0, 11).'</td>
                                     <td>'.$row->manager_unique_code.'</td>
                                     <td>'.$row->project_name.'</td>
-                                    <td>'.$row->stock_type.'</td>
-                                    <td>'.$row->stock_name.'</td>
+                                    <td>'.$row->stock_type.', '.$row->stock_name.'</td>
                                     <td>'.$row->rejected_amounts.'</td>
-                                    <td>
-                                      <a href="#"><button class="btn btn-outline-primary" >View</button></a>
-                                  </td>
+                                    <td>'.$status_button.'</td>
                                     </tr>
                                     ';
                                   }

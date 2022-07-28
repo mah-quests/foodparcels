@@ -30,7 +30,8 @@ class ActivityNotificationClass
       }
    }
 
-   function getRegionActivities($region){
+   function getRegionActivities($region)
+   {
 
     $query = "SELECT * FROM activities_tbl WHERE region='".$region."' ORDER BY activity_id DESC";
 
@@ -46,7 +47,8 @@ class ActivityNotificationClass
     }
 
 
-    function getRegionActivitiesLimit20($region){
+    function getRegionActivitiesLimit20($region)
+    {
 
         $query = "SELECT * FROM activities_tbl WHERE region='".$region."' ORDER BY activity_id DESC  LIMIT 20";
     
@@ -59,9 +61,10 @@ class ActivityNotificationClass
                     
                     return $data;
             }
-        }    
+    }    
 
-    function getUserActivities($user_id){
+    function getUserActivities($user_id)
+    {
 
         $query = "SELECT * FROM activities_tbl WHERE user_id='".$user_id."' ORDER BY activity_id DESC";
     
@@ -74,9 +77,10 @@ class ActivityNotificationClass
                     
                     return $data;
             }
-        }    
+    }    
 
-   function addUserActivity(){
+   function addUserActivity()
+   {
 
     $form_data = array(
         ':unique_code'  => $_POST["unique_code"],

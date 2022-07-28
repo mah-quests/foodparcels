@@ -126,6 +126,12 @@ if($_GET["action"] == 'after_foodpack_create')
  $data = $api_object->updateCurrentStockFoodPack();
 }
 
+// Update the status column for a specific record using a unique_code as a reference. The database being updated is the 'supplier_stock_level_tbl' 
+if($_GET["action"] == 'update_rejected_stock_status')
+{
+ $data = $api_object->updateRejectedStockStatus();
+}
+
 echo json_encode($data);
 
 ?>

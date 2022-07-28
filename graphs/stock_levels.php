@@ -5,14 +5,14 @@
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
-        ["Element", "Density", { role: "style" } ],
+        ["Stock", "Qty", { role: "style" } ],
         ["Maize \n Meal", <?php echo $row->total_maize_meal ?>, "#FFDAE1"],
         ["Rice", <?php echo $row->total_rice ?>, "#D6EBFF"],
         ["Sugar", <?php echo $row->total_sugar ?>, "#FFF3DA"],
         ["Cooking \n Oil", <?php echo $row->total_cooking_oil ?>, "#DBF5F5"],
         ["Tea", <?php echo $row->total_tea ?>, "#E6D9FF"],
         ["Baked \n Beans", <?php echo $row->total_baked_beans ?>, "#FFE9D7"],
-        ["All \n Purpose'\n' Soap", <?php echo $row->total_all_purpose_soap ?>, "#DBF5F5"],
+        ["All \n Purpose \n Soap", <?php echo $row->total_all_purpose_soap ?>, "#DBF5F5"],
         ["Soya \n Mince", <?php echo $row->total_soya_mince ?>, "#FFDAE1"],
         ["Cabbage", <?php echo $row->total_cabbage ?>, "#FFF3DA"],
         ["Potatoes", <?php echo $row->total_potatoes ?>, "#DBF5F5"],

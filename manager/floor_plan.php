@@ -336,7 +336,7 @@
                             <td>'.$row->stock_level_amount.'</td>
                             <td>'.$row->stock_exp_date.'</td>
                             <td>
-                              <a target="_blank" href="allocate_stock.php?id='.$row->stockdetail_id.'"><button class="btn btn-outline-primary">Allocate</button></a>
+                              <a href="allocate_stock.php?id='.$row->stockdetail_id.'"><button class="btn btn-outline-primary">Allocate</button></a>
                             </td>
                             </tr>
                             ';

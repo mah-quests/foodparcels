@@ -116,24 +116,26 @@
                   <div class="col-lg-12 grid-margin stretch-card" id="food-bank-stock">
                     <div class="card">
                       <div class="card-body">
-                        <h4 class="card-title">Food Bank Stock History</h4>
+                        <h4 class="card-title">Received Stock History</h4>
                         <div class="table-responsive">
                           <table class="table table-hover">
                             <thead>
                               <tr>
                                 <th>#</th>
-                                <th>Created Date</th>
+                                <th>Date</th>
+                                <th>Delivery<br> Month</th>
+                                <th>Project</th>
                                 <th>Stock Type</th>
                                 <th>Item Details</th>
                                 <th>Quantity</th>
-                                <th>Manufactured Date</th>
+                                <th>Man. Date</th>
                                 <th>Expiry Date</th>
                               </tr>
                             </thead>
                             <tbody>
 
                             <?php
-                                $api_url = $APIBASE."delivery_notice_exec.php?action=supplier_stock_region&region=".$_SESSION['region']."";
+                                $api_url = $APIBASE."delivery_notice_exec.php?action=show_foodbank_stock&location=".$_SESSION['region']."";
                                 $client = curl_init($api_url);
                                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                 $response = curl_exec($client);
@@ -149,7 +151,9 @@
                                     $bank_history_output .= '
                                     <tr>
                                     <td>'.$row->stockdetail_id.'</td>
-                                    <td>'.$row->create_date.'</td>
+                                    <td>'.substr($row->create_date_time, 0, 11).'</td>
+                                    <td>'.$row->delivery_month.'</td>
+                                    <td>'.$row->project_name.'</td>
                                     <td>'.$row->stock_type.'</td>
                                     <td>'.$row->stock_name.', '.$row->stock_brand.'</td>
                                     <td>'.$row->stock_level_amount.'</td>

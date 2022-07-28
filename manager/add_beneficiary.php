@@ -1080,13 +1080,13 @@
                             <div class="col-md-4">
                               <div class="form-group">
                                 <label for="id_number">South African ID Number / Date Of Birth</label>
-                                <input type="text" class="form-control" id="id_number" name="id_number" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" pattern="[0-9]{12}" placeholder="Enter ID Number">
+                                <input type="text" class="form-control" id="id_number" name="id_number" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" pattern="[0-9]{13}" placeholder="Enter ID Number">
                               </div>
                             </div>
                             <div class="col-md-4">
                               <div class="form-group">
                                 <label for="cellphone">Cellphone Number</label>
-                                <input type="text" class="form-control" id="cellphone" name="cellphone" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"  pattern="[0-9+]{10}" placeholder="Enter Cellphone" required>
+                                <input type="text" class="form-control" id="cellphone" name="cellphone" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"  pattern="[0-9+]{10}" placeholder="Enter Cellphone">
                               </div>
                             </div>
                             <div class="col-md-4">
