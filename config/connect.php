@@ -3,10 +3,8 @@
 //main connection file for both admin & front end
 include 'properties.php';
 
-$limit = 20;
-
 // Create connection
-$db = mysqli_connect($SERVERNAME, $USERNAME, $PASSWORD, $DATABASENAME); // connecting 
+$db = new PDO($SERVERNAME,$USERNAME,$PASSWORD, $OPTIONS);
 
 // Check connection
 if (!$db) {       //checking connection to DB	
@@ -16,3 +14,5 @@ if (!$db) {       //checking connection to DB
 }else{
     
 }
+
+?>

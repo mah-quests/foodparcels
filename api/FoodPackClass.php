@@ -12,9 +12,12 @@ class FoodPackClass
    
    function database_connection()
    {
-      $this->connect = new PDO("mysql:host=localhost;dbname=foodbank", "foodbank", "foodbank");
+      
+      include("../config/properties.php"); 
+      $this->connect = new PDO($SERVERNAME,$USERNAME,$PASSWORD, $OPTIONS);  
       
    }
+
 
    function getFoodPackListLimit20($location)
    {

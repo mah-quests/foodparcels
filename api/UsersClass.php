@@ -4,6 +4,7 @@ class UsersClass
 {
    private $connect = '';
 
+
    function __construct()
    {
       $this->database_connection();
@@ -12,7 +13,9 @@ class UsersClass
    
    function database_connection()
    {
-      $this->connect = new PDO("mysql:host=localhost;dbname=foodbank", "foodbank", "foodbank");
+
+    include("../config/properties.php"); 
+    $this->connect = new PDO($SERVERNAME,$USERNAME,$PASSWORD, $OPTIONS);
       
    }
 
@@ -118,6 +121,77 @@ function checkLoginDetails($username)
 }  
 
 
+function addCustomerSurvey(){
+
+    $form_data = array(
+        ':full_names'  => $_POST["full_names"],
+        ':cellphone'  => $_POST["cellphone"],
+        ':region'  => $_POST["region"],
+        ':quality'  => $_POST["quality"], 
+        ':time'  => $_POST["time"], 
+        ':communication'  => $_POST["communication"], 
+        ':experience'  => $_POST["experience"], 
+        ':friendliness'  => $_POST["friendliness"], 
+        ':resolving_issues'  => $_POST["resolving_issues"], 
+        ':notes'  => $_POST["notes"]
+    );
+
+    $query = "
+    INSERT INTO customer_experience_tbl 
+    (full_names, cellphone, region, quality, time, communication, experience, friendliness, resolving_issues, notes) 
+    VALUES 
+    (:full_names, :cellphone, :region, :quality, :time, :communication, :experience, :friendliness, :resolving_issues, :notes)
+    ";
+
+    $statement = $this->connect->prepare($query);
+    if($statement->execute($form_data)){
+        $data[] = array(
+            'success' => '1'
+        );
+    } else {
+        $data[] = array(
+            'failed' => '0'
+        );
+    }
+
+    return $data;
+
 }
 
+function getSurveysDone(){
+    $query = "SELECT * FROM customer_experience_tbl ORDER BY experience_id DESC";
+    $statement = $this->connect->prepare($query);
+    if($statement->execute())
+    {
+        while($row = $statement->fetch(PDO::FETCH_ASSOC))
+        {
+            $data[] = $row;
+        }
+        return $data;
+    }
+}
+
+function showCustomerExpirience($region)
+{
+ $query = "
+ SELECT 
+ ( SELECT AVG(quality) FROM customer_experience_tbl WHERE region='".$region."' ) AS average_quality, 
+ ( SELECT AVG(time) FROM customer_experience_tbl WHERE region='".$region."' ) AS average_time, 
+ ( SELECT AVG(communication) FROM customer_experience_tbl WHERE region='".$region."' ) AS average_communication, 
+ ( SELECT AVG(experience) FROM customer_experience_tbl WHERE region='".$region."' ) AS average_experience, 
+ ( SELECT AVG(friendliness) FROM customer_experience_tbl WHERE region='".$region."' ) AS average_friendliness, 
+ ( SELECT AVG(resolving_issues) FROM customer_experience_tbl WHERE region='".$region."' ) AS average_resolving_issues;
+ ";
+   $statement = $this->connect->prepare($query);
+   if($statement->execute())
+   {
+      while($row = $statement->fetch(PDO::FETCH_ASSOC))
+      {
+         $data[] = $row;
+      }
+      return $data;
+   }
+} 
+
+}
 ?>

@@ -159,7 +159,7 @@
                         <br>
 
                         <div align="center">
-                          <img src="../qr-code/<?php echo $row->unique_code ?>.png"  alt="QR Code" width="200">
+                          <img src="<?php echo $QRDIR.$row->unique_code ?>.png"  alt="QR Code" width="200">
                         </div>
 
                         <div class="container-fluid w-100" align="center" >
