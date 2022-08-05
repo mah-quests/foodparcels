@@ -18,6 +18,5 @@
     $APIBASE 		= "$URLBASE/api/";                                   //API    
  
     $QRDIR = "../qr-code/";
-    $SIGNATUREDIR = "../qr-code/";
 
 ?>
