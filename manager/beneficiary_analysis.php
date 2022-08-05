@@ -35,7 +35,7 @@
                       <div class="card bg-gradient-x-info">
                         <div class="card-content">
                           <div class="row">   
-                            <?php include 'graphs/respondents_age_race.php'; ?>
+                            <?php include '../graphs/ward_details.php'; ?>
                           </div>
                         </div>
                       </div>
@@ -49,7 +49,7 @@
                       <div class="card bg-gradient-x-info">
                         <div class="card-content">
                           <div class="row">   
-                            <?php include 'graphs/sector_religions.php'; ?>
+                            <?php include '../graphs/sector_religions.php'; ?>
                           </div>
                         </div>
                       </div>
@@ -63,7 +63,7 @@
                       <div class="card bg-gradient-x-info">
                         <div class="card-content">
                           <div class="row">   
-                            <?php include 'graphs/sector_genders.php'; ?>
+                            <?php include '../graphs/sector_genders.php'; ?>
                           </div>
                         </div>
                       </div>
@@ -77,7 +77,7 @@
                       <div class="card bg-gradient-x-info">
                         <div class="card-content">
                           <div class="row">   
-                            <?php include 'graphs/sector_sex_pronouns.php'; ?>
+                            <?php include '../graphs/sector_sex_pronouns.php'; ?>
                           </div>
                         </div>
                       </div>
@@ -91,7 +91,7 @@
                       <div class="card bg-gradient-x-info">
                         <div class="card-content">
                           <div class="row">   
-                            <?php include 'graphs/sector_disabilities.php'; ?>
+                            <?php include '../graphs/sector_disabilities.php'; ?>
                           </div>
                         </div>
                       </div>
@@ -105,7 +105,7 @@
                       <div class="card bg-gradient-x-info">
                         <div class="card-content">
                           <div class="row">   
-                            <?php include 'graphs/sector_employment.php'; ?>
+                            <?php include '../graphs/sector_employment.php'; ?>
                           </div>
                         </div>
                       </div>

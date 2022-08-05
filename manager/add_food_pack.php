@@ -3,6 +3,9 @@
   include("../config/connect.php");
   include("include/QR_BarCode.php");
 
+  define('ROOT_PATH', dirname(__DIR__) . '/');
+  $QRDIR = ROOT_PATH."qr-code/";    
+
   error_reporting(0);
   session_start();
 
@@ -281,9 +284,7 @@
         foreach ($allocated_stock as $id) {
 
           $remove_stock_data = array(
-
             'allocation_id' => $id 
-
           );
         
           $api_url = $APIBASE."stock_levels_exec.php?action=create_foodpack";
@@ -316,7 +317,10 @@
 
         $current_stock_data = array(
 
-          'region' => $_SESSION['region']
+          'region' => $_SESSION['region'],
+          'unique_code' => $unique_code,
+          'update_activity' => "Removed stock to generate a full food pack"
+          
 
         );
       
@@ -355,12 +359,13 @@
 
         );
 
-        $url = $URLBASE."foodpack.php?code=".$unique_code;
+        $url = $URLBASE."/foodpack.php?code=".$unique_code;
         //create text QR code
         $qr->URL($url);
 
         //Save QR in image
-        $qr->qrCode(200,'../qr-code/'.$unique_code.'.png');        
+        $qr->qrCode(200,$QRDIR.$unique_code.'.png');        
+
       
         $api_url = $APIBASE."stock_levels_exec.php?action=add_foodpack_summary";
         $client = curl_init($api_url);

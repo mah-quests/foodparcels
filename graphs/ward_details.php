@@ -13,21 +13,19 @@
       function drawAgeSegmentsChart() {
 
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Front Line Workers');
+        data.addColumn('string', 'Ward Code Colors');
         data.addColumn('number', 'Numbers');
         data.addRows([
-          ['Between 18 to 24 years', <?php echo 4350 ?>],
-          ['Between 25 to 34 years', <?php echo 6724 ?>],
-          ['Between 35 to 44 years', <?php echo 4564 ?>],
-          ['Between 45 to 54 years', <?php echo 4233 ?>],
-          ['Between 55 to 64 years', <?php echo 5642 ?>],          
-          ['Over 65 years', <?php echo 4546 ?>]
+          ['Red', <?php echo 4350 ?>],
+          ['Yellow', <?php echo 6724 ?>],
+          ['Green', <?php echo 4546 ?>]
         ]);
 
-        var options = {title:'Age Brackets',
-                       width:550,
+        var options = {title:'Ward Color Details',
+                       width:450,
                        height:400,
-                       pieHole: 0.4,
+                       pieHole: 0.5,
+                       colors: ['#770A04', '#E2A501', '#164735']
                      };
 
         var chart = new google.visualization.PieChart(document.getElementById('age_segmentation_barchart_div'));
@@ -37,12 +35,13 @@
       function drawRageSegmentation() {
 
       var data = google.visualization.arrayToDataTable([
-        ["Element", "Density", { role: "style" } ],
-         ['African (Black)', <?php echo 1989 ?>, '#676767'],  
-         ['Colored', <?php echo 342 ?>, '#fec001'], 
-         ['Indian', <?php echo 675 ?>, '#d1af94'],
-         ['White', <?php echo 565 ?>, '#e9e9e9'],
-         ['Other', <?php echo 53 ?>, 'color: #425d2c' ], 
+        ["Element", "Grant", { role: "style" } ],
+         ['CSG', <?php echo 1989 ?>, '#676767'],  
+         ['OLD AGE', <?php echo 1342 ?>, '#fec001'], 
+         ['DISABILITY', <?php echo 1675 ?>, '#d1af94'],
+         ['FOSTER CARE', <?php echo 1565 ?>, '#e9e9e9'],
+         ['NONE', <?php echo 342 ?>, '#aece01'], 
+         ['OTHER', <?php echo 553 ?>, 'color: #425d2c' ], 
       ]);       
 
 
@@ -55,8 +54,8 @@
                        2]);
 
       var options = {
-        title: "Race Segmentations",
-        width: 550,
+        title: "Grant Details",
+        width: 500,
         height: 400,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },

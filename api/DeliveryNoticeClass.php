@@ -11,7 +11,10 @@ class DeliveryNoticeClass
 
     function database_connection()
     {
-        $this->connect = new PDO("mysql:host=localhost;dbname=foodbank", "foodbank", "foodbank");
+
+    include("../config/properties.php"); 
+    $this->connect = new PDO($SERVERNAME,$USERNAME,$PASSWORD, $OPTIONS);
+
         
     }
 
@@ -656,14 +659,21 @@ class DeliveryNoticeClass
     function updateCurrentStockFoodPack(){
 
         $form_data = array(
-            ':region'  => $_POST["region"]
+            ':region'  => $_POST["region"],
+            ':unique_code'  => $_POST["unique_code"],
+            ':update_activity'  => $_POST["update_activity"]
         );
 
         $query = "
         UPDATE actual_stocklevel_tbl 
         SET 
-            current_stock_level = current_stock_level - 1
 
+            current_stock_level = current_stock_level - 1, 
+            old_stock_level = current_stock_level + 1,
+            updated_stock_level = -1, 
+            unique_code = :unique_code,
+            update_activity = :update_activity
+        
         WHERE region = :region
         ";
 

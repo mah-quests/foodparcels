@@ -28,6 +28,23 @@ if($_GET["action"] == 'check_user_login')
  $data = $api_object->checkLoginDetails($_GET["username"]);
 }
 
+// Add the data to the 'customer_experience_tbl' table. This is a table that stores user login details
+if($_GET["action"] == 'add_customer_experience')
+{
+ $data = $api_object->addCustomerSurvey();
+}
+
+// Get all the results of all the surveys
+if($_GET["action"] == 'show_all_surveys')
+{
+ $data = $api_object->getSurveysDone();
+}
+
+// Gets average customer expeience for all surveys
+if($_GET["action"] == 'view_customer_experience')
+{
+ $data = $api_object->showCustomerExpirience($_GET["region"]);
+}
 
 echo json_encode($data);
 

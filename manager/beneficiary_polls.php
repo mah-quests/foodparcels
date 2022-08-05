@@ -33,6 +33,22 @@
 
                   <br><br>
 
+
+              <?php
+                  $api_url = $APIBASE."systems_users_exec.php?action=view_customer_experience&region=".$location."";
+                  $client = curl_init($api_url);
+                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                  $response = curl_exec($client);
+                  $result = json_decode($response);
+                  $output_limit = '';
+
+                  if(count($result) > 0)
+                  {
+                    foreach($result as $row)
+                    {
+  
+                ?>
+
                   <div class="col-md-12 grid-margin grid-margin-md-0 stretch-card">
                     <div class="card">
                       <div class="card-body">
@@ -40,50 +56,55 @@
                         <div class="template-demo">
                           <div class="d-flex justify-content-between mt-2">
                             <small>Quality Of Food</small>
-                            <small>90%</small>
+                            <small><?php echo $row->average_quality ?>%</small>
                           </div>
                           <div class="progress progress-xl">
-                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?php echo $row->average_quality ?>%" aria-valuenow="<?php echo $row->average_quality ?>" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                           <div class="d-flex justify-content-between mt-3">
                             <small>Time Management</small>
-                            <small>68%</small>
+                            <small><?php echo $row->average_time ?>%</small>
                           </div>
                           <div class="progress progress-xl">
-                            <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 68%" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?php echo $row->average_time ?>%" aria-valuenow="<?php echo $row->average_time ?>" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                           <div class="d-flex justify-content-between mt-3">
                             <small>Communication</small>
-                            <small>55%</small>
+                            <small><?php echo $row->average_communication ?>%</small>
                           </div>
                           <div class="progress progress-xl">
-                            <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?php echo $row->average_communication ?>%" aria-valuenow="<?php echo $row->average_communication ?>" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                           <div class="d-flex justify-content-between mt-3">
                             <small>Experience</small>
-                            <small>35%</small>
+                            <small><?php echo $row->average_experience ?>%</small>
                           </div>
                           <div class="progress progress-xl">
-                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?php echo $row->average_experience ?>%" aria-valuenow="<?php echo $row->average_experience ?>" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                           <div class="d-flex justify-content-between mt-3">
                             <small>Friendliness</small>
-                            <small>85%</small>
+                            <small><?php echo $row->average_friendliness ?>%</small>
                           </div>
                           <div class="progress progress-xl">
-                            <div class="progress-bar bg-dark progress-bar-striped progress-bar-animated" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-dark progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?php echo $row->average_friendliness ?>%" aria-valuenow="<?php echo $row->average_friendliness ?>" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                           <div class="d-flex justify-content-between mt-3">
                             <small>Issue Resolution</small>
-                            <small>75%</small>
+                            <small><?php echo $row->average_resolving_issues ?>%</small>
                           </div>
                           <div class="progress progress-xl">
-                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?php echo $row->average_resolving_issues ?>%" aria-valuenow="<?php echo $row->average_resolving_issues ?>" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+              <?php 
+                  } 
+                } 
+              ?>
+
                 </div>
                 <br><br>
                 <div class="card">
@@ -94,149 +115,63 @@
                         <div class="table-responsive">
                           <table id="order-listing" class="table">
                             <thead>
-                              <tr>
+                              <tr align="center">
                                 <th>#</th>
                                 <th>Full Names</th>
+                                <th>Date & Time</th>
                                 <th>Quality</th>
                                 <th>Time<br> management</th>
                                 <th>Communication</th>
                                 <th>Experience</th>
                                 <th>Friendliness</th>
-                                <th>Issue<br> Resolution</th>                                
-                                <th>Actions</th>
+                                <th>Issue<br> Resolution</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>Aneziwe<br> Khetha</td>
-                                <td>8</td>
-                                <td>5</td>
-                                <td>3</td>
-                                <td>8</td>
-                                <td>7</td>
-                                <td>2</td>  
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>2</td>
-                                <td>Sifiso <br> Ximba</td>
-                                <td>8</td>
-                                <td>7</td>
-                                <td>9</td>
-                                <td>1</td>
-                                <td>7</td>
-                                <td>2</td>  
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>3</td>
-                                <td>Zwalipani <br> Ndlovu</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>2</td>  
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>4</td>
-                                <td>Thulani <br> Sthole</td>
-                                <td>8</td>
-                                <td>9</td>
-                                <td>10</td>
-                                <td>8</td>
-                                <td>7</td>
-                                <td>2</td>  
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>5</td>
-                                <td>Sande <br> Nyeza</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>8</td>
-                                <td>1</td>
-                                <td>9</td>
-                                <td>5</td>  
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>6</td>
-                                <td>Anna <br> Motshabi</td>
-                                <td>6</td>
-                                <td>6</td>
-                                <td>3</td>
-                                <td>9</td>
-                                <td>2</td>
-                                <td>1</td>  
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>7</td>
-                                <td>Moshe <br> Sebela</td>
-                                <td>9</td>
-                                <td>9</td>
-                                <td>3</td>
-                                <td>7</td>
-                                <td>3</td>
-                                <td>9</td>  
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>8</td>
-                                <td>Alice <br> Tsotetsi</td>
-                                <td>8</td>
-                                <td>9</td>
-                                <td>4</td>
-                                <td>3</td>
-                                <td>7</td>
-                                <td>9</td>  
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>9</td>
-                                <td>Kedibone <br> Mogapi</td>
-                                <td>4</td>
-                                <td>7</td>
-                                <td>4</td>
-                                <td>9</td>
-                                <td>1</td>
-                                <td>4</td>  
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>10</td>
-                                <td>Nombulelo <br> Thiso</td>
-                                <td>9</td>
-                                <td>9</td>
-                                <td>3</td>
-                                <td>0</td>
-                                <td>4</td>
-                                <td>3</td>  
-                                <td>
-                                  <button class="btn btn-outline-primary">View</button>
-                                </td>
-                              </tr>
+                            <?php
+                                $api_url = $APIBASE."systems_users_exec.php?action=show_all_surveys";
+                                $client = curl_init($api_url);
+                                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                $response = curl_exec($client);
+                                $result = json_decode($response);
+                                $output_region = '';
+
+                                if(count($result) > 0)
+                                {
+                                  foreach($result as $row)
+                                  {
+
+                                    if($row->region == $_SESSION['region']){
+
+                                      $output_region .= '
+                                      <tr align="center">
+                                      <td>'.$row->experience_id.'</td>
+                                      <td>'.$row->full_names.'</td>
+                                      <td>'.substr($row->date_time, 0, 11).'</td>
+                                      <td>'.$row->quality.'</td>
+                                      <td>'.$row->time.'</td>
+                                      <td>'.$row->communication.'</td>
+                                      <td>'.$row->experience.'</td>
+                                      <td>'.$row->friendliness.'</td>
+                                      <td>'.$row->resolving_issues.'</td>
+                                      </tr>
+                                      ';                                      
+
+                                    }
+
+                                  }
+                                } else {
+                                  $output_region .= '
+                                  <center>
+                                    <tr>
+                                      <td> No Data To Display </td>
+                                    </tr>
+                                  </center>
+                                  ';
+                                }
+
+                                echo $output_region;
+											      ?>     
                             </tbody>
                           </table>
                         </div>
