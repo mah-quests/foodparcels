@@ -574,7 +574,20 @@ if($_SESSION['role'] != "manager"){
                 <i class="menu-icon mdi mdi-cash-usd"></i>
                 <span class="menu-title">Finance Report </span>
               </a>
-            </li>                                      
+            </li>  
+            <li class="nav-item nav-category">ADMINISTRATION</li>
+            <li class="nav-item">
+              <a class="nav-link" href="register.php">
+                <i class="menu-icon mdi mdi-file-hidden"></i>
+                <span class="menu-title">Users</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="menu-icon mdi mdi-file-outline"></i>
+                <span class="menu-title">Vehicles</span>
+              </a>
+            </li>                                                
           </ul>
         </nav>  
 

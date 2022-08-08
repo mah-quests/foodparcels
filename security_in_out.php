@@ -7,75 +7,133 @@
 
   if(isset($_POST['submit'])) 
   {
-   $username = $_POST["username"];
-   $password = $_POST["password"];
 
-   if ($username == "security" && $password == "security"){
+    $passed_code = $_GET['code'];
 
-      if($_GET["action"] == "transit"){
-        $foodpack_data = array(
+    $username = $_POST["username"];
 
-            'unique_code' => $_GET['code'],
-            'foodpack_state' => "In Transit",
-            'state' => "intransit",
+    $api_url = $APIBASE."systems_users_exec.php?action=check_user_login&username=".$username."";
+    $client = curl_init($api_url);
+    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($client);
+    $result = json_decode($response);
+   
+   
+    if(count($result) > 0){
+      foreach($result as $row) {
+   
+         $db_password = $row->password;
+   
+         if (password_verify($_POST['password'], $db_password)) {
+   
+          if($row->role == "security"){
 
-        );
-      } else {
-        $foodpack_data = array(
-
-          'unique_code' => $_GET['code'],
-          'foodpack_state' => "Food Bank",
-          'state' => "foodbank",
-
-      );        
-      }
-        
-        $api_url = $APIBASE."foodpack_exec.php?action=update_foodpack_state";
-        $client = curl_init($api_url);
-        curl_setopt($client, CURLOPT_POST, true);
-        curl_setopt($client, CURLOPT_POSTFIELDS, $foodpack_data);
-        curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($client);
-        curl_close($client); 
-        
-
-
-        $activities_data = array(
-          'unique_code' => $unique_code,
-          'action_performed' => "The security has processed a food pack and changed its status, ",
-          'performed_by' => "security",
-          'user_id'  => "8",
-          'region' => "Johannesburg" 
-        );
+            if($_GET["action"] == "transit"){
+              $foodpack_data = array(
       
-        $api_url = $APIBASE."activity_notification_exec.php?action=add_user_activity";
-        $client = curl_init($api_url);
-        curl_setopt($client, CURLOPT_POST, true);
-        curl_setopt($client, CURLOPT_POSTFIELDS, $activities_data);
-        curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($client);
-        curl_close($client);
-        $result = json_decode($response, true); 
+                  'unique_code' => $_GET['code'],
+                  'foodpack_state' => "In Transit",
+                  'state' => "intransit",
+      
+              );
+            } else {
+              $foodpack_data = array(
+      
+                'unique_code' => $_GET['code'],
+                'foodpack_state' => "Food Bank",
+                'state' => "foodbank",
+      
+            );        
+            }
+              
+              $api_url = $APIBASE."foodpack_exec.php?action=update_foodpack_state";
+              $client = curl_init($api_url);
+              curl_setopt($client, CURLOPT_POST, true);
+              curl_setopt($client, CURLOPT_POSTFIELDS, $foodpack_data);
+              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+              $response = curl_exec($client);
+              curl_close($client); 
+              
+      
+      
+              $activities_data = array(
+                'unique_code' => $unique_code,
+                'action_performed' => "The security has processed a food pack and changed its status, ",
+                'performed_by' => "security",
+                'user_id'  => "8",
+                'region' => "Johannesburg" 
+              );
+            
+              $api_url = $APIBASE."activity_notification_exec.php?action=add_user_activity";
+              $client = curl_init($api_url);
+              curl_setopt($client, CURLOPT_POST, true);
+              curl_setopt($client, CURLOPT_POSTFIELDS, $activities_data);
+              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+              $response = curl_exec($client);
+              curl_close($client);
+              $result = json_decode($response, true); 
+      
+      
+              $success = "<br>Successfully Updated Food Pack Status! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+              <script type='text/javascript'>
+                  function countdown() {
+                    var i = document.getElementById('counter');
+                    if (parseInt(i.innerHTML)<=0) {
+                      window.close();
+                    }
+                    i.innerHTML = parseInt(i.innerHTML)-1;
+                  }
+                  setInterval(function(){ countdown(); },1000);
+                  </script>'";     
 
 
-        $success = "<br>Successfully Updated Food Pack Status! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
-        <script type='text/javascript'>
-            function countdown() {
+
+          } else {
+            $error_message = "<br>NOT SECURITY ROLE! You do not have permission to authorise food pack to be in-transit! Please try again<p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+            <script type='text/javascript'>
+                function countdown() {
+                var i = document.getElementById('counter');
+                if (parseInt(i.innerHTML)<=0) {
+                  location.href = 'security_in_out.php?action=transit&code=$passed_code';
+                }
+                i.innerHTML = parseInt(i.innerHTML)-1;
+                }
+                setInterval(function(){ countdown(); },3000);
+                </script>'";   
+
+          }
+
+        } else {
+
+          $error_message = "<br>The password entered is incorrect! Please try again<p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+          <script type='text/javascript'>
+              function countdown() {
               var i = document.getElementById('counter');
               if (parseInt(i.innerHTML)<=0) {
-                location.href = 'foodpack.php';
+                location.href = 'security_in_out.php?action=transit&code=$passed_code';
               }
               i.innerHTML = parseInt(i.innerHTML)-1;
-            }
-            setInterval(function(){ countdown(); },1000);
-            </script>'";          
+              }
+              setInterval(function(){ countdown(); },3000);
+              </script>'";   
 
-   } else {
+        }
+      } 
+    } else {
 
-    $error_message = "<b>Username and Password Incorrect.</b> <br>Food Pack status NOT updated!";
+      $error_message = "<br>The username entered is incorrect! Please try again<p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+      <script type='text/javascript'>
+          function countdown() {
+          var i = document.getElementById('counter');
+          if (parseInt(i.innerHTML)<=0) {
+              location.href = 'security_in_out.php?action=transit&code=$passed_code';
+          }
+          i.innerHTML = parseInt(i.innerHTML)-1;
+          }
+          setInterval(function(){ countdown(); },3000);
+          </script>'";   
 
-   }
-   
+    }
 
   }
 ?>
