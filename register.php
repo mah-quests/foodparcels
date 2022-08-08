@@ -16,6 +16,9 @@
         'role' => $_POST["role"],
         'region' => $_POST["region"],
         'foodbank' => $_POST["foodbank"],
+        'id_number' => $_POST["id_number"],
+        'cellphone' => $_POST["cellphone"],
+        'address' => $_POST["address"],        
         'code' => $_POST["code"]
         );
 
@@ -140,6 +143,15 @@
                         <input type="text" class="form-control form-control-lg" id="surname" name="surname"  placeholder="Enter Surname" required>
                     </div>
                     <div class="form-group">
+                        <input type="text" class="form-control form-control-lg" id="id_number" name="id_number"  placeholder="Enter ID Number">
+                    </div>   
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-lg" id="cellphone" name="cellphone"  placeholder="Enter Cellphone">
+                    </div>   
+                    <div class="form-group">
+                        <textarea class="form-control form-control-lg" id="address" name="address"  placeholder="Enter Home Address"></textarea>
+                    </div>                                        
+                    <div class="form-group">
                         <select class="form-control form-control-lg" id="region" name="region" required>
                             <option>Select Region</option>
                             <option>Johannesburg</option>
@@ -154,8 +166,6 @@
                             <option>Select Role</option>
                             <option value="manager">Manager</option>
                             <option value="supplier">Supplier</option>
-                            <option value="agent">Agent</option>
-                            <option value="security">Security</option>
                         </select>
                     </div>                     
                     <div class="form-group">

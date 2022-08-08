@@ -24,6 +24,7 @@ class UsersClass
     $hash_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
     $form_data = array(
+        
         ':first_name'  => $_POST["first_name"],
         ':surname'  => $_POST["surname"],
         ':username'  => $_POST["username"],
@@ -31,14 +32,18 @@ class UsersClass
         ':role'  => $_POST["role"], 
         ':region'  => $_POST["region"], 
         ':foodbank'  => $_POST["foodbank"], 
-        ':code'  => $_POST["code"]
+        ':code'  => $_POST["code"],
+        ':address'  => $_POST["address"],
+        ':cellphone'  => $_POST["cellphone"], 
+        ':id_number'  => $_POST["id_number"]
+        
     );
 
     $query = "
     INSERT INTO user_login_tbl 
-    (first_name, surname, username, password, role, region, foodbank, code) 
+    (first_name, surname, username, password, role, region, foodbank, code, address, cellphone, id_number) 
     VALUES 
-    (:first_name, :surname, :username, :password, :role, :region, :foodbank, :code)
+    (:first_name, :surname, :username, :password, :role, :region, :foodbank, :code, :address, :cellphone, :id_number)
     ";
 
     $statement = $this->connect->prepare($query);
