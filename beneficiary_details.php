@@ -79,16 +79,18 @@
 
       if($current_delivery_times < 3){
         $delivery_state = "delivered";
+        $household_state="post-delivery";
         $state = "Delivered";
       } else if($current_delivery_times > 2){
-        $delivery_state = "post-delivery";
+        $delivery_state = "delivered";
+        $household_state="post-delivery";
         $state = "Post Delivery";
       }
 
       // Update the 'head_of_household_tbl' table, changing the status to delivered and food pack code 
       $add_pack_to_beneficiary = array(
         'unique_code' => $_GET['hoh_code'],
-        'allocated' => $delivery_state,
+        'allocated' => $household_state,
         'allocated_ref' => $_GET['foodparcel']
       );
     
@@ -156,7 +158,7 @@
           function countdown() {
             var i = document.getElementById('counter');
             if (parseInt(i.innerHTML)<=0) {
-              location.href = 'foodpack.php';
+              window.close();
             }
             i.innerHTML = parseInt(i.innerHTML)-1;
           }

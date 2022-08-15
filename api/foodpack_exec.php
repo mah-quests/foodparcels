@@ -11,6 +11,12 @@ if($_GET["action"] == 'show_foodpack_list_20')
  $data = $api_object->getFoodPackListLimit20($_GET["location"]);
 }
 
+// Show all stock details in the 'packaged_foodpack_tbl', filter data using region and limit to 20 records
+if($_GET["action"] == 'show_foodpack_list_today')
+{
+ $data = $api_object->getFoodPackListToday($_GET["location"]);
+}
+
 // Show all food pack details in the 'packaged_foodpack_tbl', filter data using region 
 if($_GET["action"] == 'show_foodpack_list')
 {
@@ -21,6 +27,12 @@ if($_GET["action"] == 'show_foodpack_list')
 if($_GET["action"] == 'show_foodpack_stage')
 {
  $data = $api_object->showFoodPackStages($_GET["location"]);
+}
+
+// Show all food pack in the 'packaged_foodpack_tbl', filter data using region 
+if($_GET["action"] == 'show_foodpack_stage_today')
+{
+ $data = $api_object->showFoodPackStagesToday($_GET["location"]);
 }
 
 // Show food pack details in the 'packaged_foodpack_tbl', filter data using unique code 

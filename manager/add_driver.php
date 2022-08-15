@@ -13,17 +13,15 @@ session_start();
         'surname' => $_POST["surname"],
         'id_number' => $_POST["id_number"],
         'cellphone' => $_POST["cellphone"],
-        'address' => $_POST["home_address"],
-        'username' => $_POST["username"],
-        'password' => $_POST["password"],
-        'role' => $_POST["role"],
+        'address' => $_POST["address"],
+        'license_number' => $_POST["license_number"],
+        'license_code' => $_POST["license_code"],
         'region' => $_SESSION['region'],
-        'foodbank' => $_SESSION['foodbank'],
-        'code' => $_POST["code"]
+        'foodbank' => $_SESSION['foodbank']
         );
 
 
-        $api_url = $APIBASE."systems_users_exec.php?action=add_systems_user";
+        $api_url = $APIBASE."systems_users_exec.php?action=add_driver_operator";
         $client = curl_init($api_url);
         curl_setopt($client, CURLOPT_POST, true);
         curl_setopt($client, CURLOPT_POSTFIELDS, $user_data);
@@ -35,12 +33,12 @@ session_start();
         
         if(count($result) > 0){
 
-            $success = "<br>Finished adding a User! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+            $success = "<br>Finished adding a Food bank driver! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
             <script type='text/javascript'>
                 function countdown() {
                 var i = document.getElementById('counter');
                 if (parseInt(i.innerHTML)<=0) {
-                    location.href = 'index.php';
+                    location.href = 'add_driver.php';
                 }
                 i.innerHTML = parseInt(i.innerHTML)-1;
                 }
@@ -52,7 +50,7 @@ session_start();
                 function countdown() {
                 var i = document.getElementById('counter');
                 if (parseInt(i.innerHTML)<=0) {
-                    location.href = 'register.php';
+                    location.href = 'add_driver.php';
                 }
                 i.innerHTML = parseInt(i.innerHTML)-1;
                 }
@@ -74,7 +72,7 @@ session_start();
                     <ul class="nav nav-tabs" role="tablist">
                       <li class="nav-item">
                         <a class="nav-link active border-0"  id="more-tab" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
-                          User Management
+                          Driver Management
                         </a>
                       </li>
                     </ul>
@@ -101,7 +99,8 @@ session_start();
                   <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                       <div class="card-body">
-                        <h4 class="card-title" align="center"><u>Add User Form</u></h4>
+                        <h4 class="card-title" align="center"><u>Add Driver Form</u></h4>
+                        <br>
                         <form action="" method="POST">
 
                           <h6>
@@ -132,53 +131,33 @@ session_start();
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label for="cellphone">Cellphone</label>
-                                  <input type="text" class="form-control" id="cellphone" name="cellphone"  placeholder="Enter cellphone">
+                                  <input type="text" class="form-control" id="cellphone" name="cellphone"  placeholder="Enter Cellphone">
                                 </div>
                               </div>   
                             </div>                            
                             <div class="row">
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="role">Role</label>
-                                    <select class="form-control" id="role" name="role" required>
-                                    <option selected></option>
-                                    <option value="manager">Manager</option>
-                                    <option value="supplier">Supplier</option>
-                                    <option value="agent">Agent</option>
-                                    <option value="security">Security</option>
-                                    <option value="operator">Operator</option>
-                                </select>
+                                  <label for="license_number">License Number</label>
+                                  <input type="text" class="form-control" id="license_number" name="license_number"  placeholder="Enter License Number">
                                 </div>
                               </div>                            
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="home_address">Home Address</label>
-                                    <textarea class="form-control" id="home_address" name="home_address" placeholder="Enter Home Address" required></textarea>
+                                  <label for="license_code">License Code</label>
+                                  <input type="text" class="form-control" id="license_code" name="license_code"  placeholder="Enter License Code">
+                                </div>
+                              </div>  
+                            </div>  
+                            <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="address">Home Address</label>
+                                    <textarea class="form-control" id="address" name="address" placeholder="Enter Home Address" required></textarea>
                                 </div>
                               </div>
                             </div>  
-                            <div class="row">
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                  <label for="username">Username</label>
-                                  <input type="text" class="form-control" id="username" name="username"  placeholder="Enter Username" required>
-                                </div>
-                              </div>                            
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                  <label for="password">Password</label>
-                                  <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
-                                </div>
-                              </div>
-                            </div>  
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                    <label for="code">Unique User Code</label>
-                                    <input type="text" class="form-control" id="code" name="code" placeholder="Enter Unique Code Reference" required>
-                                    </div>
-                                </div>
-                            </div>  
+
                           <div align="center">
                             <input  class="btn btn-outline-primary btn-icon-text btn-lg" type="submit" name="submit" value="Submit">
                             <button class="btn btn-outline-warning btn-icon-text btn-lg" >
@@ -195,7 +174,7 @@ session_start();
                   <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                       <div class="card-body">
-                        <h4 class="card-title">List of Users In the <?php echo $_SESSION['region'].' '  ?>Region</h4>
+                        <h4 class="card-title">List of Drivers In the <?php echo $_SESSION['region'].' ' ?> Region</h4>
                         <p class="card-description">
                           over the past 24 months
                         </p>
@@ -206,17 +185,16 @@ session_start();
                                 <th>#</th>
                                 <th>Date</th>
                                 <th>Full Names</th>
-                                <th>Role</th>
                                 <th>Phone</th>
                                 <th>ID Number </th>                                
-                                <th>Username</th>
+                                <th>License Code</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
                             <tbody>
 
                             <?php
-                                $api_url = $APIBASE."systems_users_exec.php?action=view_region_users&region=".$_SESSION["region"]."";
+                                $api_url = $APIBASE."systems_users_exec.php?action=view_region_drivers&region=".$_SESSION["region"]."";
                                 $client = curl_init($api_url);
                                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                 $response = curl_exec($client);
@@ -231,13 +209,12 @@ session_start();
 
                                     $output .= '
                                     <tr>
-                                    <td>'.$row->user_id.'</td>
+                                    <td>'.$row->driver_id.'</td>
                                     <td>'.substr($row->date_time, 0, 11).'</td>
                                     <td>'.$row->first_name.' '.$row->surname.'</td>
-                                    <td>'.$row->role.'</td>
                                     <td>'.$row->cellphone.'</td>
                                     <td>'.$row->id_number.'</td>
-                                    <td>'.$row->username.'</td>
+                                    <td>'.$row->license_code.'</td>
                                     <td>
                                       <a target="_blank" href="#"><button class="btn btn-outline-primary">Details</button></a>
                                     </td>

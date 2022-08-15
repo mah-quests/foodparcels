@@ -41,7 +41,7 @@
                         <div class="row pricing-table">
 
                           <?php
-                            $api_url = $APIBASE."foodpack_exec.php?action=show_foodpack_stage&location=".$location."";
+                            $api_url = $APIBASE."foodpack_exec.php?action=show_foodpack_stage_today&location=".$location."";
                             $client = curl_init($api_url);
                             curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                             $response = curl_exec($client);
@@ -54,29 +54,12 @@
                               {        
                           ?>
 
-
-                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
-                            <div class="card border-primary border pricing-card-body">
-                              <div class="text-center pricing-card-head">
-                                <h3 class="text-primary">New <br>Food Packs</h3>
-                                <p>#</p>
-                                <h1 class="fw-normal mb-4"><?php echo $row->pack_in_foodbank ?></h1>
-                              </div>
-                              <ul class="list-unstyled plan-features">
-                              </ul>
-                              <div class="wrapper" align="center">
-                                <a href="#stock" >
-                                  <input type='button' class="btn btn-outline-primary btn-block btn-lg"  value='View'>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
+                          <div class="col-md-6 col-xl-6 grid-margin stretch-card pricing-card">
                             <div class="card border border-success pricing-card-body">
                               <div class="text-center pricing-card-head">
-                                <h3 class="text-success">Food Packs In Transit</h3>
+                                <h3 class="text-success">Food Packs In Transit - Today </h3>
                                 <p>#</p>
-                                <h1 class="fw-normal mb-4"><?php echo $row->pack_in_transit ?></h1>
+                                <h1 class="fw-normal mb-4"><?php echo $row->pack_in_transit_today ?></h1>
                               </div>
                               <ul class="list-unstyled plan-features">
                               </ul>
@@ -87,12 +70,12 @@
                               </div>
                             </div>
                           </div>
-                          <div class="col-md-4 col-xl-4 grid-margin stretch-card pricing-card">
+                          <div class="col-md-6 col-xl-6 grid-margin stretch-card pricing-card">
                             <div class="card border border-danger pricing-card-body">
                               <div class="text-center pricing-card-head">
-                                <h3 class="text-danger">Delivered Food Packs</h3>
+                                <h3 class="text-danger">Delivered Food Packs - Today</h3>
                                 <p>#</p>
-                                <h1 class="fw-normal mb-4"><?php echo $row->pack_delivered ?></h1>
+                                <h1 class="fw-normal mb-4"><?php echo $row->pack_delivered_today ?></h1>
                               </div>
                               <ul class="list-unstyled plan-features">
                               </ul>
@@ -111,89 +94,6 @@
 
 
                         </div>
-                      </div>
-                    </div>
-                  </div>
-
-              
-
-                  
-                  <div class="col-lg-12 grid-margin stretch-card" id="stock">
-                    <div class="card">
-                      <div class="card-body">
-                        <h4 class="card-title"> <i>Stock In The Food Bank </i></h4>
-                        <div class="table-responsive">
-                          <table class="table table-hover">
-                            <thead>
-                              <tr>
-                                <th>Transaction</th>
-                                <th>Reference</th>
-                                <th>Project Name</th>
-                                <th>Package Date</th>
-                                <th>Packed By</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-
-                            <?php
-                                $api_url = $APIBASE."foodpack_exec.php?action=show_foodpack_list&location=".$location."";
-                                $client = curl_init($api_url);
-                                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                                $response = curl_exec($client);
-                                $result = json_decode($response);
-                                $food_bank_output = '';
-
-                                if(count($result) > 0)
-                                {
-                                  foreach($result as $row)
-                                  {
-
-                                    $status = $row->foodpack_state;
-
-                                    if ($status == 'Food Bank') {
-
-                                    $food_bank_output .= '
-                                    <tr>
-                                    <td>'.$row->foodpack_id.'</td>
-                                    <td>'.$row->unique_code.'</td>
-                                    <td>'.$row->project_name.'</td>
-                                    <td>'.$row->package_date.'</td>
-                                    <td>'.$row->pakaged_by.'</td>
-                                    <td><label class="badge badge-primary">Food Bank</label></td>
-                                    <td>
-                                      <a target="_blank" href="view_foodparcel_details.php?code='.$row->unique_code.'"><button class="btn btn-outline-primary">View</button></a>
-                                    </td>                                      
-                                    </tr>
-                                    ';
-                                  }
-                                } 
-                              } else {
-                                $food_bank_output .= '
-                                  <tr align="center">
-                                    <td align="center"> No Data To Display </td>
-                                  </tr>
-                                  ';
-                              }
-
-                                echo $food_bank_output;
-                            ?>                      
-
-
-
-                            </tbody>
-                          </table>
-                        </div>
-
-                        <div align="center">
-                          <br><br>
-                          <button type="button" class="btn btn-outline-primary btn-icon-text btn-lg">
-                            View All
-                          </button>
-
-                        </div>
-
                       </div>
                     </div>
                   </div>
@@ -220,7 +120,7 @@
                             <tbody>
 
                             <?php
-                                $api_url = $APIBASE."foodpack_exec.php?action=show_foodpack_list&location=".$location."";
+                                $api_url = $APIBASE."foodpack_exec.php?action=show_foodpack_list_today&location=".$location."";
                                 $client = curl_init($api_url);
                                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                 $response = curl_exec($client);
@@ -303,7 +203,7 @@
                             <tbody>
 
                             <?php
-                                $api_url = $APIBASE."foodpack_exec.php?action=show_foodpack_list&location=".$location."";
+                                $api_url = $APIBASE."foodpack_exec.php?action=show_foodpack_list_today&location=".$location."";
                                 $client = curl_init($api_url);
                                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                 $response = curl_exec($client);

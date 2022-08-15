@@ -46,6 +46,36 @@ if($_GET["action"] == 'view_customer_experience')
  $data = $api_object->showCustomerExpirience($_GET["region"]);
 }
 
+// Gets users from a specified region
+if($_GET["action"] == 'view_region_users')
+{
+ $data = $api_object->showRegionUsers($_GET["region"]);
+}
+
+// Add the data to the 'driver_details_tbl' table. This is a table that stores driver details
+if($_GET["action"] == 'add_driver_operator')
+{
+ $data = $api_object->addDriverOperator();
+}
+
+// Gets users from a specified region
+if($_GET["action"] == 'view_region_drivers')
+{
+ $data = $api_object->showRegionDrivers($_GET["region"]);
+}
+
+// Add the data to the 'vehicle_details_tbl' table. This is a table that stores vehicle details
+if($_GET["action"] == 'add_vehicle_details')
+{
+ $data = $api_object->addVehicleDetails();
+}
+
+// Gets users from a specified region
+if($_GET["action"] == 'view_region_vehicles')
+{
+ $data = $api_object->showRegionVehicles($_GET["region"]);
+}
+
 echo json_encode($data);
 
 ?>
