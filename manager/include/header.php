@@ -514,25 +514,25 @@ if($_SESSION['role'] != "manager"){
             </li>  
             <li class="nav-item nav-category">SECURITY CHECK</li>
             <li class="nav-item">
-              <a class="nav-link" href="pack_intransit.html">
+              <a class="nav-link" href="pack_intransit.php">
                 <i class="menu-icon ti ti-car"></i>
                 <span class="menu-title">Food Packs Transit</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="food_pack_stages.html">
+              <a class="nav-link" href="food_pack_stages.php">
                 <i class="menu-icon ti ti-layers-alt"></i>
                 <span class="menu-title">Food Packs Stages</span>
               </a>
             </li>          
             <li class="nav-item">
-              <a class="nav-link" href="food_pack_return.html">
+              <a class="nav-link" href="food_pack_return.php">
                 <i class="menu-icon ti ti-shift-left"></i>
                 <span class="menu-title">Food Packs Return </span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="security_all_activities.html">
+              <a class="nav-link" href="security_all_activities.php">
                 <i class="menu-icon ti ti-align-left"></i>
                 <span class="menu-title">All Activities </span>
               </a>
@@ -556,6 +556,25 @@ if($_SESSION['role'] != "manager"){
                 <span class="menu-title">All Deliveries </span>
               </a>
             </li>
+            <li class="nav-item nav-category">ADMINISTRATION</li>
+            <li class="nav-item">
+              <a class="nav-link" href="register.php">
+                <i class="menu-icon icon icon-people"></i>
+                <span class="menu-title">Users</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="add_driver.php">
+                <i class="menu-icon icon icon-user-following"></i>
+                <span class="menu-title">Drivers</span>
+              </a>
+            </li>  
+            <li class="nav-item">
+              <a class="nav-link" href="add_vehicle.php">
+                <i class="menu-icon mdi mdi-car"></i>
+                <span class="menu-title">Vehicles</span>
+              </a>
+            </li>            
             <li class="nav-item nav-category">REPORTS</li>
             <li class="nav-item">
               <a class="nav-link" href="delivery_reports.html">
@@ -575,19 +594,6 @@ if($_SESSION['role'] != "manager"){
                 <span class="menu-title">Finance Report </span>
               </a>
             </li>  
-            <li class="nav-item nav-category">ADMINISTRATION</li>
-            <li class="nav-item">
-              <a class="nav-link" href="register.php">
-                <i class="menu-icon mdi mdi-file-hidden"></i>
-                <span class="menu-title">Users</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <i class="menu-icon mdi mdi-file-outline"></i>
-                <span class="menu-title">Vehicles</span>
-              </a>
-            </li>                                                
           </ul>
         </nav>  
 

@@ -34,6 +34,18 @@ if($_GET["action"] == 'last_20_region_activities')
  $data = $api_object->getRegionActivitiesLimit20($_GET["region"]);
 }
 
+// Add the data to the 'security_activities_tbl' table. This is a table that stores security user activities
+if($_GET["action"] == 'add_security_activity')
+{
+ $data = $api_object->addSecurityActivity();
+}
+
+// Show all security activities from the 'security_activities_tbl', filter data using region
+if($_GET["action"] == 'security_activities')
+{
+ $data = $api_object->getSecurityActivities($_GET["region"]);
+}
+
 echo json_encode($data);
 
 ?>

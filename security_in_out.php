@@ -28,10 +28,17 @@
    
           if($row->role == "security"){
 
+            $_SESSION['loggedin'] = TRUE;
+            $_SESSION['foodbank'] = $row->foodbank;
+            $_SESSION['security_name'] = $row->first_name.' '.$row->surname;
+            $_SESSION['security_uid'] = $row->user_id;
+            $_SESSION['region'] = $row->region;
+            $_SESSION['security_role'] = $row->role;
+
             if($_GET["action"] == "transit"){
               $foodpack_data = array(
       
-                  'unique_code' => $_GET['code'],
+                  'unique_code' => $passed_code,
                   'foodpack_state' => "In Transit",
                   'state' => "intransit",
       
@@ -39,7 +46,7 @@
             } else {
               $foodpack_data = array(
       
-                'unique_code' => $_GET['code'],
+                'unique_code' => $passed_code,
                 'foodpack_state' => "Food Bank",
                 'state' => "foodbank",
       
@@ -57,11 +64,11 @@
       
       
               $activities_data = array(
-                'unique_code' => $unique_code,
+                'unique_code' => $passed_code,
                 'action_performed' => "The security has processed a food pack and changed its status, ",
-                'performed_by' => "security",
-                'user_id'  => "8",
-                'region' => "Johannesburg" 
+                'performed_by' => $_SESSION['security_name'],
+                'user_id'  => $_SESSION['security_uid'],
+                'region' => $_SESSION['region']
               );
             
               $api_url = $APIBASE."activity_notification_exec.php?action=add_user_activity";
@@ -74,17 +81,35 @@
               $result = json_decode($response, true); 
       
       
-              $success = "<br>Successfully Updated Food Pack Status! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
-              <script type='text/javascript'>
-                  function countdown() {
-                    var i = document.getElementById('counter');
-                    if (parseInt(i.innerHTML)<=0) {
-                      window.close();
+              if($_GET["action"] == "transit"){
+
+                $success = "<br>Successfully Authenticated, final step before submiting information! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+                <script type='text/javascript'>
+                    function countdown() {
+                      var i = document.getElementById('counter');
+                      if (parseInt(i.innerHTML)<=0) {
+                        location.href = 'intransit_details.php?action=transit&code=$passed_code';
+                      }
+                      i.innerHTML = parseInt(i.innerHTML)-1;
                     }
-                    i.innerHTML = parseInt(i.innerHTML)-1;
-                  }
-                  setInterval(function(){ countdown(); },1000);
-                  </script>'";     
+                    setInterval(function(){ countdown(); },1000);
+                    </script>'";  
+
+              } else {
+
+                $success = "<br>Successfully Authenticated, final step before submiting information! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+                <script type='text/javascript'>
+                    function countdown() {
+                      var i = document.getElementById('counter');
+                      if (parseInt(i.innerHTML)<=0) {
+                        location.href = 'intransit_details.php?action=foodbank&code=$passed_code';
+                      }
+                      i.innerHTML = parseInt(i.innerHTML)-1;
+                    }
+                    setInterval(function(){ countdown(); },1000);
+                    </script>'";  
+
+              }
 
 
 
