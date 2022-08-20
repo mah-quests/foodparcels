@@ -1,34 +1,6 @@
 <?php
-
-  include("config/connect.php");
-
-  error_reporting(0);
-  session_start();
-  ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>DSD - Department of Social Development </title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="vendors/feather/feather.css">
-  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
-</head>
+  include_once "header.php";
+?>
 
 <body>
   <div class="container-scroller">
@@ -41,7 +13,9 @@
                 <img src="images/dsd-logo.png" alt="logo" width="100%">
               </div>
               <br>
-              <h4 align="center">DSD Food Parcel Portal</h4>
+              <h4 align="center">
+                  Food Hamper Portal
+              </h4>
               <h6 class="fw-light" align="center">Details of the food parcel after the QR Code Scan</h6>
               <form class="pt-3">
               <div class="form-group">

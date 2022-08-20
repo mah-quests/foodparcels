@@ -1,10 +1,7 @@
 <?php
 
-  include("config/connect.php");
-
-  error_reporting(0);
-  session_start();
-
+  include_once "header.php";
+  
   if(isset($_POST['submit'])) 
   {
    $username = $_POST["username"];
@@ -80,30 +77,6 @@
   }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>DSD - Department of Social Development </title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="vendors/feather/feather.css">
-  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
-</head>
-
 <body>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
@@ -115,7 +88,9 @@
                 <img src="images/dsd-logo.png" alt="logo" width="100%">
               </div>
               <br>
-              <h4 align="center">DSD Security Portal</h4>
+              <h4 align="center">
+                  DSD Security Portal
+              </h4>
 
             <div align="center">
                 <?php if (!empty($error_message)) {
