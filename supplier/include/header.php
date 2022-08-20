@@ -16,7 +16,7 @@ if($_SESSION['role'] != "supplier"){
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>DSD Web App - Supplier Portal </title>
+  <title>Gauteng Food Distribution Centre Automation System</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../vendors/feather/feather.css">
   <link rel="stylesheet" href="../vendors/mdi/css/materialdesignicons.min.css">

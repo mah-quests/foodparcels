@@ -1,5 +1,6 @@
 <?php
 
+  include_once "header.php";
   include("config/connect.php");
 
   error_reporting(0);
@@ -64,49 +65,6 @@
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>DSD - Department of Social Development </title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="vendors/feather/feather.css">
-  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
-
-<script>
-
-    function showHideRegistrationAfterKey() {
-      var noOption = document.getElementById("reg_key").value;
-      if (noOption == "MAHQUESTS2022DSDAPP") {
-        jQuery('#registration_full_form').hide();
-        document.getElementById("registration_full_form").style.visibility = 'hidden';
-        jQuery('#registration_full_form').show();
-        document.getElementById("registration_full_form").style.visibility = 'visible';               
-      } else {
-        jQuery('#registration_full_form').show();
-        document.getElementById("registration_full_form").style.visibility = 'visible';
-        jQuery('#registration_full_form').hide();
-        document.getElementById("registration_full_form").style.visibility = 'hidden';
-      }
-    }
-  </script>  
-
-</head>
-
 <body>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
@@ -117,7 +75,8 @@
               <div align="center">
                 <img src="images/dsd-logo.png" alt="logo" width="100%">
               </div>
-              <h4 align="center">DSD User Registration Portal</h4>
+              <br>
+              <h4 align="center">Food Distribution Centre Automation System</h4>
               <br> 
 
                 <div align="center">

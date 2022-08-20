@@ -1,8 +1,6 @@
 <?php 
 
-include("config/connect.php");
-error_reporting(0); // hide undefine index errors
-session_start(); // temp sessions
+include_once "header.php";
 
 if(isset($_POST['submit'])) 
 {
@@ -41,7 +39,7 @@ if(isset($_POST['submit']))
               }
               i.innerHTML = parseInt(i.innerHTML)-1;
               }
-              setInterval(function(){ countdown(); },3000);
+              setInterval(function(){ countdown(); },1000);
               </script>'";  
 
           header("refresh:1;url=manager/dashboard.php");
@@ -58,7 +56,7 @@ if(isset($_POST['submit']))
               }
               i.innerHTML = parseInt(i.innerHTML)-1;
               }
-              setInterval(function(){ countdown(); },3000);
+              setInterval(function(){ countdown(); },1000);
               </script>'";  
 
           header("refresh:1;url=supplier/dashboard.php");
@@ -75,7 +73,7 @@ if(isset($_POST['submit']))
             }
             i.innerHTML = parseInt(i.innerHTML)-1;
             }
-            setInterval(function(){ countdown(); },3000);
+            setInterval(function(){ countdown(); },1000);
             </script>'";   
 
       }
@@ -93,7 +91,7 @@ if(isset($_POST['submit']))
         }
         i.innerHTML = parseInt(i.innerHTML)-1;
         }
-        setInterval(function(){ countdown(); },3000);
+        setInterval(function(){ countdown(); },1000);
         </script>'";      
 
   }
@@ -101,29 +99,6 @@ if(isset($_POST['submit']))
 } 
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>DSD - Department of Social Development </title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="vendors/feather/feather.css">
-  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
-</head>
 
 <body>
   <div class="container-scroller">
@@ -147,7 +122,7 @@ if(isset($_POST['submit']))
                 <img src="images/dsd-logo.png" alt="logo" width="300">
               </div>
               <br>
-              <h4>Gauteng Food Distribution Center App</h4>
+              <h4 align="center">Food Distribution Centre Automation System</h4>
               <h6 class="fw-light"></h6>
               <form action="" method="post" >
                 <div class="form-group">
