@@ -49,7 +49,7 @@
                       <div class="card bg-gradient-x-info">
                         <div class="card-content">
                           <div class="row">   
-                            <?php include '../graphs/sector_religions.php'; ?>
+                            <?php include '../graphs/identification_numbers.php'; ?>
                           </div>
                         </div>
                       </div>
@@ -63,7 +63,7 @@
                       <div class="card bg-gradient-x-info">
                         <div class="card-content">
                           <div class="row">   
-                            <?php include '../graphs/sector_genders.php'; ?>
+                            <?php include '../graphs/household_beneficiaries.php'; ?>
                           </div>
                         </div>
                       </div>
@@ -77,7 +77,7 @@
                       <div class="card bg-gradient-x-info">
                         <div class="card-content">
                           <div class="row">   
-                            <?php include '../graphs/sector_sex_pronouns.php'; ?>
+                            <?php include '../graphs/ailments_emergency_data.php'; ?>
                           </div>
                         </div>
                       </div>

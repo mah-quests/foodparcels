@@ -34,6 +34,20 @@ class FoodPackClass
    }
 
 
+   function getFoodPackListToday($location)
+   {
+      $query = "SELECT * FROM packaged_foodpack_tbl WHERE region='".$location."' AND DATE(package_date) = CURDATE() ORDER BY foodpack_id DESC";
+      $statement = $this->connect->prepare($query);
+      if($statement->execute())
+      {
+         while($row = $statement->fetch(PDO::FETCH_ASSOC))
+         {
+            $data[] = $row;
+         }
+         return $data;
+      }
+   }
+
    function getFoodPackList($location)
    {
       $query = "SELECT * FROM packaged_foodpack_tbl WHERE region='".$location."'  ORDER BY foodpack_id DESC";
@@ -70,6 +84,26 @@ class FoodPackClass
     ( SELECT COUNT(*) FROM packaged_foodpack_tbl WHERE state='foodbank' AND region='".$region."' ) AS pack_in_foodbank, 
     ( SELECT COUNT(*) FROM packaged_foodpack_tbl WHERE state='intransit' AND region='".$region."') AS pack_in_transit, 
     ( SELECT COUNT(*) FROM packaged_foodpack_tbl WHERE state='delivered' AND region='".$region."') AS pack_delivered;
+    ";
+      $statement = $this->connect->prepare($query);
+      if($statement->execute())
+      {
+         while($row = $statement->fetch(PDO::FETCH_ASSOC))
+         {
+            $data[] = $row;
+         }
+         return $data;
+      }
+   } 
+
+
+   function showFoodPackStagesToday($region)
+   {
+    $query = "
+    SELECT 
+    ( SELECT COUNT(*) FROM packaged_foodpack_tbl WHERE state='foodbank' AND region='".$region."' AND DATE(package_date) = CURDATE()) AS pack_in_foodbank_today, 
+    ( SELECT COUNT(*) FROM packaged_foodpack_tbl WHERE state='intransit' AND region='".$region."' AND DATE(package_date) = CURDATE()) AS pack_in_transit_today, 
+    ( SELECT COUNT(*) FROM packaged_foodpack_tbl WHERE state='delivered' AND region='".$region."' AND DATE(package_date) = CURDATE()) AS pack_delivered_today;
     ";
       $statement = $this->connect->prepare($query);
       if($statement->execute())

@@ -1,9 +1,6 @@
 <?php
 
-  include("config/connect.php");
-
-  error_reporting(0);
-  session_start();
+  include_once "header.php";
 
   if(isset($_POST['submit'])) 
   {
@@ -79,16 +76,18 @@
 
       if($current_delivery_times < 3){
         $delivery_state = "delivered";
+        $household_state="post-delivery";
         $state = "Delivered";
       } else if($current_delivery_times > 2){
-        $delivery_state = "post-delivery";
+        $delivery_state = "delivered";
+        $household_state="post-delivery";
         $state = "Post Delivery";
       }
 
       // Update the 'head_of_household_tbl' table, changing the status to delivered and food pack code 
       $add_pack_to_beneficiary = array(
         'unique_code' => $_GET['hoh_code'],
-        'allocated' => $delivery_state,
+        'allocated' => $household_state,
         'allocated_ref' => $_GET['foodparcel']
       );
     
@@ -156,7 +155,7 @@
           function countdown() {
             var i = document.getElementById('counter');
             if (parseInt(i.innerHTML)<=0) {
-              location.href = 'foodpack.php';
+              window.close();
             }
             i.innerHTML = parseInt(i.innerHTML)-1;
           }
@@ -165,32 +164,6 @@
 
   }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>DSD - Department of Social Development </title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="vendors/feather/feather.css">
-  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
-
-
-</head>
 
 <body>
 

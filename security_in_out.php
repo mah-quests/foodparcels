@@ -1,108 +1,164 @@
 <?php
 
-  include("config/connect.php");
-
-  error_reporting(0);
-  session_start();
-
+  include_once "header.php";
+  
   if(isset($_POST['submit'])) 
   {
-   $username = $_POST["username"];
-   $password = $_POST["password"];
 
-   if ($username == "security" && $password == "security"){
+    $passed_code = $_GET['code'];
 
-      if($_GET["action"] == "transit"){
-        $foodpack_data = array(
+    $username = $_POST["username"];
 
-            'unique_code' => $_GET['code'],
-            'foodpack_state' => "In Transit",
-            'state' => "intransit",
+    $api_url = $APIBASE."systems_users_exec.php?action=check_user_login&username=".$username."";
+    $client = curl_init($api_url);
+    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($client);
+    $result = json_decode($response);
+   
+   
+    if(count($result) > 0){
+      foreach($result as $row) {
+   
+         $db_password = $row->password;
+   
+         if (password_verify($_POST['password'], $db_password)) {
+   
+          if($row->role == "security"){
 
-        );
-      } else {
-        $foodpack_data = array(
+            $_SESSION['loggedin'] = TRUE;
+            $_SESSION['foodbank'] = $row->foodbank;
+            $_SESSION['security_name'] = $row->first_name.' '.$row->surname;
+            $_SESSION['security_uid'] = $row->user_id;
+            $_SESSION['region'] = $row->region;
+            $_SESSION['security_role'] = $row->role;
 
-          'unique_code' => $_GET['code'],
-          'foodpack_state' => "Food Bank",
-          'state' => "foodbank",
-
-      );        
-      }
-        
-        $api_url = $APIBASE."foodpack_exec.php?action=update_foodpack_state";
-        $client = curl_init($api_url);
-        curl_setopt($client, CURLOPT_POST, true);
-        curl_setopt($client, CURLOPT_POSTFIELDS, $foodpack_data);
-        curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($client);
-        curl_close($client); 
-        
-
-
-        $activities_data = array(
-          'unique_code' => $unique_code,
-          'action_performed' => "The security has processed a food pack and changed its status, ",
-          'performed_by' => "security",
-          'user_id'  => "8",
-          'region' => "Johannesburg" 
-        );
+            if($_GET["action"] == "transit"){
+              $foodpack_data = array(
       
-        $api_url = $APIBASE."activity_notification_exec.php?action=add_user_activity";
-        $client = curl_init($api_url);
-        curl_setopt($client, CURLOPT_POST, true);
-        curl_setopt($client, CURLOPT_POSTFIELDS, $activities_data);
-        curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($client);
-        curl_close($client);
-        $result = json_decode($response, true); 
+                  'unique_code' => $passed_code,
+                  'foodpack_state' => "In Transit",
+                  'state' => "intransit",
+      
+              );
+            } else {
+              $foodpack_data = array(
+      
+                'unique_code' => $passed_code,
+                'foodpack_state' => "Food Bank",
+                'state' => "foodbank",
+      
+            );        
+            }
+              
+              $api_url = $APIBASE."foodpack_exec.php?action=update_foodpack_state";
+              $client = curl_init($api_url);
+              curl_setopt($client, CURLOPT_POST, true);
+              curl_setopt($client, CURLOPT_POSTFIELDS, $foodpack_data);
+              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+              $response = curl_exec($client);
+              curl_close($client); 
+              
+      
+      
+              $activities_data = array(
+                'unique_code' => $passed_code,
+                'action_performed' => "The security has processed a food pack and changed its status, ",
+                'performed_by' => $_SESSION['security_name'],
+                'user_id'  => $_SESSION['security_uid'],
+                'region' => $_SESSION['region']
+              );
+            
+              $api_url = $APIBASE."activity_notification_exec.php?action=add_user_activity";
+              $client = curl_init($api_url);
+              curl_setopt($client, CURLOPT_POST, true);
+              curl_setopt($client, CURLOPT_POSTFIELDS, $activities_data);
+              curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+              $response = curl_exec($client);
+              curl_close($client);
+              $result = json_decode($response, true); 
+      
+      
+              if($_GET["action"] == "transit"){
+
+                $success = "<br>Successfully Authenticated, final step before submiting information! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+                <script type='text/javascript'>
+                    function countdown() {
+                      var i = document.getElementById('counter');
+                      if (parseInt(i.innerHTML)<=0) {
+                        location.href = 'intransit_details.php?action=transit&code=$passed_code';
+                      }
+                      i.innerHTML = parseInt(i.innerHTML)-1;
+                    }
+                    setInterval(function(){ countdown(); },1000);
+                    </script>'";  
+
+              } else {
+
+                $success = "<br>Successfully Authenticated, final step before submiting information! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+                <script type='text/javascript'>
+                    function countdown() {
+                      var i = document.getElementById('counter');
+                      if (parseInt(i.innerHTML)<=0) {
+                        location.href = 'intransit_details.php?action=foodbank&code=$passed_code';
+                      }
+                      i.innerHTML = parseInt(i.innerHTML)-1;
+                    }
+                    setInterval(function(){ countdown(); },1000);
+                    </script>'";  
+
+              }
 
 
-        $success = "<br>Successfully Updated Food Pack Status! <p>You will be redirected in <span id='counter'>1</span> second(s).</p>
-        <script type='text/javascript'>
-            function countdown() {
+
+          } else {
+            $error_message = "<br>NOT SECURITY ROLE! You do not have permission to authorise food pack to be in-transit! Please try again<p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+            <script type='text/javascript'>
+                function countdown() {
+                var i = document.getElementById('counter');
+                if (parseInt(i.innerHTML)<=0) {
+                  location.href = 'security_in_out.php?action=transit&code=$passed_code';
+                }
+                i.innerHTML = parseInt(i.innerHTML)-1;
+                }
+                setInterval(function(){ countdown(); },3000);
+                </script>'";   
+
+          }
+
+        } else {
+
+          $error_message = "<br>The password entered is incorrect! Please try again<p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+          <script type='text/javascript'>
+              function countdown() {
               var i = document.getElementById('counter');
               if (parseInt(i.innerHTML)<=0) {
-                location.href = 'foodpack.php';
+                location.href = 'security_in_out.php?action=transit&code=$passed_code';
               }
               i.innerHTML = parseInt(i.innerHTML)-1;
-            }
-            setInterval(function(){ countdown(); },1000);
-            </script>'";          
+              }
+              setInterval(function(){ countdown(); },3000);
+              </script>'";   
 
-   } else {
+        }
+      } 
+    } else {
 
-    $error_message = "<b>Username and Password Incorrect.</b> <br>Food Pack status NOT updated!";
+      $error_message = "<br>The username entered is incorrect! Please try again<p>You will be redirected in <span id='counter'>1</span> second(s).</p>
+      <script type='text/javascript'>
+          function countdown() {
+          var i = document.getElementById('counter');
+          if (parseInt(i.innerHTML)<=0) {
+              location.href = 'security_in_out.php?action=transit&code=$passed_code';
+          }
+          i.innerHTML = parseInt(i.innerHTML)-1;
+          }
+          setInterval(function(){ countdown(); },3000);
+          </script>'";   
 
-   }
-   
+    }
 
   }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>DSD - Department of Social Development </title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="vendors/feather/feather.css">
-  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
-</head>
 
 <body>
   <div class="container-scroller">
@@ -115,7 +171,9 @@
                 <img src="images/dsd-logo.png" alt="logo" width="100%">
               </div>
               <br>
-              <h4 align="center">DSD Security Portal</h4>
+              <h4 align="center">
+                  DSD Security Portal
+              </h4>
 
             <div align="center">
                 <?php if (!empty($error_message)) {
