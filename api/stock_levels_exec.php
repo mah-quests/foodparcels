@@ -41,10 +41,36 @@ if($_GET["action"] == 'show_project_stock_details')
  $data = $api_object->getStockMovementDetailRegion($_GET["location"], $_GET["project_name"]);
 }
 
-// Show the sum total number of stock from the 'foodbank_stock_movement_tbl', filter data using region. 
-if($_GET["action"] == 'show_region_total')
+// Show all stock details in the 'stock_allocation_tbl', filter data using region and by project_name by descending order. 
+// Also the stock count has to be over 0
+if($_GET["action"] == 'view_stock_details')
 {
- $data = $api_object->getStockMovementTotalByRegion($_GET["location"]);
+ $data = $api_object->showProjectStockDetail($_GET["location"], $_GET["project_name"]);
+}
+
+// Get total amount of stock for all stock in a project
+if($_GET["action"] == 'view_stock_levels')
+{
+ $data = $api_object->showAllocatedStockTotals($_GET["location"], $_GET["project_name"]);
+}
+
+
+// Get total amount of stock for all stock in a project
+if($_GET["action"] == 'view_all_stock_levels')
+{
+ $data = $api_object->showAllAllocatedStockTotals($_GET["location"]);
+}
+
+// Get total amount of stock for all stock in a project
+if($_GET["action"] == 'show_region_stock_details')
+{
+ $data = $api_object->showRegionStockDetail($_GET["location"]);
+}
+
+// Show the sum total number of stock from the 'foodbank_stock_movement_tbl', filter data using region. 
+if($_GET["action"] == 'show_region_totals')
+{
+ $data = $api_object->getStockMovementTotalByRegion($_GET["location"], $_GET["project_name"]);
 }
 
 // Show the sum total number of stock from the 'foodbank_stock_movement_tbl', filter data using region and by project name

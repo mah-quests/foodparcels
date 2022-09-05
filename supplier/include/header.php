@@ -390,6 +390,12 @@ if($_SESSION['role'] != "supplier"){
             </li> 
             <li class="nav-item nav-category">Stock Management</li>
             <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="menu-icon ti ti-calendar"></i>
+                <span class="menu-title">Provisional Schedule</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="delivery_register.php">
                 <i class="menu-icon ti ti-shopping-cart"></i>
                 <span class="menu-title">Delivery Register</span>
@@ -406,7 +412,13 @@ if($_SESSION['role'] != "supplier"){
                 <i class="menu-icon ti ti-package"></i>
                 <span class="menu-title">Damages & Returns</span>
               </a>
-            </li>         
+            </li>  
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+              <i class="menu-icon ti ti-search"></i>
+                <span class="menu-title">Custom Search</span>
+              </a>
+            </li>                    
           </li>          
           <li class="nav-item nav-category">Reports</li>
           <li class="nav-item">

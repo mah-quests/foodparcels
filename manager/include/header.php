@@ -390,30 +390,20 @@ if($_SESSION['role'] != "manager"){
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">DASHBOARD</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#regions" aria-expanded="false" aria-controls="ui-advanced">
-                <i class="menu-icon ti ti-angle-double-right"></i>
-                <span class="menu-title">REGIONS</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="regions">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="#">Jo'burg</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">Sedibeng</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">Tshwane</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">West Rand</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">Ekurhuleni</a></li>
-                </ul>
-              </div>
-            </li>          
-            <li class="nav-item nav-category">SUPPLIER MGNT</li>
+            </li>         
+            <li class="nav-item nav-category">SUPPLIER MODULE</li>
             <li class="nav-item">
               <a class="nav-link" href="notifications.php">
                 <i class="menu-icon ti ti-announcement"></i>
                 <span class="menu-title">Notifications</span>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="menu-icon ti ti-calendar"></i>
+                <span class="menu-title">Provisional Schedule</span>
+              </a>
+            </li>            
             <li class="nav-item">
               <a class="nav-link" href="goods_receivables.php">
                 <i class="menu-icon ti ti-check-box"></i>
@@ -423,7 +413,7 @@ if($_SESSION['role'] != "manager"){
             <li class="nav-item">
               <a class="nav-link" href="donations.php">
                 <i class="menu-icon ti ti-gift"></i>
-                <span class="menu-title">Donations </span>
+                <span class="menu-title">Donations</span>
               </a>
             </li>  
             <li class="nav-item">
@@ -432,7 +422,7 @@ if($_SESSION['role'] != "manager"){
                 <span class="menu-title">Damages & Returns </span>
               </a>
             </li>             
-            <li class="nav-item nav-category">PACKAGING MGNT</li>
+            <li class="nav-item nav-category">WAREHOUSE MODULE</li>
             <li class="nav-item">
               <a class="nav-link" href="stock_level.php">
                 <i class="menu-icon ti ti-align-justify"></i>
@@ -440,23 +430,34 @@ if($_SESSION['role'] != "manager"){
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="items_list.php">
-                <i class="menu-icon ti ti-menu"></i>
-                <span class="menu-title">Items List</span>
+            <a class="nav-link" data-bs-toggle="collapse" href="#projects" aria-expanded="false" aria-controls="ui-advanced">
+              <i class="menu-icon ti ti-menu"></i>
+              <span class="menu-title">Items List</span>
+              <i class="menu-arrow"></i>
+            </a>
+              <div class="collapse" id="projects">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="all_items_list.php">All</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="unallocated_stock.php">Unallocated Stock</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="items_list.php?project=wop">WOP</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="items_list.php?project=art">ART</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="items_list.php?project=spc">Special Projects</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="items_list.php?project=don">Donation</a></li> 
+                </ul>
+              </div>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="week_activity.php">
+                <i class="menu-icon ti ti-notepad"></i>
+                <span class="menu-title">Weekly Activities </span>
               </a>
-            </li>          
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="floor_plan.php">
                 <i class="menu-icon mdi mdi-border-inside"></i>
                 <span class="menu-title">Floor Plan </span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="add_food_pack.php">
-                <i class="menu-icon ti ti-plus"></i>
-                <span class="menu-title">Add Food Packs </span>
-              </a>
-            </li> 
             <li class="nav-item">
               <a class="nav-link" href="food_parcels.php">
                 <i class="menu-icon icon icon-bag"></i>
@@ -469,13 +470,44 @@ if($_SESSION['role'] != "manager"){
                 <span class="menu-title">Damages & Returns </span>
               </a>
             </li>
-            <li class="nav-item nav-category">BENEFICIARY MGNT</li>
             <li class="nav-item">
-              <a class="nav-link" href="add_beneficiary.php">
-                <i class="menu-icon icon icon-user-follow"></i>
-                <span class="menu-title">Add Beneficiary</span>
+              <a class="nav-link" href="#">
+              <i class="menu-icon ti ti-announcement"></i>
+                <span class="menu-title">Notification</span>
+              </a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+              <i class="menu-icon ti ti-search"></i>
+                <span class="menu-title">Custom Search</span>
               </a>
             </li>
+            <li class="nav-item nav-category">HAMPER PACKAGING MODULE</li>
+            <li class="nav-item">
+              <a class="nav-link" href="add_food_pack.php">
+                <i class="menu-icon ti ti-package"></i>
+                <span class="menu-title">Add Hamper</span>
+              </a>
+            </li>            
+            <li class="nav-item">
+              <a class="nav-link" href="pack_intransit.php">
+                <i class="menu-icon ti ti-car"></i>
+                <span class="menu-title">Food Packs Transit</span>
+              </a>
+            </li>  
+            <li class="nav-item">
+              <a class="nav-link" href="food_parcels.php">
+                <i class="menu-icon ti ti-split-h"></i>
+                <span class="menu-title">Hamper Stages</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+              <i class="menu-icon ti ti-search"></i>
+                <span class="menu-title">Custom Search</span>
+              </a>
+            </li>           
+            <li class="nav-item nav-category">BENEFICIARY MODULE</li>
             <li class="nav-item">
               <a class="nav-link" href="list_beneficiary.php">
                 <i class="menu-icon icon icon-list"></i>
@@ -505,14 +537,26 @@ if($_SESSION['role'] != "manager"){
                 <i class="menu-icon ti ti-mouse"></i>
                 <span class="menu-title">Food Pack Activities </span>
               </a>
-            </li>             
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="menu-icon ti ti-crown"></i>
+                <span class="menu-title">Change Agents </span>
+              </a>
+            </li>                         
             <li class="nav-item">
               <a class="nav-link" href="beneficiary_polls.php">
                 <i class="menu-icon ti ti-comments"></i>
                 <span class="menu-title">Beneficiary Polls </span>
               </a>
             </li>  
-            <li class="nav-item nav-category">SECURITY CHECK</li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+              <i class="menu-icon ti ti-search"></i>
+                <span class="menu-title">Custom Search</span>
+              </a>
+            </li>
+            <li class="nav-item nav-category">SECURITY DATA</li>
             <li class="nav-item">
               <a class="nav-link" href="pack_intransit.php">
                 <i class="menu-icon ti ti-car"></i>
@@ -537,25 +581,31 @@ if($_SESSION['role'] != "manager"){
                 <span class="menu-title">All Activities </span>
               </a>
             </li> 
-            <li class="nav-item nav-category">FOOD DELIVERIES</li>
+            <li class="nav-item nav-category">DISTRIBUTION MODULE</li>
             <li class="nav-item">
-              <a class="nav-link" href="door2door_deliveries.html">
-                <i class="menu-icon mdi mdi-home"></i>
-                <span class="menu-title">Door to door</span>
+              <a class="nav-link" href="list_beneficiary.php">
+                <i class="menu-icon icon icon-list"></i>
+                <span class="menu-title">Beneficiary List</span>
+              </a>
+            </li>  
+            <li class="nav-item">
+              <a class="nav-link" href="pack_intransit.php">
+                <i class="menu-icon ti ti-car"></i>
+                <span class="menu-title">Food Packs Transit</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="central_deliveries.html">
-                <i class="menu-icon mdi mdi-google-circles-extended"></i>
-                <span class="menu-title">Central</span>
+              <a class="nav-link" href="distribution_plan.php">
+                <i class="menu-icon ti ti-direction-alt"></i>
+                <span class="menu-title">Food Distribution Plan </span>
               </a>
-            </li>          
+            </li>            
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <i class="menu-icon mdi mdi-account-multiple-outline"></i>
-                <span class="menu-title">All Deliveries </span>
+              <i class="menu-icon ti ti-search"></i>
+                <span class="menu-title">Custom Search</span>
               </a>
-            </li>
+            </li>  
             <li class="nav-item nav-category">ADMINISTRATION</li>
             <li class="nav-item">
               <a class="nav-link" href="register.php">
@@ -571,29 +621,59 @@ if($_SESSION['role'] != "manager"){
             </li>  
             <li class="nav-item">
               <a class="nav-link" href="add_vehicle.php">
-                <i class="menu-icon mdi mdi-car"></i>
+                <i class="menu-icon ti ti-car"></i>
                 <span class="menu-title">Vehicles</span>
               </a>
             </li>            
-            <li class="nav-item nav-category">REPORTS</li>
+            <li class="nav-item nav-category">ANALYTICS & REPORTING</li>
             <li class="nav-item">
-              <a class="nav-link" href="delivery_reports.html">
-                <i class="menu-icon mdi mdi-file-hidden"></i>
-                <span class="menu-title">Delivery Reports</span>
+              <a class="nav-link" href="#">
+                <i class="menu-icon icon  icon-basket-loaded"></i>
+                <span class="menu-title">Summary</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <i class="menu-icon mdi mdi-file-outline"></i>
-                <span class="menu-title">Stock Management Report</span>
+                <i class="menu-icon ti ti-angle-up"></i>
+                <span class="menu-title">Warehouse</span>
               </a>
             </li>          
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <i class="menu-icon mdi mdi-cash-usd"></i>
-                <span class="menu-title">Finance Report </span>
+                <i class="menu-icon ti ti-shopping-cart-full"></i>
+                <span class="menu-title">Suppliers</span>
               </a>
-            </li>  
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="menu-icon ti ti-face-smile"></i>
+                <span class="menu-title">Beneficiaries</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="menu-icon ti ti-wallet"></i>
+                <span class="menu-title">Distribution</span>
+              </a>
+            </li>   
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="menu-icon ti ti-briefcase"></i>
+                <span class="menu-title">Hampers</span>
+              </a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="menu-icon ti ti-truck"></i>
+                <span class="menu-title">Transporting</span>
+              </a>
+            </li>               
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="menu-icon ti ti-face-smile"></i>
+                <span class="menu-title">Custom Report</span>
+              </a>
+            </li>   
           </ul>
         </nav>  
 

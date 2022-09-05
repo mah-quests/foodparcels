@@ -141,7 +141,95 @@ class StockLevelsClass
                     
                     return $data;
             }
-    }      
+    }  
+    
+    function showProjectStockDetail($location, $project_name){
+
+
+        $query = "SELECT * FROM stock_allocation_tbl WHERE region='".$location."' AND project_name='".$project_name."' AND items_qty > 0 ORDER BY items_qty DESC";
+    
+            $statement = $this->connect->prepare($query);
+            
+            if($statement->execute()){
+                while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                    $data[] = $row;
+                    }
+                    
+                    return $data;
+            }
+    }    
+    
+    function showAllocatedStockTotals($location, $project_name)
+    {
+     $query = "
+     SELECT 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Maize Meal' AND region='".$location."' AND project_name='".$project_name."') AS total_maize_meal, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Rice' AND region='".$location."' AND project_name='".$project_name."') AS total_rice, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Sugar' AND region='".$location."' AND project_name='".$project_name."') AS total_sugar, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Cooking Oil' AND region='".$location."' AND project_name='".$project_name."') AS total_cooking_oil, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Tea' AND region='".$location."' AND project_name='".$project_name."') AS total_tea, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Baked Beans' AND region='".$location."' AND project_name='".$project_name."') AS total_baked_beans, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='All Purpose Soap' AND region='".$location."' AND project_name='".$project_name."') AS total_all_purpose_soap, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Soya Mince' AND region='".$location."' AND project_name='".$project_name."') AS total_soya_mince, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Cabbage' AND region='".$location."' AND project_name='".$project_name."') AS total_cabbage, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Potatoes' AND region='".$location."' AND project_name='".$project_name."') AS total_potatoes, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Pumpkin' AND region='".$location."' AND project_name='".$project_name."') AS total_pumpkin,
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  region='".$location."' AND project_name='".$project_name."') AS total_project_stock;
+     ";
+       $statement = $this->connect->prepare($query);
+       if($statement->execute())
+       {
+          while($row = $statement->fetch(PDO::FETCH_ASSOC))
+          {
+             $data[] = $row;
+          }
+          return $data;
+       }
+    }     
+
+    function showAllAllocatedStockTotals($location)
+    {
+     $query = "
+     SELECT 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Maize Meal' AND region='".$location."' ) AS total_maize_meal, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Rice' AND region='".$location."' ) AS total_rice, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Sugar' AND region='".$location."' ) AS total_sugar, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Cooking Oil' AND region='".$location."' ) AS total_cooking_oil, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Tea' AND region='".$location."' ) AS total_tea, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Baked Beans' AND region='".$location."' ) AS total_baked_beans, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='All Purpose Soap' AND region='".$location."' ) AS total_all_purpose_soap, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Soya Mince' AND region='".$location."' ) AS total_soya_mince, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Cabbage' AND region='".$location."' ) AS total_cabbage, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Potatoes' AND region='".$location."' ) AS total_potatoes, 
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  stock_name='Pumpkin' AND region='".$location."' ) AS total_pumpkin,
+     ( SELECT SUM(items_qty) FROM stock_allocation_tbl WHERE  region='".$location."' ) AS total_project_stock;
+     ";
+       $statement = $this->connect->prepare($query);
+       if($statement->execute())
+       {
+          while($row = $statement->fetch(PDO::FETCH_ASSOC))
+          {
+             $data[] = $row;
+          }
+          return $data;
+       }
+    }   
+    
+    function showRegionStockDetail($location){
+
+
+        $query = "SELECT * FROM stock_allocation_tbl WHERE region='".$location."' AND items_qty > 0 ORDER BY items_qty DESC";
+    
+            $statement = $this->connect->prepare($query);
+            
+            if($statement->execute()){
+                while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                    $data[] = $row;
+                    }
+                    
+                    return $data;
+            }
+    }        
 
 
     function addStockLocation(){
@@ -255,7 +343,8 @@ class StockLevelsClass
                     
                     return $data;
             }
-    }  
+    }
+      
 
 
     function updateAllocatedStockLevels(){
