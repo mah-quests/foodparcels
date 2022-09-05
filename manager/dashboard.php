@@ -65,10 +65,10 @@
 
                   <h3>Stock Level Percentage</h3><br>
 
+
                 <?php 
 
-                  
-                  $api_url = $APIBASE."stock_levels_exec.php?action=show_region_total&location=".$location."";
+                  $api_url = $APIBASE."stock_levels_exec.php?action=view_all_stock_levels&location=".$location."";
                   $client = curl_init($api_url);
                   curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                   $response = curl_exec($client);
@@ -76,11 +76,13 @@
 
                   foreach($result as $row)
                   {
+                    
                     $ceiling = 16600;
-                    $region_totals = $row->total;
-                    $stock_percentage = ($region_totals / $ceiling) * 100;
 
-                  ?>  
+                    $stock_percentage = ($row->total_project_stock / $ceiling) * 100;
+
+
+                  ?>   
 
                   <div class="row" align="center">
                     <div class="col-md-2 grid-margin">
@@ -89,28 +91,13 @@
                           <div class="d-flex flex-row align-items-center">
                             <i class=""></i>
                             <div class="ms-3">
-                              <h6 class="text-white">Joburg Stock</h6>
+                              <h6 class="text-white"><? echo $_SESSION['region'] ?> Stock % </h6>
                               <h2 class="mt-2 card-text text-white"><?php echo number_format((float)$stock_percentage, 2, '.', ''); ?>%</h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-
-                <?php 
-
-                  }
-                  $stock_name = "Maize+Meal";
-                  $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
-                  $client = curl_init($api_url);
-                  curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                  $response = curl_exec($client);
-                  $result = json_decode($response);
-
-                  foreach($result as $row)
-                  {
-
-                  ?>                       
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -119,27 +106,12 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-google">Maize-Meal</h6>
-                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->total_maize_meal ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-
-                  <?php 
-                    }
-
-                    $stock_name = "Rice";
-                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
-                    $client = curl_init($api_url);
-                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                    $response = curl_exec($client);
-                    $result = json_decode($response);
-  
-                    foreach($result as $row)
-                    {
-                    
-                  ?>
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -148,28 +120,12 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-linkedin">Rice</h6>
-                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->total_rice ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-
-                  <?php 
-
-                    }
-
-                    $stock_name = "Sugar";
-                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
-                    $client = curl_init($api_url);
-                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                    $response = curl_exec($client);
-                    $result = json_decode($response);
-  
-                    foreach($result as $row)
-                    {
-                    
-                  ?>                    
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -178,28 +134,12 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-dribbble">Sugar</h6>
-                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->total_sugar ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-
-                  <?php 
-                  
-                    }
-
-                    $stock_name = "Cooking+Oil";
-                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
-                    $client = curl_init($api_url);
-                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                    $response = curl_exec($client);
-                    $result = json_decode($response);
-  
-                    foreach($result as $row)
-                    {
-                    
-                  ?>   
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -208,30 +148,13 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-reddit">Cooking Oil</h6>
-                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->total_cooking_oil ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-
-                  <?php 
                   
-                    }
-
-                    $stock_name = "Tea";
-                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
-                    $client = curl_init($api_url);
-                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                    $response = curl_exec($client);
-                    $result = json_decode($response);
-  
-                    foreach($result as $row)
-                    {
-                    
-                  ?>   
-                  
-
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
                         <div class="card-body">
@@ -239,35 +162,16 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-behance">Tea</h6>
-                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->total_tea ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>    
 
-                <?php 
-
-                    } 
-
-                ?>
 
                     <div class="col-md-2 grid-margin">
-                    </div>
-
-                  <?php 
-                  
-                    $stock_name = "Baked+Beans";
-                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
-                    $client = curl_init($api_url);
-                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                    $response = curl_exec($client);
-                    $result = json_decode($response);
-  
-                    foreach($result as $row)
-                    {
-                    
-                  ?>                       
+                    </div>                  
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -276,28 +180,12 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-linkedin">Baked Beans</h6>
-                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->total_baked_beans ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>  
-
-                  <?php 
-                  
-                    }
-
-                    $stock_name = "All+Purpose+Soap";
-                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
-                    $client = curl_init($api_url);
-                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                    $response = curl_exec($client);
-                    $result = json_decode($response);
-  
-                    foreach($result as $row)
-                    {
-                    
-                  ?>                       
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -306,28 +194,12 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-linkedin">Soap</h6>
-                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->total_all_purpose_soap ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div> 
-
-                  <?php 
-                  
-                    }
-
-                    $stock_name = "Soya+Mince";
-                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
-                    $client = curl_init($api_url);
-                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                    $response = curl_exec($client);
-                    $result = json_decode($response);
-  
-                    foreach($result as $row)
-                    {
-                    
-                  ?>                    
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -336,28 +208,12 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-dribbble">Soya Mince</h6>
-                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->total_soya_mince ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div> 
-
-                  <?php 
-                  
-                    }
-
-                    $stock_name = "Cabbage";
-                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
-                    $client = curl_init($api_url);
-                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                    $response = curl_exec($client);
-                    $result = json_decode($response);
-  
-                    foreach($result as $row)
-                    {
-                    
-                  ?>  
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -366,28 +222,12 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-reddit">Cabbage</h6>
-                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->total_cabbage ?></h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>                                         
-
-                  <?php 
-                  
-                    }
-
-                    $stock_name = "Potatoes";
-                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
-                    $client = curl_init($api_url);
-                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                    $response = curl_exec($client);
-                    $result = json_decode($response);
-  
-                    foreach($result as $row)
-                    {
-                    
-                  ?>  
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -396,7 +236,7 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-behance">Potatoes</h6>
-                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->total_potatoes ?></h2>
                             </div>
                           </div>
                         </div>
@@ -406,21 +246,6 @@
                     <div class="col-md-2 grid-margin">
                     </div>                    
 
-                  <?php 
-                  
-                    }
-
-                    $stock_name = "Pumpkin";
-                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."&stock_name=".$stock_name."";
-                    $client = curl_init($api_url);
-                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-                    $response = curl_exec($client);
-                    $result = json_decode($response);
-  
-                    foreach($result as $row)
-                    {
-                    
-                  ?>  
 
                     <div class="col-md-2 grid-margin">
                       <div class="card d-flex align-items-center">
@@ -429,7 +254,7 @@
                             <i class=""></i>
                             <div class="ms-3">
                               <h6 class="text-behance">Pumpkin</h6>
-                              <h2 class="mt-2 text-muted card-text"><?php echo $row->current_stock_level ?></h2>
+                              <h2 class="mt-2 text-muted card-text"><?php echo $row->total_pumpkin ?></h2>
                             </div>
                           </div>
                         </div>
@@ -441,9 +266,7 @@
                   ?>                                       
 
 
-                  </div>
-
-
+              </div>
 
 
                       <div class="row">
@@ -707,27 +530,28 @@
                                   foreach($result as $row)
                                   {
 
+                                  ?>
 
-                                    $delivered_output .= '
                                     <tr>
-                                    <td>'.$row->hoh_id.'</td>
-                                    <td>'.$row->hoh_date_time.'</td>
-                                    <td>'.$row->first_name.' '.$row->surname.'</td>
-                                    <td>'.$row->cellphone.'</td>
-                                    <td>'.$row->id_number.'</td>
-                                    <td>'.$row->home_address.'</td>
-                                    <td>'.$row->no_delivery_times.'</td>
-                                    <td>
-                                      <a target="_blank" href="view_beneficiary_details.php?code='.$row->unique_code.'"><button class="btn btn-outline-primary">View</button></a>
-                                    </td>                                    
+                                        <td><?php echo $row->hoh_id ?></td>
+                                        <td><?php echo $row->hoh_date_time ?></td>
+                                        <td><?php echo $row->first_name.', '.$row->surname ?></td>
+                                        <td><?php echo $row->cellphone ?></td>
+                                        <td><?php echo $row->id_number ?></td>
+                                        <td><?php echo $row->home_address ?></td>
+                                        <td><?php echo $row->no_delivery_times ?></td>
+                                        <td>
+                                          <a target="_blank" href="view_beneficiary_details.php?code='.$row->unique_code.'"><button class="btn btn-outline-primary">View</button></a>
+                                        </td>                                           
                                     </tr>
-                                    ';
+
+                                <?php 
+
                                   }
                                 }
 
-                                echo $delivered_output;
-                                
-                            ?> 
+                                ?>
+
 
                             <?php
                                 // Update the API end-point
@@ -743,27 +567,25 @@
                                   foreach($result as $row)
                                   {
 
+                                ?>
 
-                                    $delivered_output .= '
-                                    <tr>
-                                    <td>'.$row->hoh_id.'</td>
-                                    <td>'.substr($row->hoh_date_time, 0, 11).'</td>
-                                    <td>'.$row->first_name.' '.$row->surname.'</td>
-                                    <td>'.$row->cellphone.'</td>
-                                    <td>'.$row->id_number.'</td>
-                                    <td>'.$row->home_address.'</td>
-                                    <td>'.$row->no_delivery_times.'</td>
-                                    <td>
-                                      <a target="_blank" href="view_beneficiary_details.php?code='.$row->unique_code.'"><button class="btn btn-outline-primary">View</button></a>
-                                    </td>
-                                    </tr>
-                                    ';
+                                  <tr>
+                                      <td><?php echo $row->hoh_id ?></td>
+                                      <td><?php substr($row->hoh_date_time, 0, 11) ?></td>
+                                      <td><?php echo $row->first_name.', '.$row->surname ?></td>
+                                      <td><?php echo $row->cellphone ?></td>
+                                      <td><?php echo $row->id_number ?></td>
+                                      <td><?php echo $row->home_address ?></td>
+                                      <td><?php echo $row->no_delivery_times ?></td>
+                                      <td>
+                                        <a target="_blank" href="view_beneficiary_details.php?code='.$row->unique_code.'"><button class="btn btn-outline-primary">View</button></a>
+                                      </td>                                           
+                                  </tr>
+
+                            <?php                                    
                                   }
                                 }
-
-                                echo $delivered_output;
-                            ?> 
-
+                            ?>
 
                             </tbody>
                           </table>

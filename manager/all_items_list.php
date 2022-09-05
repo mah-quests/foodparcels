@@ -5,26 +5,9 @@
   session_start();
 
   $location = $_SESSION['region'];
-  $project = $_GET['project'];
+  $project_name = "%";
 
-
-  if ($_GET['project'] == "wop"){
-    $project_name="War+On+Poverty";
-    $project_header = "WOP";
-  } else if ($_GET['project'] == "art"){
-    $project_name="ART";
-    $project_header = "ART";
-  } else if ($_GET['project'] == "spc"){
-    $project_name="Special+Projects";
-    $project_header = "Special Projects";
-  } else if ($_GET['project'] == "don"){
-    $project_name="Donations";
-    $project_header = "Donations";
-  }
 ?>  
-        
-        
-
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
@@ -49,12 +32,12 @@
                   </div>
                   <br><br>
 
-                  <h3><?php echo $project_header ?>  Stock Levels</h3><br>
+                  <h3><?php echo $_SESSION['region'].' ' ?>  - Stock Levels</h3><br>
 
                 <?php 
 
                   
-                  $api_url = $APIBASE."stock_levels_exec.php?action=view_stock_levels&location=".$location."&project_name=".$project_name."";
+                  $api_url = $APIBASE."stock_levels_exec.php?action=view_all_stock_levels&location=".$location."";
                   $client = curl_init($api_url);
                   curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                   $response = curl_exec($client);
@@ -77,7 +60,7 @@
                           <div class="d-flex flex-row align-items-center">
                             <i class=""></i>
                             <div class="ms-3">
-                              <h6 class="text-white"><?php echo $project_header ?> Stock % </h6>
+                              <h6 class="text-white"> Stock % </h6>
                               <h2 class="mt-2 card-text text-white"><?php echo number_format((float)$stock_percentage, 2, '.', ''); ?>%</h2>
                             </div>
                           </div>
@@ -254,7 +237,7 @@
 
               </div>
 
-              <div class="col-12 grid-margin">
+                <div class="col-12 grid-margin">
                   <div class="card">
                     <div class="card-body">
                       <h4 class="card-title">Stock Details</h4>
@@ -278,7 +261,7 @@
 
                               <?php
                                     
-                                    $api_url = $APIBASE."stock_levels_exec.php?action=view_stock_details&location=".$location."&project_name=".$project_name."";
+                                    $api_url = $APIBASE."stock_levels_exec.php?action=show_region_stock_details&location=".$location."";
                                     $client = curl_init($api_url);
                                     curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                                     $response = curl_exec($client);
@@ -332,7 +315,79 @@
                       </div>
                     </div>
                   </div>
-                </div>                       
+                </div> 
+
+
+                <div class="col-12 grid-margin">
+                    <div class="card">
+                        <div class="card-body">
+                        <h4 class="card-title">Unallocated Stock</h4>
+                        <div class="row">
+                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                            <table id="sortable-table-2" class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th class="sortStyle">Date Delivered<i class="ti-angle-down"></i></th>
+                                    <th class="sortStyle">Stock Type<i class="ti-angle-down"></i></th>
+                                    <th class="sortStyle">Stock Details<i class="ti-angle-down"></i></th>
+                                    <th class="sortStyle">Quantity<i class="ti-angle-down"></i></th>
+                                    <th class="sortStyle">Manufactured<br> Date<i class="ti-angle-down"></i></th>
+                                    <th class="sortStyle">Expiry Date<i class="ti-angle-down"></i></th>
+                                    <th class="sortStyle">Allocated<br> Space<i class="ti-angle-down"></i></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                        
+                                    $api_url = $APIBASE."delivery_notice_exec.php?action=show_foodbank_stock&location=".$_SESSION['region']."";
+                                    $client = curl_init($api_url);
+                                    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+                                    $response = curl_exec($client);
+                                    $result = json_decode($response);
+                                    $art_output = '';
+
+                                    if(count($result) > 0)
+                                    {
+                                        foreach($result as $row)
+                                        {
+
+                                            $row_id = $row->stockdetail_id;
+                                                if($row->allocated != "allocated" && $row->allocated != "partial"){
+
+                                ?>  
+
+
+                                <tr>
+                                        <td><?php echo $row->stockdetail_id ?></td>
+                                        <td><?php echo $row->create_date_time ?></td>
+                                        <td><?php echo $row->stock_type ?></td>
+                                        <td><?php echo $row->stock_name.', '.$row->stock_brand ?></td>
+                                        <td><?php echo $row->stock_level_amount ?></td>
+                                        <td><?php echo $row->stock_man_date ?></td>
+                                        <td><?php echo $row->stock_exp_date ?></td>
+                                        <td>-</td>
+                                    </tr>
+
+                                    <?php 
+                                            } 
+                                        }
+                                    } 
+                                    ?>
+
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+
+          </div>
+        </div>                
+
+
 
                 </div>
               </div>
@@ -378,8 +433,7 @@
 <!-- endinject -->
 <!-- Custom js for this page-->
 <script src="../js/data-table.js"></script>
-<script src="../js/jq.tablesort.js"></script>
-<script src="../js/tablesorter.js"></script>
+
 
 <?php
 
