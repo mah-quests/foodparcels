@@ -430,11 +430,28 @@ if($_SESSION['role'] != "manager"){
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="items_list.php">
-                <i class="menu-icon ti ti-menu"></i>
-                <span class="menu-title">Items List</span>
+            <a class="nav-link" data-bs-toggle="collapse" href="#projects" aria-expanded="false" aria-controls="ui-advanced">
+              <i class="menu-icon ti ti-menu"></i>
+              <span class="menu-title">Items List</span>
+              <i class="menu-arrow"></i>
+            </a>
+              <div class="collapse" id="projects">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="all_items_list.php">All</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="unallocated_stock.php">Unallocated Stock</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="items_list.php?project=wop">WOP</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="items_list.php?project=art">ART</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="items_list.php?project=spc">Special Projects</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="items_list.php?project=don">Donation</a></li> 
+                </ul>
+              </div>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="week_activity.php">
+                <i class="menu-icon ti ti-notepad"></i>
+                <span class="menu-title">Weekly Activities </span>
               </a>
-            </li>          
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="floor_plan.php">
                 <i class="menu-icon mdi mdi-border-inside"></i>
